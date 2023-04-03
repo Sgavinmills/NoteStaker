@@ -1,0 +1,38 @@
+{
+    "the last kingdom" : {
+        "tags" : ["tv shows", "tv shows (watched)"],
+        "additional_notes" : "",
+        "date_added" : ""
+    },
+
+    "peripheral" : {
+        "tags" : ["tv shows", "tv shows (watched)"],
+        "additional_info" : "reccomended by Danny",
+        "date_added" : ""
+    },
+
+    "pack for spain" : {
+        "tags" : ["todo", "spain todo"],
+        "additional_notes" : "passport, swim shorts, sunglasses",
+        "date_added" : ""
+    },
+
+    "england rugby top" : {
+        "tags" : ["present ideas"],
+        "additional_notes" : "for ros",
+        "date_added" : ""
+    },
+
+    "toilet roll with face on" : {
+        "tags" : ["present ideas"],
+        "additional_notes" : "",
+        "date_added" : ""
+    },
+
+    "typing game where you type spells/attacks faster than opponent" : {
+        "tags" : ["app idea"],
+        "additional_notes" : "",
+        "date_added" : ""
+    }
+
+}

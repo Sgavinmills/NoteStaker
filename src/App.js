@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import memoryJSON from './memory.json';
+import { useState, useEffect } from 'react';
+import Categories from './components/Categories';
+import AddNoteCard from './components/AddNoteCard'
+import NewNoteForm from './components/NewNoteForm';
+import {getCategoryLabels} from "./memoryFunctions/memoryFunctions";
+
 
 function App() {
+  const [memory, setMemory] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+
+  useEffect(() => {
+    const categories = getCategoryLabels(memoryJSON);
+    memoryJSON.categories = categories;
+    setMemory(memoryJSON);
+    setIsLoading(false);
+
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AddNoteCard showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
+      {showAddNoteForm && <NewNoteForm memory={memory} setMemory={setMemory} setShowAddNoteForm={setShowAddNoteForm}/> }
+      {!isLoading && <Categories memory={memory} />}
     </div>
+   
   );
 }
 
