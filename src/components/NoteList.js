@@ -2,27 +2,26 @@ import NoteCard from './NoteCard'
 import styles from "../CSS/Card.module.css";
 import { useState, useEffect } from 'react';
 
-export default function NoteList({memory, categoryName}) {
+export default function NoteList({memory, categoryName, setMemory}) {
 
   const [notesToList, setNotesToList] = useState([]);
   useEffect(() => {
     setNotesToList(() => {
-      const notes = Object.values(memory).filter(note => {
-        console.log(note.tags);
-        console.log(categoryName);
+      const notes = memory.notes.filter(note => {
         if (note.tags?.includes(categoryName)) {
           return note;
         }
       })
-      console.log(notes);
       return notes;
     })
   }, [memory, categoryName])
+
+
   
   return (
     <div>
           {notesToList?.map((note, index) => (
-            <NoteCard mainText={notesToList[index]} additionalText={note.additional_info}/>
+            <NoteCard note={note} index={index} setMemory={setMemory}/>
           ))}
     </div>
   )

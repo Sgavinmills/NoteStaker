@@ -1,5 +1,5 @@
 import './App.css';
-import memoryJSON from './memory.json';
+import memoryJSON from './memory2.json';
 import { useState, useEffect } from 'react';
 import Categories from './components/Categories';
 import AddNoteCard from './components/AddNoteCard'
@@ -13,18 +13,19 @@ function App() {
   const [showAddNoteForm, setShowAddNoteForm] = useState(false);
 
   useEffect(() => {
-    const categories = getCategoryLabels(memoryJSON);
-    memoryJSON.categories = categories;
-    setMemory(memoryJSON);
-    setIsLoading(false);
-
+  //   const categories = getCategoryLabels(memoryJSON);
+  //   memoryJSON.categories = categories;
+  //   setMemory(memoryJSON);
+  setMemory(memoryJSON);
+  console.log(memory);
+  setIsLoading(false);
   }, [])
 
   return (
     <div>
       <AddNoteCard showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
       {showAddNoteForm && <NewNoteForm memory={memory} setMemory={setMemory} setShowAddNoteForm={setShowAddNoteForm}/> }
-      {!isLoading && <Categories memory={memory} />}
+      {!isLoading && <Categories memory={memory} setMemory={setMemory} />}
     </div>
    
   );

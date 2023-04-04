@@ -7,10 +7,16 @@
   border: 1px solid #E8E8E8;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 16px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   text-align: left;
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
+}
+
+.category-card-container {
+  border-bottom: 1px solid rgb(174, 161, 161);
 }
 
 .add-note-container {
@@ -19,12 +25,129 @@
   margin-bottom: 15px;
 }
 
-.main-text {
+.note-card-container {
+  /* width: 80%; */
+  margin: auto;
+  /* background-color: rgb(194, 194, 232); */
+  /* border: 4px double #444; */
+  padding: 10px;
+}
+
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}
+
+
+.category-main-text {
+  /* font-size: 20px; */
   font-weight: bold;
   margin-bottom: 8px;
+  /* color: #1E2432; */
+  color: #2E3F57;
+}
+
+.note-main-text {
+  /* font-size: 20px; */
+  font-size: 16px;
+  font-weight: normal;
+  /* font-style: italic; */
+  margin-bottom: 8px;
+  color: #3e5368;
+  /* color: #4E687F; */
 }
 
 .additional-notes {
+  /* font-style: italic; */
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.tags {
   font-size: 14px;
   color: #666666;
+  margin-left: 10px;
+
+
 }
+
+.category-down-arrow {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid black;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.category-up-arrow {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid black;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.note-down-arrow {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid black;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.note-up-arrow {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid black;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.trash-icon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.slide-in {
+  animation: slide-in 0.5s forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-out {
+  animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+
+
