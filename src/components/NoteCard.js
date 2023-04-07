@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "../CSS/Card.module.css";
 import NewNoteForm from './NewNoteForm';
 
@@ -6,6 +6,19 @@ const NoteCard = ({note, setShowNotes, setMemory, memory}) => {
   const [showAdditionalDetails, setShowAdditionalDetails] = useState(false);
   const [showEdittingNote, setShowEdittingNote] = useState(false);
 
+  // on render have a useeffect that checks if note.note length > 65 chars and aply the fadeout css if so
+  const [useFadeout,setUseFadeout] = useState(false)
+  useEffect(() => {
+    console.log(note.note.length);
+    console.log(showAdditionalDetails)
+    // NEED BETTER WAY THAN LENGTH > 65 TO DETERMINE IF GONE ONTO NEXT LINE....
+    if (note.note.length > 32 && !showAdditionalDetails) {
+      console.log("setting usefadeout true...")
+      setUseFadeout(true);
+    } else {
+      setUseFadeout(false);
+    }
+  }, [showAdditionalDetails])
   const handleEdit = (event) => {
     console.log("editting....")
     event.stopPropagation();
@@ -38,7 +51,12 @@ const NoteCard = ({note, setShowNotes, setMemory, memory}) => {
     })
   }
   return (
-    <div className={`${styles["card-container"]} ${styles["note-card-container"]} ${showAdditionalDetails || showEdittingNote ? "" : styles["note-card-container_collapsed"]}`} onClick={()=> {setShowAdditionalDetails(!showAdditionalDetails); console.log("im anywhere on card")}}>
+    <div className={`${styles["card-container"]} ${styles["note-card-container"]} 
+    ${showAdditionalDetails || showEdittingNote ? "" : styles["note-card-container_collapsed"]} ${!useFadeout ? "" : styles["note-card-container_fade_out"]}`
+    
+    } 
+    
+    onClick={()=> {setShowAdditionalDetails(!showAdditionalDetails); console.log("im anywhere on card")}}>
       <div className={styles["header-container"]}>
         <div className={styles["main-note-text-container"]}>
 
