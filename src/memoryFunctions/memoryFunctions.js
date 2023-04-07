@@ -20,3 +20,24 @@ export function getCategoryLabels(memory) {
   
     return memory.categories;
 }
+
+export function writeToLocalStorage(memory) {
+    localStorage.setItem("memory", JSON.stringify(memory));
+    console.log("written to local storage...");
+}
+
+export function readFromLocalStorage() {
+    localStorage.getItem("memory");
+    const savedMemory = JSON.parse(localStorage.getItem("memory"));
+    if (!savedMemory) {
+        const emptyMemory = {
+            notes : [],
+            categories: []
+        }
+
+        return emptyMemory;
+    }
+    console.log("read from memory");
+
+    return savedMemory;
+}

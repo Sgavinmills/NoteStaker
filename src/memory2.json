@@ -1,41 +1,113 @@
 {
  "notes" : [
     {
-        "note" : "the last kingdom",
-        "tags" : ["tv shows", "tv shows (watched)"],
-        "additional_info" : "",
-        "date_added" : ""
-    },
-    {
-        "note" : "peripheral",
-        "tags" : ["tv shows", "tv shows (watched)"],
-        "additional_info" : "reccomended by Danny",
-        "date_added" : ""
-    },
-    {
-        "note" : "pack for spain",
-        "tags" : ["todo"],
-        "additional_info" : "passport, swim shorts, sunglasses",
-        "date_added" : ""
-    },
-    {
-        "note" : "england rugby top",
-        "tags" : ["present ideas"],
-        "additional_info" : "for ros",
-        "date_added" : ""
-    },
-    {
-        "note" : "toilet roll with face on",
-        "tags" : ["present ideas"],
-        "additional_info" : "",
-        "date_added" : ""
-    },
-    {
-        "note" : "typing game where you do attacks / cast spells by typing faster than opponenet",
-        "tags" : ["app idea"],
-        "additional_info" : "",
-        "date_added" : ""
-    }
+        "note": "Luna",
+        "tags": ["dog names"],
+        "additional_info": "It's a strong and elegant name",
+        "date_added": ""
+      },
+      {
+        "note": "Cleo",
+        "tags": ["cat names"],
+        "additional_info": "It's a cute and playful name",
+        "date_added": ""
+      },
+      {
+        "note": "Breaking Bad",
+        "tags": ["tv shows", "tv shows (watched)"],
+        "additional_info": "My friend John recommended it to me",
+        "date_added": ""
+      },
+      {
+        "note": "Game of Thrones",
+        "tags": ["tv shows"],
+        "additional_info": "My coworker Sarah told me it's great",
+        "date_added": ""
+      },
+      {
+        "note": "Bluetooth headphones",
+        "tags": ["present ideas"],
+        "additional_info": "For my brother's birthday",
+        "date_added": ""
+      },
+      {
+        "note": "A recipe app",
+        "tags": ["app ideas"],
+        "additional_info": "To keep track of all my favorite recipes",
+        "date_added": ""
+      },
+      {
+        "note": "Bella",
+        "tags": ["dog names"],
+        "additional_info": "It's a classic and beautiful name",
+        "date_added": ""
+      },
+      {
+        "note": "Simba",
+        "tags": ["cat names"],
+        "additional_info": "It's a strong and regal name",
+        "date_added": ""
+      },
+      {
+        "note": "Stranger Things",
+        "tags": ["tv shows"],
+        "additional_info": "My sister Emma loves it",
+        "date_added": ""
+      },
+      {
+        "note": "The Office",
+        "tags": ["tv shows (watched)"],
+        "additional_info": "I binged it on Netflix",
+        "date_added": ""
+      },
+      {
+        "note": "A new watch",
+        "tags": ["present ideas"],
+        "additional_info": "For my mom's anniversary",
+        "date_added": ""
+      },
+      {
+        "note": "A language learning app",
+        "tags": ["app ideas"],
+        "additional_info": "To improve my Spanish",
+        "date_added": ""
+      },
+      {
+        "note": "Max",
+        "tags": ["dog names"],
+        "additional_info": "It's a short and easy-to-remember name",
+        "date_added": ""
+      },
+      {
+        "note": "Mittens",
+        "tags": ["cat names"],
+        "additional_info": "It's a cute and funny name",
+        "date_added": ""
+      },
+      {
+        "note": "Peaky Blinders",
+        "tags": ["tv shows"],
+        "additional_info": "My friend Tom recommended it to me",
+        "date_added": ""
+      },
+      {
+        "note": "The Crown",
+        "tags": ["tv shows"],
+        "additional_info": "I heard it's a great historical drama",
+        "date_added": ""
+      },
+      {
+        "note": "A yoga mat",
+        "tags": ["present ideas"],
+        "additional_info": "For my sister who loves yoga",
+        "date_added": ""
+      },
+      {
+        "note": "A meal planning app",
+        "tags": ["app ideas"],
+        "additional_info": "To save time and eat healthier",
+        "date_added": ""
+      }
  ],
- "categories" : ["tv shows", "tv shows (watched)", "todo", "spain todo", "present ideas", "app idea"]
+ "categories" : ["dog names", "cat names", "tv shows", "tv shows (watched)", "present ideas", "app ideas"]
 }

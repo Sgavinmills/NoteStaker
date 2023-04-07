@@ -21,7 +21,7 @@ export default function NoteList({memory, categoryName, setMemory}) {
   return (
     <div>
           {notesToList?.map((note, index) => (
-            <NoteCard note={note} index={index} setMemory={setMemory}/>
+            <NoteCard key={index} note={note} index={index} setMemory={setMemory} memory={memory}/>
           ))}
     </div>
   )

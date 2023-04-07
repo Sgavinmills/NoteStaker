@@ -31,6 +31,17 @@
   /* background-color: rgb(194, 194, 232); */
   /* border: 4px double #444; */
   padding: 10px;
+  /* height: 50px; */
+  /* overflow-y: hidden; */
+}
+
+.note-card-container_expanded {
+
+}
+
+.note-card-container_collapsed {
+  height: 50px;
+  overflow-y: hidden;
 }
 
 
@@ -38,8 +49,25 @@
 .header-container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  /* margin-right: 20px; */
+  /* border: 2px solid red; */
+}
+
+.main-note-text-container {
+  /* width: 200px; */
+  /* border: 2px solid green; */
+}
+
+
+.icon-container {
+  width: 110px;
+  /* border: 2px solid blue; */
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 
@@ -118,6 +146,12 @@
 }
 
 .trash-icon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.edit-icon {
   font-size: 24px;
   cursor: pointer;
   margin-right: 20px;
