@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from "../CSS/Card.module.css";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import NoteList from './NoteList';
 const CategoryCard = ({categoryName, memory, setMemory}) => {
-  const [showAdditionalDetails, setShowAdditionalDetails] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   
   return (

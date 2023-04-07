@@ -1,5 +1,5 @@
 import './App.css';
-import testMemoryJSON from './memory2.json';
+// import testMemoryJSON from './memory2.json';
 // import testMemoryJSON from './emptyMemory.json';
 import { useState, useEffect } from 'react';
 import Categories from './components/Categories';
@@ -7,7 +7,7 @@ import AddNoteCard from './components/AddNoteCard';
 import AddCategoryCard from './components/AddCategoryCard';
 import NewNoteForm from './components/NewNoteForm';
 import NewCategoryForm from './components/NewCategoryForm';
-import {getCategoryLabels, readFromLocalStorage, writeToLocalStorage} from "./memoryFunctions/memoryFunctions";
+import {readFromLocalStorage, writeToLocalStorage} from "./memoryFunctions/memoryFunctions";
 
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
       writeToLocalStorage(memory)
 
     }
-  }, [memory])
+  }, [memory, isLoading])
 
   return (
     <div>

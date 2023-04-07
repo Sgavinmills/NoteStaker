@@ -1,5 +1,4 @@
 import NoteCard from './NoteCard'
-import styles from "../CSS/Card.module.css";
 import { useState, useEffect } from 'react';
 
 export default function NoteList({memory, categoryName, setMemory}) {
@@ -11,6 +10,7 @@ export default function NoteList({memory, categoryName, setMemory}) {
         if (note.tags?.includes(categoryName)) {
           return note;
         }
+        return false;
       })
       return notes;
     })

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {writeToLocalStorage} from "../memoryFunctions/memoryFunctions";
 import formStyles from "../CSS/AddNoteForm.module.css";
 
 //CAN PROBABLY ONLY HAVE ONE SETSHOWEDDITTINGFORM/SHWADDNOTFORMFUNCTION IF THE PROPS HAE SAME NAME BUT DIFFERENT METHODS DEPENDING ON WHEER PASSED FROM
