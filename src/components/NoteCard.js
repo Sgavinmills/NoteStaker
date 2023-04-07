@@ -18,7 +18,7 @@ const NoteCard = ({note, setShowNotes, setMemory, memory}) => {
     } else {
       setUseFadeout(false);
     }
-  }, [showAdditionalDetails])
+  }, [showAdditionalDetails, note.note.length])
   const handleEdit = (event) => {
     console.log("editting....")
     event.stopPropagation();
