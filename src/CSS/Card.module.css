@@ -44,10 +44,15 @@
   margin-top: 0px;
 }
 
-.header-container {
+.category-contents-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+}
+
+.category-icon-container {
+  display: flex;
+  align-items: center;
 }
 
 .category-main-text {
@@ -64,6 +69,11 @@
   color: #b4b4b4;
 }
 
+.category-plus-symbol {
+  color: #c6d6f0;
+  font-size: 26px;
+  margin-right: 20px;
+}
 
 .category-down-arrow {
   width: 0;
@@ -74,12 +84,12 @@
   display: inline-block;
   vertical-align: middle;
   margin-right: 15px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 .category-up-arrow {
   margin-right: 15px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   width: 0;
   height: 0;
   border-left: 10px solid transparent;

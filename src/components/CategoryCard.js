@@ -2,18 +2,31 @@ import React from 'react';
 import styles from "../CSS/Card.module.css";
 import { useState } from 'react';
 import NoteList from './NoteList';
+import NewAddNoteForm from './NewAddNoteForm';
+
 const CategoryCard = ({categoryName, memory, setMemory}) => {
   const [showNotes, setShowNotes] = useState(false);
+  const [addNote, setAddNote] = useState(false);
+
+  const handleAddNoteClick = (event) => {
+    event.stopPropagation();
+    setAddNote(!addNote);
+  }
   
   return (
     <>
     <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onClick={()=> {setShowNotes(!showNotes)}}>
-      <div className={styles["header-container"]}>
-      <p className={styles["category-main-text"]}>{categoryName}</p>
-      <span className={`${!showNotes ? styles["category-down-arrow"] : styles["category-up-arrow"]}`} ></span>
+      <div className={styles["category-contents-container"]}>
+          <p className={styles["category-main-text"]}>{categoryName}</p>
+          <div className={styles["category-icon-container"]}>
+            <span className={`${styles["category-plus-symbol"]}`} onClick={(event) => {handleAddNoteClick(event)}} >&#x002B;</span>
+            <span className={`${!showNotes ? styles["category-down-arrow"] : styles["category-up-arrow"]}`} ></span>
+
+          </div>
       </div>
     </div>
 
+    {addNote && <NewAddNoteForm setMemory={setMemory} setShowAddNoteForm={setAddNote} directToCategory={categoryName}/>  }
     {showNotes && <NoteList memory={memory} categoryName={categoryName} setMemory={setMemory} />}
     </>
   );
