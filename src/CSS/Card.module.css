@@ -37,8 +37,8 @@
 .add-note-container {
   color: #c6d6f0;
   font-weight: bold;
-
-  background-color: #1e1e1e;
+  font-size: 30px;
+  background-color: #1b1716;
 
   margin-bottom: 15px;
   margin-top: 0px;
