@@ -1,0 +1,5 @@
+.app-container {
+    background-color: #010101;
+    min-height: 2000px;
+    /* todo: calculate min height to be an extra screen */
+}

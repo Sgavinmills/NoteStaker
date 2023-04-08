@@ -1,7 +1,6 @@
 import CategoryCard from './CategoryCard'
 
 export default function Categories({memory, setMemory}) {
-console.log(memory.categories)
   return (
     <div>
           {memory.categories.map((category, index) => (

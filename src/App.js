@@ -8,6 +8,7 @@ import AddCategoryCard from './components/AddCategoryCard';
 import NewNoteForm from './components/NewNoteForm';
 import NewCategoryForm from './components/NewCategoryForm';
 import {readFromLocalStorage, writeToLocalStorage} from "./memoryFunctions/memoryFunctions";
+import AppStyle from "./CSS/AppContainer.module.css";
 
 
 function App() {
@@ -17,28 +18,20 @@ function App() {
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
 
   useEffect(() => {
-  //   const categories = getCategoryLabels(memoryJSON);
-  //   memoryJSON.categories = categories;
-  //   setMemory(memoryJSON);
   // const memoryToUse = testMemoryJSON;
   const memoryToUse = readFromLocalStorage();
   setMemory(memoryToUse); 
-  // setMemory(readFromLocalStorage());
-  console.log(memoryToUse);
   setIsLoading(false);
   }, [])
 
   useEffect(() => {
     if (!isLoading) {
-      console.log("WRITING TO MEMORY. ");
-      console.log(memory);
       writeToLocalStorage(memory)
-
     }
   }, [memory, isLoading])
 
   return (
-    <div>
+    <div className={`${AppStyle["app-container"]}`}>
       <AddNoteCard showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
       <AddCategoryCard showAddCategoryForm={showAddCategoryForm} setShowAddCategoryForm={setShowAddCategoryForm} />
       {showAddCategoryForm && <NewCategoryForm setMemory={setMemory} setShowAddCategoryForm={setShowAddCategoryForm}/> }
