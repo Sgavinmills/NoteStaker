@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 
-const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory}) => {
-  const [noteText, setNoteText] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]);
+const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory, noteToEdit, setEdittingForm}) => {
+  const [noteText, setNoteText] = useState(noteToEdit ? noteToEdit.note : '');
+  const [selectedCategories, setSelectedCategories] = useState(noteToEdit ? noteToEdit.tags : []);
 
 
   const handleCategoryClick = (category) => {
@@ -23,27 +23,55 @@ const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory
       return;
     }
 
-  setMemory(currMemory => {
-    const newMemory = {...currMemory};
-    newMemory.notes.unshift({
-      "note" : noteText,
-      "tags" : directToCategory ? [directToCategory] : selectedCategories,
-      "additional_info" : "",
-      "date_added" : ""
-    });
-    return newMemory;
-  })
+    if (noteToEdit) {
+      // find note and replace with this one
+      setMemory(currMemory => {
+        const newMemory = {...currMemory};
+        const updatedNotes = [...newMemory.notes];
+        // once we give each item unique id can simply this nonsense
+        const index = updatedNotes.reduce((acc, item, index) => {
+          const isMatch = Object.keys(noteToEdit).every(key => {
+            if (Array.isArray(noteToEdit[key])) {
+              return noteToEdit[key].every(tag => item[key].includes(tag));
+            }
+            return item[key] === noteToEdit[key];
+          });
+          return isMatch ? index : acc;
+        }, -1);
+        updatedNotes[index].note = noteText;
+        updatedNotes[index].tags = selectedCategories;
+        newMemory.notes = updatedNotes;
+        return newMemory;
+      })
+
+      setEdittingForm(false);
+
+
+    } else {
+      // add item to start of notes array
+      setMemory(currMemory => {
+        const newMemory = {...currMemory};
+        newMemory.notes.unshift({
+          "note" : noteText,
+          "tags" : directToCategory ? [directToCategory] : selectedCategories,
+          "additional_info" : "",
+          "date_added" : ""
+        });
+        return newMemory;
+      })
+      setShowAddNoteForm(false);
+
+    }
     
     setNoteText('');
-      setShowAddNoteForm(false);
     setSelectedCategories([]);
   };
 
   return (
-    <div className={`${formStyles["note-form-container"]} ${!directToCategory ? formStyles["note-form-container_new_note"] : ""}`}>
+    <div className={`${formStyles["note-form-container"]} ${!directToCategory && !noteToEdit ? formStyles["note-form-container_new_note"] : ""}`}>
       <form onSubmit={handleNoteSubmit}>
         <textarea
-          className={`${formStyles["note-text-input"]} ${directToCategory ? formStyles["note-text-input_direct_to_category"] : ""}`}
+          className={`${formStyles["note-text-input"]} ${directToCategory || noteToEdit ? formStyles["note-text-input_reduced_height_textarea"] : ""}`}
           placeholder="Enter note text here"
           value={noteText}
           onChange={(event) => setNoteText(event.target.value)}

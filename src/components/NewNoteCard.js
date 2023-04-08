@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styles from "../CSS/Card.module.css";
-import NewNoteForm from "./NewNoteForm";
+import NewAddNoteForm from "./NewAddNoteForm";
 
 const NoteCard = ({ note, setMemory, memory }) => {
-  const [showEdittingNote, setShowEdittingNote] = useState(false);
+  const [edittingNote, setEdittingNote] = useState(false);
 
   const handleEdit = (event) => {
     event.stopPropagation();
-    setShowEdittingNote(!showEdittingNote);
+    setEdittingNote(!edittingNote);
   };
 
   return (
@@ -18,12 +18,12 @@ const NoteCard = ({ note, setMemory, memory }) => {
       >
         {note.note}
       </p>
-      {showEdittingNote && (
-        <NewNoteForm
+      {edittingNote && (
+        <NewAddNoteForm
           memory={memory}
           setMemory={setMemory}
-          setShowEdittingForm={setShowEdittingNote}
-          note={note}
+          setEdittingForm={setEdittingNote}
+          noteToEdit={note}
         />
       )}
     </>
