@@ -49,10 +49,12 @@ const NoteCard = ({ note, setMemory, memory }) => {
       >
         {note.note}
       </p>
-    <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;</span>
+      <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
+      
+     {showMoreOptions && <MoreOptions handleDelete={handleDelete} />}
+      </span>
 
      </div>
-     {showMoreOptions && <MoreOptions handleDelete={handleDelete} />}
       {edittingNote && (
         <NewAddNoteForm
           memory={memory}
