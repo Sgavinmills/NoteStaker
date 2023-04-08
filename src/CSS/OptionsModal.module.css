@@ -1,0 +1,11 @@
+.options-container {
+    position: absolute;
+    /* border: 2px solid red; */
+    right: 2px;
+    background-color: #1e1e1e;
+}
+
+.option-text {
+    color: white;
+    font-size: 14px;
+}

@@ -50,6 +50,12 @@
   align-items: center;
 }
 
+.note-contents-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .category-icon-container {
   display: flex;
   align-items: center;
@@ -73,6 +79,14 @@
   color: #c6d6f0;
   font-size: 26px;
   margin-right: 20px;
+}
+
+.note-three-vertical-dots-icon {
+  color: #b4b4b4;
+  font-size: 24px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding-top: 13px;
 }
 
 .category-down-arrow {
