@@ -4,6 +4,8 @@ import NewAddNoteForm from "./NewAddNoteForm";
 import MoreOptions from "./MoreOptions";
 
 const NoteCard = ({ note, setMemory, memory }) => {
+
+  
   const [edittingNote, setEdittingNote] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
@@ -40,6 +42,24 @@ const NoteCard = ({ note, setMemory, memory }) => {
     })
   }
 
+  const optionNotHandled = () => {
+    console.log("This option is not handled yet");
+  }
+  const options = [
+    { 
+      option: "Delete item",
+      action: handleDelete,
+    },
+    {
+      option: "Add/remove categories",
+      action: optionNotHandled
+    },
+    {
+      option: "View additional details",
+      action: optionNotHandled
+    }
+  ]
+
   return (
     <>
      <div className={styles["note-contents-container"]}>
@@ -51,7 +71,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
       </p>
       <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
       
-     {showMoreOptions && <MoreOptions handleDelete={handleDelete} />}
+     {showMoreOptions && <MoreOptions options={options} />}
       </span>
 
      </div>

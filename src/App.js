@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className={`${AppStyle["app-container"]}`}>
-      <AddNoteCard showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
+      <AddNoteCard memory={memory} setMemory={setMemory} showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
       {/* <AddCategoryCard showAddCategoryForm={showAddCategoryForm} setShowAddCategoryForm={setShowAddCategoryForm} /> */}
       {/* {showAddCategoryForm && <NewCategoryForm setMemory={setMemory} setShowAddCategoryForm={setShowAddCategoryForm}/> } */}
       {/* {showAddNoteForm && <NewNoteForm memory={memory} setMemory={setMemory} setShowAddNoteForm={setShowAddNoteForm}/> } */}
