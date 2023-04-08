@@ -4,7 +4,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Categories from './components/Categories';
 import AddNoteCard from './components/AddNoteCard';
-import AddCategoryCard from './components/AddCategoryCard';
+// import AddCategoryCard from './components/AddCategoryCard';
 import NewNoteForm from './components/NewNoteForm';
 import NewCategoryForm from './components/NewCategoryForm';
 import {readFromLocalStorage, writeToLocalStorage} from "./memoryFunctions/memoryFunctions";
