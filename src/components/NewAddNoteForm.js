@@ -17,6 +17,9 @@ const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory
 
   const handleNoteSubmit = (event) => {
     event.preventDefault();
+    if (noteText.length === 0) {
+      return;
+    }
     // extract this to a memory function - writeToMemory
     if (selectedCategories.length === 0 && !directToCategory) {
       alert("enter a category");

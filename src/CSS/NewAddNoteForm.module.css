@@ -29,6 +29,50 @@
     background-color: transparent;
   }
 
+  .note-text-input-test {
+    width: 100%;
+    /* min-height: 180px; */
+    /* padding: 10px; */
+    font-size: 15px;
+    color: #b4b4b4;
+    /* border: 2px solid #ddd; */
+    /* border-radius: 5px; */
+    resize: none;
+    box-sizing: border-box;
+    /* margin-bottom: 20px; */
+    border: none;
+    /* border: 1px solid red; */
+    background-color: transparent;
+    font-family: Arial, sans-serif;
+    /* height: 200px; */
+    /* height: 38px; */
+  /* margin: 29px 5px 5px 15px; */
+
+  }
+
+  .textarea-container {
+    width: 100%;
+    margin: 29px 5px 5px 15px;
+    position: relative;
+    /* border: 2px solid red; */
+  }
+
+  .icon-container {
+    color: white;
+    position: absolute;
+    bottom: -20px;
+    right: 0px;
+  }
+
+  .tick-icon, .cross-icon {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  .tick-icon {
+    margin-right: 20px;
+  }
+
   .note-text-input_reduced_height_textarea {
     min-height: 100px;
   }
@@ -73,3 +117,5 @@
     background-color: #6bbf56;
     color: #fff;
   }
+
+  

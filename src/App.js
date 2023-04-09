@@ -31,8 +31,30 @@ function App() {
     }
   }, [memory, isLoading])
 
+  const addUniqueIds = () => {
+    setMemory((currMemory) => {
+      const newMemory = {...currMemory};
+      const newNotes = [...newMemory.notes];
+      newNotes.forEach(note => {
+        const timeStamp = new Date().getTime();
+        const randomNumber = Math.random().toString(36).slice(2,9);
+        console.log(timeStamp);
+        console.log(randomNumber);
+        const uniqueIdentifier = String(timeStamp) + randomNumber;
+        console.log(uniqueIdentifier)
+
+        if (!note.id) {
+          note.id = uniqueIdentifier;
+        }
+      })
+      newMemory.notes = newNotes;
+      return newMemory;
+    })
+  }
   return (
     <div className={`${AppStyle["app-container"]}`}>
+        
+      <button style={{ height: `100px`}} onClick={addUniqueIds}>Add unique ids</button>
       <AddNoteCard memory={memory} setMemory={setMemory} showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
       {/* <AddCategoryCard showAddCategoryForm={showAddCategoryForm} setShowAddCategoryForm={setShowAddCategoryForm} /> */}
       {/* {showAddCategoryForm && <NewCategoryForm setMemory={setMemory} setShowAddCategoryForm={setShowAddCategoryForm}/> } */}
