@@ -91,6 +91,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
     // setTimeout(() => {
     //   setInFocus(false);
     // }, 100);
+    setInFocus(false);
     handleSubmit(event);
 
   }
@@ -178,7 +179,7 @@ console.log(index)
         /> { inFocus && 
         <span className={`${formStyles["icon-container"]}`}>
           <span className={`${formStyles["tick-icon"]}`} onClick={(event) => {console.log("nothing for now, submit happens on blur anyway")}}>&#x2705;</span>
-          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleCancel(event)}}>&#x274C;</span>
+          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleCancel(event)}} onTouchStart={(event) => {handleCancel(event)}}>&#x274C;</span>
         </span> }
       </div>
       <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
