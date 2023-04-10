@@ -32,15 +32,20 @@ const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory
         const newMemory = {...currMemory};
         const updatedNotes = [...newMemory.notes];
         // once we give each item unique id can simply this nonsense
+        // const index = updatedNotes.reduce((acc, item, index) => {
+        //   const isMatch = Object.keys(noteToEdit).every(key => {
+        //     if (Array.isArray(noteToEdit[key])) {
+        //       return noteToEdit[key].every(tag => item[key].includes(tag));
+        //     }
+        //     return item[key] === noteToEdit[key];
+        //   });
+        //   return isMatch ? index : acc;
+        // }, -1);
+
         const index = updatedNotes.reduce((acc, item, index) => {
-          const isMatch = Object.keys(noteToEdit).every(key => {
-            if (Array.isArray(noteToEdit[key])) {
-              return noteToEdit[key].every(tag => item[key].includes(tag));
-            }
-            return item[key] === noteToEdit[key];
-          });
+          const isMatch = noteToEdit.id === item.id;
           return isMatch ? index : acc;
-        }, -1);
+        }, -1)
         updatedNotes[index].note = noteText;
         updatedNotes[index].tags = selectedCategories;
         newMemory.notes = updatedNotes;
@@ -54,12 +59,18 @@ const NewAddNoteForm = ({memory, setMemory, setShowAddNoteForm, directToCategory
       // add item to start of notes array
       setMemory(currMemory => {
         const newMemory = {...currMemory};
-        newMemory.notes.unshift({
+        const newNotes = [...newMemory.notes];
+        const timeStamp = new Date().getTime();
+        const randomNumber = Math.random().toString(36).slice(2,9);
+        const uniqueIdentifier = String(timeStamp) + randomNumber;
+        newNotes.unshift({
           "note" : noteText,
           "tags" : directToCategory ? [directToCategory] : selectedCategories,
           "additional_info" : "",
-          "date_added" : ""
+          "date_added" : "",
+          id : uniqueIdentifier
         });
+        newMemory.notes = newNotes;
         return newMemory;
       })
       setShowAddNoteForm(false);

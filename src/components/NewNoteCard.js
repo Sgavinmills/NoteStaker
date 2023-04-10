@@ -4,15 +4,28 @@ import formStyles from "../CSS/NewAddNoteForm.module.css";
 // import NewAddNoteForm from "./NewAddNoteForm";
 import MoreOptions from "./MoreOptions";
 
-const NoteCard = ({ note, setMemory, memory }) => {
+const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
   
   // const [edittingNote, setEdittingNote] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const [highPriority, setHighPriority] = useState(note.isHighPriority);
   const [noteText, setNoteText] = useState(note.note);
   const [textAreaHeight, setTextAreaHeight] = useState(38);
   const [inFocus, setInFocus] = useState(false);
-  const [originalNote, setOriginalNote] = useState(note.note);
+  const [originalNote, setOriginalNote] = useState(noteContent);
+  const [displayCategories, setDisplayCategories] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState(note.tags);
+
+
+
+  // need this one otherwise the textareas don't update when memory state changes (ie deleting an item) because
+  // it doesnt directly display anything from the memory state. 
+  useEffect(() => {
+    // if (note.note !== noteText) {
+      setNoteText(note.note); 
+    // }
+  }, [note.note]); 
 
   useEffect(() => {
     if (textareaRef?.current) {
@@ -21,32 +34,37 @@ const NoteCard = ({ note, setMemory, memory }) => {
     }
   }, [memory])
 
+  useEffect(() => {
+    setMemory(currMemory => {
+      const newMemory = {...currMemory}
+      const updatedNotes = [...newMemory.notes];
+      const index = updatedNotes.reduce((acc, item, index) => {
+        const isMatch = note.id === item.id;
+        return isMatch ? index : acc;
+      }, -1);
 
-  // const handleEdit = (event) => {
-  //   console.log("never get ehre do i?")
-  //   event.stopPropagation();
-  //   setEdittingNote(!edittingNote);
-  // };
+      updatedNotes[index].tags = [...selectedCategories];
+      newMemory.notes = updatedNotes;
+      return newMemory;
+    })
+  }, [selectedCategories, setMemory, note.id])
 
   const handleMoreOptionsClick = (event) => {
     event.stopPropagation();
     setShowMoreOptions(!showMoreOptions);
   }
 
-  const handleDelete = () => {
-    setShowMoreOptions(false);
+  const handleDelete = (event) => {
+    event.preventDefault();
 
+    setShowMoreOptions(false);
+console.log("in here?")
     setMemory(currMemory => {
       const newMemory = {...currMemory};
       const updatedNotes = [...newMemory.notes];
-      // THIS SHOULD BE EXTRACTED INTO A MEMORY FUNCTION
       const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = Object.keys(note).every(key => {
-          if (Array.isArray(note[key])) {
-            return note[key].every(tag => item[key].includes(tag));
-          }
-          return item[key] === note[key];
-        });
+        console.log(index, note.id, item.id)
+        const isMatch = note.id === item.id;
         return isMatch ? index : acc;
       }, -1);
 
@@ -75,12 +93,8 @@ const NoteCard = ({ note, setMemory, memory }) => {
   ]
 
   const handleChange = (event) => {
-    console.log(textareaRef.current.scrollHeight)
-    console.log(textareaRef.current.clientHeight)
-    console.log(textareaRef)
     setNoteText(event.target.value)
     setTextAreaHeight(textareaRef.current.scrollHeight);
-
   }
 
   const handleFocus = (event) => {
@@ -91,8 +105,11 @@ const NoteCard = ({ note, setMemory, memory }) => {
     // setTimeout(() => {
     //   setInFocus(false);
     // }, 100);
+    console.log("also blurring....")
     setInFocus(false);
     handleSubmit(event);
+    // setDisplayCategories(false);
+
 
   }
   const handleSubmit = (event) => {
@@ -118,14 +135,29 @@ const NoteCard = ({ note, setMemory, memory }) => {
       const index = updatedNotes.reduce((acc, item, index) => {
         const isMatch = note.id === item.id;
         return isMatch ? index : acc;
-      }, -1)
-console.log(index)
+      }, -1);
+
       updatedNotes[index].note = noteText;
       newMemory.notes = updatedNotes;
       return newMemory;
     })
 
   }  
+
+  const handleCategoryClick = (event, category) => {
+    console.log(event)
+    event.preventDefault();
+    event.stopPropagation();
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+
+   
+  };
+
+
   const handleCancel = (event) => {
     event.preventDefault();
     // setCancelClicked(true);
@@ -156,12 +188,37 @@ console.log(index)
     // }
     // setNoteText(note.note);
   }
+
+  const handleAddRemoveCategoryIconClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDisplayCategories(!displayCategories);
+  }
+
+  const handleHighPriorityClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setMemory(currMemory => {
+      const newMemory = {...currMemory}
+      const updatedNotes = [...newMemory.notes];
+      const index = updatedNotes.reduce((acc, item, index) => {
+        const isMatch = note.id === item.id;
+        return isMatch ? index : acc;
+      }, -1);
+      
+      // updatedNotes[index].tags = [...selectedCategories];
+      updatedNotes[index].isHighPriority = !highPriority;
+      newMemory.notes = updatedNotes;
+      return newMemory;
+    })
+    setHighPriority(!highPriority);
+  }
   return (
     <>
      <div className={styles["note-contents-container"]}>
      {/* <p
         className={styles["note-paragraph"]}
-        onClick={(event) => handleEdit(event)}
+        // onClick={(event) => handleEdit(event)}
       >
         {note.note}
       </p>  */}
@@ -169,17 +226,22 @@ console.log(index)
         <textarea 
         ref={textareaRef}
         style={{ height: `${textAreaHeight}px`}}
-        className={`${formStyles["note-text-input-test"]} `}
+        className={`${formStyles["note-text-input-test"]} ${highPriority ? formStyles["note-text-input-test_high_prority"] : ""}`}
         placeholder="Enter note text here"
         value={noteText}
         onFocus={(event) => { handleFocus(event) }}
         onBlur={(event) => { handleBlur(event) }}
         onChange={(event) => { handleChange(event)}}
-      
+        id={note.id}
         /> { inFocus && 
         <span className={`${formStyles["icon-container"]}`}>
+
+
+          <span className={`${formStyles["plus-icon"]}`} onMouseDown={(event) => {handleAddRemoveCategoryIconClick(event)}} onTouchStart={(event) => {handleAddRemoveCategoryIconClick(event)}}>&#x2295;</span>
+          <span className={`${formStyles["high-priority-icon"]} ${highPriority ? formStyles["note-text-input-test_high_prority"] : ""}`} onMouseDown={(event) => {handleHighPriorityClick(event)}} onTouchStart={(event) => {handleHighPriorityClick(event)}}>&#x2606;</span>
+          <span className={`${formStyles["rewind-icon"]}`} onMouseDown={(event) => {handleCancel(event)}} onTouchStart={(event) => {handleCancel(event)}}>&#x21BA;</span>
           <span className={`${formStyles["tick-icon"]}`} onClick={(event) => {console.log("nothing for now, submit happens on blur anyway")}}>&#x2705;</span>
-          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleCancel(event)}} onTouchStart={(event) => {handleCancel(event)}}>&#x274C;</span>
+          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleDelete(event)}} onTouchStart={(event) => {handleDelete(event)}} >&#x274C;</span>
         </span> }
       </div>
       <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
@@ -187,6 +249,23 @@ console.log(index)
       </span>
 
      </div>
+
+     {/* // DEFO MAKE THIS ITS OWN ADDREMOVECATEGORIES COMPONENT */}
+     { displayCategories && inFocus && <div className={formStyles["categories-container"]}>
+        {memory.categories.map(category => (
+          <div key={category} 
+          className={`${formStyles["category-tab"]} ${selectedCategories.includes(category) ? formStyles["selected"] : ''}`}
+          onMouseDown={(event) => handleCategoryClick(event, category)}
+          onTouchStart={(event) => handleCategoryClick(event, category)}
+          >
+             
+              {category}
+          </div>
+
+        )
+          
+        )}
+        </div>}
       {/* {edittingNote && (
         <NewAddNoteForm
           memory={memory}

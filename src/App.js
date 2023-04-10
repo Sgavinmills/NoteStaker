@@ -38,8 +38,6 @@ function App() {
       newNotes.forEach(note => {
         const timeStamp = new Date().getTime();
         const randomNumber = Math.random().toString(36).slice(2,9);
-        console.log(timeStamp);
-        console.log(randomNumber);
         const uniqueIdentifier = String(timeStamp) + randomNumber;
         console.log(uniqueIdentifier)
 

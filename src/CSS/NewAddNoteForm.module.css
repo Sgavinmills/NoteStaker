@@ -47,7 +47,11 @@
     /* height: 200px; */
     /* height: 38px; */
   /* margin: 29px 5px 5px 15px; */
+  
+}
 
+.note-text-input-test_high_prority {
+    color: #FFD700;
   }
 
   .textarea-container {
@@ -60,17 +64,25 @@
   .icon-container {
     color: white;
     position: absolute;
-    bottom: -20px;
+    bottom: -25px;
     right: 0px;
   }
 
-  .tick-icon, .cross-icon {
+  .tick-icon, .cross-icon  {
     margin-right: 8px;
     cursor: pointer;
   }
 
-  .tick-icon {
+  .tick-icon, .high-priority-icon, .rewind-icon, .plus-icon {
     margin-right: 20px;
+  }
+
+  .rewind-icon, .plus-icon {
+    font-size: 25px;
+  }
+
+  .plus-icon {
+    font-size: 23px;
   }
 
   .note-text-input_reduced_height_textarea {
@@ -101,6 +113,7 @@
     flex-wrap: wrap;
     gap: 4px;
     padding: 3px;
+    margin-top: 15px;
   }
   
   .category-tab {
