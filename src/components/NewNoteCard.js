@@ -194,24 +194,31 @@ console.log("in here?")
     event.stopPropagation();
     setDisplayCategories(!displayCategories);
   }
-
+  let touchTimeout = null;
   const handleHighPriorityClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    setMemory(currMemory => {
-      const newMemory = {...currMemory}
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-      
-      // updatedNotes[index].tags = [...selectedCategories];
-      updatedNotes[index].isHighPriority = !highPriority;
-      newMemory.notes = updatedNotes;
-      return newMemory;
-    })
-    setHighPriority(!highPriority);
+
+    if (!touchTimeout) {
+      touchTimeout = setTimeout(() => {
+
+        setMemory(currMemory => {
+          const newMemory = {...currMemory}
+          const updatedNotes = [...newMemory.notes];
+          const index = updatedNotes.reduce((acc, item, index) => {
+            const isMatch = note.id === item.id;
+            return isMatch ? index : acc;
+          }, -1);
+          
+          // updatedNotes[index].tags = [...selectedCategories];
+          updatedNotes[index].isHighPriority = !highPriority;
+          newMemory.notes = updatedNotes;
+          return newMemory;
+        })
+        setHighPriority(!highPriority);
+        touchTimeout = null;
+      }, 200)
+    }
   }
   return (
     <>
