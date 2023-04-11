@@ -166,8 +166,8 @@ const CategoryCard = ({categoryName, memory, setMemory}) => {
       <div className={styles["category-contents-container"]}>
               { !edittingCategory ? 
                <p className={styles["category-main-text"]}>{categoryName}
-               {showNotes && <span className={styles["edit-icon"]} onTouchStart={(event) => {handleTouchStart(event, "edit")}} onMouseDown={(event) => {handleEdit(event)}}>&#x270F;</span>}
-               {showNotes && <span className={styles["trash-icon"]} onTouchStart={(event) => {handleTouchStart(event, "delete")}} onMouseDown={(event) => {handleDelete(event)}}>&#x1F5D1;</span>}
+               {/* {showNotes && <span className={styles["edit-icon"]} onTouchStart={(event) => {handleTouchStart(event, "edit")}} onMouseDown={(event) => {handleEdit(event)}}>&#x270F;</span>} */}
+               {/* {showNotes && <span className={styles["trash-icon"]} onTouchStart={(event) => {handleTouchStart(event, "delete")}} onMouseDown={(event) => {handleDelete(event)}}>&#x1F5D1;</span>} */}
                </p>
                :<div> <textarea 
                ref={textareaRef}
