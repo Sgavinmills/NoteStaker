@@ -10,10 +10,12 @@
     width: 100%;
     background-color: #010101;
     z-index: 99;
+    height: 10vh;
 }
 
 .hamburger-span {
     font-size: 50px;
     color: #c6d6f0;
     display: block;
+    width: 50px;
 }
