@@ -5,7 +5,7 @@ import formStyles from "../CSS/NewAddNoteForm.module.css";
 import MoreOptions from "./MoreOptions";
 import ConfirmModal from "./ConfirmModal";
 
-const NoteCard = ({ note, setMemory, memory, noteContent }) => {
+const NoteCard = ({ note, setMemory, memory, noteContent, indexKey }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
   
   // const [edittingNote, setEdittingNote] = useState(false);
@@ -19,8 +19,8 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   const [selectedCategories, setSelectedCategories] = useState(note.tags);
   const [touchTimeout, setTouchTimeout] = useState(false);
   const [markDone, setMarkDone] = useState(note.markDone);
-  const [isModalOpen, setIsModalOpen] = useState(false)
-;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
   // need this one otherwise the textareas don't update when memory state changes (ie deleting an item) because
@@ -32,11 +32,14 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   }, [note.note]); 
 
   useEffect(() => {
+    console.log("Key:" + indexKey);
     if (textareaRef?.current) {
       setTextAreaHeight(textareaRef.current.scrollHeight);
-
+      if (note.note.length === 0 && indexKey === 0) {
+        textareaRef.current.focus();
+      }
     }
-  }, [memory])
+  }, [memory, indexKey, note.note.length])
 
   useEffect(() => {
     setMemory(currMemory => {
@@ -90,6 +93,7 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
 
   const handleDeleteClick = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setIsModalOpen(false);
     // setShowMoreOptions(false);
     setMemory(currMemory => {

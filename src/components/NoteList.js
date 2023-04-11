@@ -25,7 +25,7 @@ export default function NoteList({memory, categoryName, setMemory}) {
   return (
     <div className={styles["note-list-container"]} >
           {notesToList?.map((note, index) => (
-            <NewNoteCard key={index} note={note} noteContent={note.note}  index={index} setMemory={setMemory} memory={memory}/>
+            <NewNoteCard indexKey={index} key={index} note={note} noteContent={note.note}  index={index} setMemory={setMemory} memory={memory}/>
             // <NoteCard key={index} note={note} index={index} setMemory={setMemory} memory={memory}/>
           ))}
     </div>
