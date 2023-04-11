@@ -86,12 +86,37 @@
   margin-right: 20px;
 }
 
-.note-three-vertical-dots-icon {
-  color: #b4b4b4;
-  font-size: 24px;
+.dots-and-tick-container {
   margin-right: 10px;
   margin-top: 10px;
   padding-top: 13px;
+}
+
+.note-three-vertical-dots-icon {
+  color: #b4b4b4;
+  font-size: 24px;
+  /* margin-right: 10px;
+  margin-top: 10px;
+  padding-top: 13px; */
+}
+
+.done-tick-visible {
+  visibility: visible;
+  opacity: 1;
+  color: green;
+}
+.done-tick-invisible {
+  /* visibility: hidden; */
+  opacity: 0.3;
+  
+}
+
+.done-tick, .not-done-tick {
+  margin-right: 5px;
+}
+
+.not-done-tick {
+  opacity: 0.4;
 }
 
 .category-down-arrow {

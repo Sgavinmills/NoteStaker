@@ -3,6 +3,7 @@ import styles from "../CSS/Card.module.css";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 // import NewAddNoteForm from "./NewAddNoteForm";
 import MoreOptions from "./MoreOptions";
+import ConfirmModal from "./ConfirmModal";
 
 const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
@@ -16,7 +17,10 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   const [originalNote, setOriginalNote] = useState(noteContent);
   const [displayCategories, setDisplayCategories] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(note.tags);
-
+  const [touchTimeout, setTouchTimeout] = useState(false);
+  const [markDone, setMarkDone] = useState(note.markDone);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+;
 
 
   // need this one otherwise the textareas don't update when memory state changes (ie deleting an item) because
@@ -49,16 +53,45 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
     })
   }, [selectedCategories, setMemory, note.id])
 
+  useEffect(() => {
+    setMemory(currMemory => {
+      const newMemory = {...currMemory}
+      const updatedNotes = [...newMemory.notes];
+      const index = updatedNotes.reduce((acc, item, index) => {
+        const isMatch = note.id === item.id;
+        return isMatch ? index : acc;
+      }, -1);
+
+      updatedNotes[index].isHighPriority = highPriority;
+      newMemory.notes = updatedNotes;
+      return newMemory;
+    })
+  }, [highPriority, setMemory, note.id])
+
+  useEffect(() => {
+    setMemory(currMemory => {
+      const newMemory = {...currMemory}
+      const updatedNotes = [...newMemory.notes];
+      const index = updatedNotes.reduce((acc, item, index) => {
+        const isMatch = note.id === item.id;
+        return isMatch ? index : acc;
+      }, -1);
+
+      updatedNotes[index].markDone = markDone;
+      newMemory.notes = updatedNotes;
+      return newMemory;
+    })
+  }, [markDone, setMemory, note.id])
+
   const handleMoreOptionsClick = (event) => {
     event.stopPropagation();
     setShowMoreOptions(!showMoreOptions);
   }
 
-  const handleDelete = (event) => {
+  const handleDeleteClick = (event) => {
     event.preventDefault();
-
-    setShowMoreOptions(false);
-console.log("in here?")
+    setIsModalOpen(false);
+    // setShowMoreOptions(false);
     setMemory(currMemory => {
       const newMemory = {...currMemory};
       const updatedNotes = [...newMemory.notes];
@@ -80,7 +113,7 @@ console.log("in here?")
   const options = [
     { 
       option: "Delete item",
-      action: handleDelete,
+      action: handleDeleteClick,
     },
     {
       option: "Add/remove categories",
@@ -158,7 +191,7 @@ console.log("in here?")
   };
 
 
-  const handleCancel = (event) => {
+  const handleCancelClick = (event) => {
     event.preventDefault();
     // setCancelClicked(true);
     // console.log(cancelClicked)
@@ -189,39 +222,83 @@ console.log("in here?")
     // setNoteText(note.note);
   }
 
-  const handleAddRemoveCategoryIconClick = (event) => {
+  const handleAddRemoveCategoryClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
     setDisplayCategories(!displayCategories);
   }
-  let touchTimeout = null;
+
   const handleHighPriorityClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!touchTimeout) {
-      touchTimeout = setTimeout(() => {
+    // this touchtimeout stuff seems to work, will need applying to other icons and category tabs. 
+    // should prob usestate rather than global variables tho? 
 
-        setMemory(currMemory => {
-          const newMemory = {...currMemory}
-          const updatedNotes = [...newMemory.notes];
-          const index = updatedNotes.reduce((acc, item, index) => {
-            const isMatch = note.id === item.id;
-            return isMatch ? index : acc;
-          }, -1);
+        // setMemory(currMemory => {
+        //   const newMemory = {...currMemory}
+        //   const updatedNotes = [...newMemory.notes];
+        //   const index = updatedNotes.reduce((acc, item, index) => {
+        //     const isMatch = note.id === item.id;
+        //     return isMatch ? index : acc;
+        //   }, -1);
           
-          // updatedNotes[index].tags = [...selectedCategories];
-          updatedNotes[index].isHighPriority = !highPriority;
-          newMemory.notes = updatedNotes;
-          return newMemory;
-        })
-        setHighPriority(!highPriority);
-        touchTimeout = null;
+        //   // updatedNotes[index].tags = [...selectedCategories];
+        //   updatedNotes[index].isHighPriority = !highPriority;
+        //   newMemory.notes = updatedNotes;
+        //   console.log("new memory:")
+        //   console.log(newMemory);
+        //   return newMemory;
+        // })
+        setHighPriority(!highPriority); // MIGHT WABT TO ADD THIS BACK .NOT SURE?
+  }
+
+  const handleMarkDoneClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setMarkDone(!markDone);
+  }
+
+  const handleTouchStart = (event, touchType, categoryName) => {
+    // event.preventDefault();
+    // event.stopPropagation();
+
+    if (!touchTimeout) {
+      setTouchTimeout(true);
+      setTimeout(() => {
+        setTouchTimeout(false);
+
+        switch (touchType) {
+          case "addRemoveCategory":
+            handleAddRemoveCategoryClick(event);
+            break;
+          case "highPriority":
+            handleHighPriorityClick(event);
+            break;
+          case "cancel":
+            handleCancelClick(event);
+            break;
+          case "markDone":
+            handleMarkDoneClick(event);
+            break;
+          case "delete":
+            // handleDeleteClick(event);
+            setIsModalOpen(true);
+            break;
+          case "category":
+            handleCategoryClick(event, categoryName);
+            break;
+          default:
+            break;
+        }
       }, 200)
     }
+
+
   }
   return (
     <>
+    {isModalOpen && <ConfirmModal handleDelete={handleDeleteClick} setIsModalOpen={setIsModalOpen} /> }
      <div className={styles["note-contents-container"]}>
      {/* <p
         className={styles["note-paragraph"]}
@@ -244,17 +321,21 @@ console.log("in here?")
         <span className={`${formStyles["icon-container"]}`}>
 
 
-          <span className={`${formStyles["plus-icon"]}`} onMouseDown={(event) => {handleAddRemoveCategoryIconClick(event)}} onTouchStart={(event) => {handleAddRemoveCategoryIconClick(event)}}>&#x2295;</span>
-          <span className={`${formStyles["high-priority-icon"]} ${highPriority ? formStyles["note-text-input-test_high_prority"] : ""}`} onMouseDown={(event) => {handleHighPriorityClick(event)}} onTouchStart={(event) => {handleHighPriorityClick(event)}}>&#x2606;</span>
-          <span className={`${formStyles["rewind-icon"]}`} onMouseDown={(event) => {handleCancel(event)}} onTouchStart={(event) => {handleCancel(event)}}>&#x21BA;</span>
-          <span className={`${formStyles["tick-icon"]}`} onClick={(event) => {console.log("nothing for now, submit happens on blur anyway")}}>&#x2705;</span>
-          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleDelete(event)}} onTouchStart={(event) => {handleDelete(event)}} >&#x274C;</span>
+          <span className={`${formStyles["plus-icon"]}`} onMouseDown={(event) => {handleAddRemoveCategoryClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "addRemoveCategory")}}>&#x2295;</span>
+          <span className={`${formStyles["high-priority-icon"]} ${highPriority ? formStyles["note-text-input-test_high_prority"] : ""}`} onMouseDown={(event) => {handleHighPriorityClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "highPriority")}}>&#x2606;</span>
+          <span className={`${formStyles["rewind-icon"]}`} onMouseDown={(event) => {handleCancelClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "cancel")}}>&#x21BA;</span>
+          <span className={`${formStyles["tick-icon"]}`} onMouseDown={(event) => {handleMarkDoneClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "markDone")}}>&#x2705;</span>
+          <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleTouchStart(event, "delete")}} onTouchStart={(event) => {handleTouchStart(event, "delete")}} >&#x274C;</span>
         </span> }
       </div>
+      <div className={styles["dots-and-tick-container"]}>
+      {/* <span className={`${styles["done-tick"]} ${markDone ? styles["done-tick-visible"] : styles["done-tick-invisible"]}`}>&#x2705;</span> */}
+      { markDone ? <span className={`${styles["done-tick"]}`} onMouseDown={(event) => {handleMarkDoneClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "markDone")}}>&#x2705;</span> 
+        : <span className={`${styles["not-done-tick"]}`} onMouseDown={(event) => {handleMarkDoneClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "markDone")}}>&#x26AA;</span> }
       <span className={styles["note-three-vertical-dots-icon"]} onClick={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
      {showMoreOptions && <MoreOptions options={options} />}
       </span>
-
+      </div>
      </div>
 
      {/* // DEFO MAKE THIS ITS OWN ADDREMOVECATEGORIES COMPONENT */}
@@ -263,7 +344,7 @@ console.log("in here?")
           <div key={category} 
           className={`${formStyles["category-tab"]} ${selectedCategories.includes(category) ? formStyles["selected"] : ''}`}
           onMouseDown={(event) => handleCategoryClick(event, category)}
-          onTouchStart={(event) => handleCategoryClick(event, category)}
+          onTouchStart={(event) => handleTouchStart(event, "category", category)}
           >
              
               {category}
