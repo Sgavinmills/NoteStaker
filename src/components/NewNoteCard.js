@@ -148,7 +148,7 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
   const handleSubmit = (event) => {
     // event.stopPropagation();
     if (noteText.length === 0) {
-      alert("cant leave note blank, delete instead if you want")
+      
       return;
     }
     setMemory(currMemory => {
@@ -324,7 +324,7 @@ const NoteCard = ({ note, setMemory, memory, noteContent }) => {
           <span className={`${formStyles["plus-icon"]}`} onMouseDown={(event) => {handleAddRemoveCategoryClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "addRemoveCategory")}}>&#x2295;</span>
           <span className={`${formStyles["high-priority-icon"]} ${highPriority ? formStyles["note-text-input-test_high_prority"] : ""}`} onMouseDown={(event) => {handleHighPriorityClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "highPriority")}}>&#x2606;</span>
           <span className={`${formStyles["rewind-icon"]}`} onMouseDown={(event) => {handleCancelClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "cancel")}}>&#x21BA;</span>
-          <span className={`${formStyles["tick-icon"]}`} onMouseDown={(event) => {handleMarkDoneClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "markDone")}}>&#x2705;</span>
+          {/* <span className={`${formStyles["tick-icon"]}`} onMouseDown={(event) => {handleMarkDoneClick(event)}} onTouchStart={(event) => {handleTouchStart(event, "markDone")}}>&#x2705;</span> */}
           <span className={`${formStyles["cross-icon"]}`} onMouseDown={(event) => {handleTouchStart(event, "delete")}} onTouchStart={(event) => {handleTouchStart(event, "delete")}} >&#x274C;</span>
         </span> }
       </div>

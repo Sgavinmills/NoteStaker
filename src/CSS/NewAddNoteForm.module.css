@@ -47,7 +47,12 @@
     /* height: 200px; */
     /* height: 38px; */
   /* margin: 29px 5px 5px 15px; */
-  
+  border: none;
+  outline: none;
+}
+
+.note-text-input-test:focus {
+  border-bottom: 1px dashed #c6d6f0;
 }
 
 .note-text-input-test_high_prority {

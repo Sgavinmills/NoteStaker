@@ -8,9 +8,32 @@ const CategoryCard = ({categoryName, memory, setMemory}) => {
   const [showNotes, setShowNotes] = useState(false);
   const [addNote, setAddNote] = useState(false);
 
+  // const handleAddNoteClick = (event) => {
+  //   event.stopPropagation();
+  //   setAddNote(!addNote);
+  // }
+
   const handleAddNoteClick = (event) => {
     event.stopPropagation();
-    setAddNote(!addNote);
+    event.preventDefault();
+    setMemory(currMemory => {
+      const newMemory = {...currMemory};
+      const newNotes = [...newMemory.notes];
+      const timeStamp = new Date().getTime();
+      const randomNumber = Math.random().toString(36).slice(2,9);
+      const uniqueIdentifier = String(timeStamp) + randomNumber;
+      newNotes.unshift({
+        "note" : "",
+        "tags" : [categoryName],
+        "additional_info" : "",
+        "date_added" : "",
+        id : uniqueIdentifier
+      });
+      newMemory.notes = newNotes;
+      return newMemory;
+    })
+
+    setShowNotes(true);
   }
   
   return (
