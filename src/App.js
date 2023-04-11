@@ -51,16 +51,16 @@ function App() {
   //   })
   // }
 
-    const iconStyle = {
-      fontSize: '50px',
-      color: '#c6d6f0',
-      cursor: 'pointer',
-    // margin: '10px',
-    // display: 'block'
-    //  'marginLeft': '90%',
-    //  'marginRight': '60px',
-     display: 'block'
-    };
+    // const iconStyle = {
+    //   fontSize: '50px',
+    //   color: '#c6d6f0',
+    //   cursor: 'pointer',
+    // // margin: '10px',
+    // // display: 'block'
+    // //  'marginLeft': '90%',
+    // //  'marginRight': '60px',
+    //  display: 'block'
+    // };
 
     const handleBurgerClick = (event) => {
       event.preventDefault();
