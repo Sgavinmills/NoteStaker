@@ -3,3 +3,17 @@
     min-height: 2000px;
     /* todo: calculate min height to be an extra screen */
 }
+
+.hamburger-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #010101;
+    z-index: 99;
+}
+
+.hamburger-span {
+    font-size: 50px;
+    color: #c6d6f0;
+    display: block;
+}

@@ -32,24 +32,24 @@ function App() {
     }
   }, [memory, isLoading])
 
-  const addUniqueIds = () => {
-    setMemory((currMemory) => {
-      const newMemory = {...currMemory};
-      const newNotes = [...newMemory.notes];
-      newNotes.forEach(note => {
-        const timeStamp = new Date().getTime();
-        const randomNumber = Math.random().toString(36).slice(2,9);
-        const uniqueIdentifier = String(timeStamp) + randomNumber;
-        console.log(uniqueIdentifier)
+  // const addUniqueIds = () => {
+  //   setMemory((currMemory) => {
+  //     const newMemory = {...currMemory};
+  //     const newNotes = [...newMemory.notes];
+  //     newNotes.forEach(note => {
+  //       const timeStamp = new Date().getTime();
+  //       const randomNumber = Math.random().toString(36).slice(2,9);
+  //       const uniqueIdentifier = String(timeStamp) + randomNumber;
+  //       console.log(uniqueIdentifier)
 
-        if (!note.id) {
-          note.id = uniqueIdentifier;
-        }
-      })
-      newMemory.notes = newNotes;
-      return newMemory;
-    })
-  }
+  //       if (!note.id) {
+  //         note.id = uniqueIdentifier;
+  //       }
+  //     })
+  //     newMemory.notes = newNotes;
+  //     return newMemory;
+  //   })
+  // }
 
     const iconStyle = {
       fontSize: '50px',
@@ -57,7 +57,9 @@ function App() {
       cursor: 'pointer',
     // margin: '10px',
     // display: 'block'
-     'marginLeft': '90%',
+    //  'marginLeft': '90%',
+    //  'marginRight': '60px',
+     display: 'block'
     };
 
     const handleBurgerClick = (event) => {
@@ -72,8 +74,8 @@ function App() {
     <div className={`${AppStyle["app-container"]}`}>
       { addingCategory && <AddCategoryModal setAddingCategory={setAddingCategory} memory={memory} setMemory={setMemory} />}
         
-      <button style={{ height: `100px`}} onClick={addUniqueIds}>Add unique ids</button>
-      <div ><span onClick={(event) => {handleBurgerClick(event)}} style={iconStyle}>&#x2630;</span></div>
+      {/* <button style={{ height: `100px`}} onClick={addUniqueIds}>Add unique ids</button> */}
+      <div className={`${AppStyle["hamburger-container"]}`}><span onClick={(event) => {handleBurgerClick(event)}} className={`${AppStyle["hamburger-span"]}`}>&#x2630;</span></div>
       {/* <AddNoteCard memory={memory} setMemory={setMemory} showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/> */}
       
       {/* <AddCategoryCard showAddCategoryForm={showAddCategoryForm} setShowAddCategoryForm={setShowAddCategoryForm} /> */}
