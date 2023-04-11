@@ -3,19 +3,20 @@ import './App.css';
 // import testMemoryJSON from './emptyMemory.json';
 import { useState, useEffect } from 'react';
 import Categories from './components/Categories';
-import AddNoteCard from './components/AddNoteCard';
+// import AddNoteCard from './components/AddNoteCard';
 // import AddCategoryCard from './components/AddCategoryCard';
 // import NewNoteForm from './components/NewNoteForm';
 import NewAddNoteForm from './components/NewAddNoteForm';
 // import NewCategoryForm from './components/NewCategoryForm';
 import {readFromLocalStorage, writeToLocalStorage} from "./memoryFunctions/memoryFunctions";
 import AppStyle from "./CSS/AppContainer.module.css";
-
+import AddCategoryModal from './components/AddCategoryModal';
 
 function App() {
   const [memory, setMemory] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+  const [addingCategory, setAddingCategory] = useState(false);
   // const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
 
   useEffect(() => {
@@ -49,11 +50,32 @@ function App() {
       return newMemory;
     })
   }
+
+    const iconStyle = {
+      fontSize: '50px',
+      color: '#c6d6f0',
+      cursor: 'pointer',
+    // margin: '10px',
+    // display: 'block'
+     'marginLeft': '90%',
+    };
+
+    const handleBurgerClick = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      setAddingCategory(!addingCategory);
+    }
+
+    
   return (
     <div className={`${AppStyle["app-container"]}`}>
+      { addingCategory && <AddCategoryModal setAddingCategory={setAddingCategory} memory={memory} setMemory={setMemory} />}
         
       <button style={{ height: `100px`}} onClick={addUniqueIds}>Add unique ids</button>
-      <AddNoteCard memory={memory} setMemory={setMemory} showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/>
+      <div ><span onClick={(event) => {handleBurgerClick(event)}} style={iconStyle}>&#x2630;</span></div>
+      {/* <AddNoteCard memory={memory} setMemory={setMemory} showAddNoteForm={showAddNoteForm} setShowAddNoteForm={setShowAddNoteForm}/> */}
+      
       {/* <AddCategoryCard showAddCategoryForm={showAddCategoryForm} setShowAddCategoryForm={setShowAddCategoryForm} /> */}
       {/* {showAddCategoryForm && <NewCategoryForm setMemory={setMemory} setShowAddCategoryForm={setShowAddCategoryForm}/> } */}
       {/* {showAddNoteForm && <NewNoteForm memory={memory} setMemory={setMemory} setShowAddNoteForm={setShowAddNoteForm}/> } */}

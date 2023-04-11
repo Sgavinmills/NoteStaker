@@ -46,3 +46,55 @@
     cursor: pointer;
   }
 
+
+  /* CSS for styling the add category modal */
+.add-category-modal-container {
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(148, 139, 139, 0.5);
+    z-index: 100;
+}
+
+.add-category-modal-content {
+  /* Set the maximum width of the form and add some spacing between elements */
+  max-width: 400px;
+  margin: auto;
+  background-color: #f8f8f8;
+  padding: 40px;
+
+}
+
+.add-category-modal-message {
+  /* Add some spacing for the form message and set font properties */
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.add-category-modal-options {
+  /* Set flexbox properties to align buttons horizontally */
+  display: flex;
+  justify-content: center;
+}
+
+.add-category-modal-option {
+  /* Set button styles, such as background color, padding, margin, and font properties */
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-category-modal-option:hover {
+  /* Add hover effect for buttons, such as changing background color */
+  background-color: #0069d9;
+}
+

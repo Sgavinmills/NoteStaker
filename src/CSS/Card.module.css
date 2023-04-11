@@ -34,6 +34,10 @@
   border-bottom: 1px solid #464646;
 }
 
+.category-card-container:first-child {
+  margin-top: 0px;
+}
+
 .add-note-container {
   color: #c6d6f0;
   font-weight: bold;
@@ -72,6 +76,39 @@
   color: #c6d6f0;
 }
 
+.category-edit-text-area {
+  /* width: 100%; */
+  /* min-height: 180px; */
+  /* padding: 10px; */
+  font-weight: bold;
+  font-size: 22px;
+  /* margin-bottom: 8px; */
+  color: #c6d6f0;
+  /* border: 2px solid #ddd; */
+  /* border-radius: 5px; */
+  resize: none;
+  box-sizing: border-box;
+  /* margin-bottom: 20px; */
+  border: none;
+  /* border: 1px solid red; */
+  background-color: transparent;
+  font-family: Arial, sans-serif;
+  /* height: 200px; */
+  /* height: 38px; */
+/* margin: 29px 5px 5px 15px; */
+border: none;
+outline: none;
+/* border: 2px solid red; */
+}
+
+.edit-icon, .trash-icon {
+  margin-left: 20px;
+}
+
+.done-editting-icon {
+  color: green;
+  font-size: 35px;
+}
 
 .note-paragraph {
   font-size: 15px;
