@@ -64,7 +64,7 @@
   .icon-container {
     color: white;
     position: absolute;
-    bottom: -25px;
+    bottom: -28px;
     right: 0px;
   }
 
@@ -77,12 +77,20 @@
     margin-right: 20px;
   }
 
-  .rewind-icon, .plus-icon {
-    font-size: 25px;
+  .rewind-icon {
+    font-size: 33px;
   }
 
   .plus-icon {
-    font-size: 23px;
+    font-size: 30px;
+  }
+
+  .high-priority-icon {
+    font-size: 25px;
+  }
+
+  .cross-icon {
+    font-size: 18px;
   }
 
   .note-text-input_reduced_height_textarea {
