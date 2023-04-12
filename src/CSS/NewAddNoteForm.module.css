@@ -29,7 +29,7 @@
     background-color: transparent;
   }
 
-  .note-text-input-test {
+  .note-text-area {
     width: 100%;
     /* min-height: 180px; */
     /* padding: 10px; */
@@ -51,11 +51,11 @@
   outline: none;
 }
 
-.note-text-input-test:focus {
+.note-text-area:focus {
   border-bottom: 1px dashed #c6d6f0;
 }
 
-.note-text-input-test_high_prority {
+.note-text-area_high_prority {
     color: #FFD700;
   }
 
