@@ -164,10 +164,12 @@ const NoteCard = ({ note, setMemory, memory }) => {
     event.stopPropagation();
     setDisplayCategories(!displayCategories);
   };
-
+  
   const handleHighPriorityClick = (event) => {
+    console.log("i am " + note.note)
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation();
+
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
       const updatedNotes = [...newMemory.notes];
@@ -201,11 +203,13 @@ const NoteCard = ({ note, setMemory, memory }) => {
   };
 
   const handleTouchStart = (event, touchType, categoryName) => {
+    event.stopPropagation();
+    event.preventDefault();
     if (!touchTimeout) {
       setTouchTimeout(true);
       setTimeout(() => {
         setTouchTimeout(false);
-
+        console.log("inside the timeout...")
         switch (touchType) {
           case "addRemoveCategory":
             handleAddRemoveCategoryClick(event);
@@ -272,6 +276,56 @@ const NoteCard = ({ note, setMemory, memory }) => {
               handleHighPriorityClick={handleHighPriorityClick}
               handleCancelClick={handleCancelClick}
             />
+            // <span className={`${formStyles["icon-container"]}`}>
+            // <span
+            //   className={`${formStyles["plus-icon"]} ${displayCategories ? formStyles["plus-icon_selected"] : ""}`}
+            //   onMouseDown={(event) => {
+            //     handleAddRemoveCategoryClick(event);
+            //   }}
+            //   onTouchStart={(event) => {
+            //     handleTouchStart(event, "addRemoveCategory");
+            //   }}
+            // >
+            //   &#x2295;
+            // </span>
+            // <span
+            //   className={`${formStyles["high-priority-icon"]} ${
+            //     note.isHighPriority
+            //       ? formStyles["note-text-area_high_prority"]
+            //       : ""
+            //   }`}
+            //   onMouseDown={(event) => {
+            //     handleHighPriorityClick(event);
+            //   }}
+            //   onTouchStart={(event) => {
+            //     handleTouchStart(event, "highPriority");
+            //   }}
+            // >
+            //   &#x2606;
+            // </span>
+            // <span
+          //     className={`${formStyles["rewind-icon"]}`}
+          //     onMouseDown={(event) => {
+          //       handleCancelClick(event);
+          //     }}
+          //     onTouchStart={(event) => {
+          //       handleTouchStart(event, "cancel");
+          //     }}
+          //   >
+          //     &#x21BA;
+          //   </span>
+          //   <span
+          //     className={`${formStyles["cross-icon"]}`}
+          //     onMouseDown={(event) => {
+          //       handleTouchStart(event, "delete");
+          //     }}
+          //     onTouchStart={(event) => {
+          //       handleTouchStart(event, "delete");
+          //     }}
+          //   >
+          //     &#x274C;
+          //   </span>
+          // </span>
           )}
         </div>
         <div className={styles["dots-and-tick-container"]}>
