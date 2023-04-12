@@ -228,7 +228,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
           default:
             break;
         }
-      }, 1000);
+      }, 100);
     }
   };
 
