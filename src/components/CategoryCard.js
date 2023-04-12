@@ -2,22 +2,16 @@ import React from 'react';
 import styles from "../CSS/Card.module.css";
 import { useState, useRef } from 'react';
 import NoteList from './NoteList';
-import NewAddNoteForm from './NewAddNoteForm';
 import ConfirmModal from './ConfirmModal';
 
 const CategoryCard = ({categoryName, memory, setMemory}) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
 
   const [showNotes, setShowNotes] = useState(false);
-  const [addNote, setAddNote] = useState(false);
   const [touchTimeout, setTouchTimeout] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [edittingCategory, setEdittingCategory] = useState(false);
   const [categoryNameText, setCategoryNameText] = useState(categoryName);
-  // const handleAddNoteClick = (event) => {
-  //   event.stopPropagation();
-  //   setAddNote(!addNote);
-  // }
 
   const confirmationMessage = "Are you sure? Entire category will be deleted. Any notes not in other categories cannot be recovered";
   const handleAddNoteClick = (event) => {
@@ -188,7 +182,6 @@ const CategoryCard = ({categoryName, memory, setMemory}) => {
       </div>
     </div>
 
-    {addNote && <NewAddNoteForm setMemory={setMemory} setShowAddNoteForm={setAddNote} directToCategory={categoryName}/>  }
     {showNotes && <NoteList memory={memory} categoryName={categoryName} setMemory={setMemory} />}
     </>
   );

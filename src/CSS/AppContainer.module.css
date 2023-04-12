@@ -11,6 +11,8 @@
     background-color: #010101;
     z-index: 99;
     height: 10vh;
+    display: flex;
+    justify-content: right;
 }
 
 .hamburger-span {
@@ -18,4 +20,5 @@
     color: #c6d6f0;
     display: block;
     width: 50px;
+    margin-right: 20px;
 }
