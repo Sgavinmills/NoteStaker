@@ -228,7 +228,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
           default:
             break;
         }
-      }, 200);
+      }, 1000);
     }
   };
 
@@ -265,6 +265,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
           />{" "}
           {inFocus && (
             <NoteIcons
+              displayCategories={displayCategories}
               note={note}
               handleTouchStart={handleTouchStart}
               handleAddRemoveCategoryClick={handleAddRemoveCategoryClick}

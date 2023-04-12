@@ -90,6 +90,10 @@
     font-size: 30px;
   }
 
+  .plus-icon_selected {
+    color: #6bbf56;
+  }
+
   .high-priority-icon {
     font-size: 25px;
   }

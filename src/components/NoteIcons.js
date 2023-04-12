@@ -1,13 +1,13 @@
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 import React from 'react';
 
-const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handleHighPriorityClick, handleCancelClick}) => {
+const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handleHighPriorityClick, handleCancelClick, displayCategories}) => {
 
   return (
     
         <span className={`${formStyles["icon-container"]}`}>
           <span
-            className={`${formStyles["plus-icon"]}`}
+            className={`${formStyles["plus-icon"]} ${displayCategories ? formStyles["plus-icon_selected"] : ""}`}
             onMouseDown={(event) => {
               handleAddRemoveCategoryClick(event);
             }}
