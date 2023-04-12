@@ -28,10 +28,10 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
             onMouseDown={(event) => {
               handleTouchStart(event, "highPriority");
             }}
-            onTouchStart={(event) => {
-              console.log("touching")
-              handleTouchStart(event, "highPriority");
-            }}
+            // onTouchStart={(event) => {
+            //   console.log("touching")
+            //   handleTouchStart(event, "highPriority");
+            // }}
           >
             &#x2606;
           </span>
