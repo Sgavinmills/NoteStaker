@@ -167,8 +167,8 @@ const NoteCard = ({ note, setMemory, memory }) => {
   
   const handleHighPriorityClick = (event) => {
     console.log("i am " + note.note)
-    event.preventDefault();
-    // event.stopPropagation();
+    // event.preventDefault();
+    event.stopPropagation();
 
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
@@ -209,7 +209,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
       setTouchTimeout(true);
       setTimeout(() => {
         setTouchTimeout(false);
-        console.log("inside the timeout...")
         switch (touchType) {
           case "addRemoveCategory":
             handleAddRemoveCategoryClick(event);

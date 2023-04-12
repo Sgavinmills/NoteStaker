@@ -9,8 +9,7 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
           <span
             className={`${formStyles["plus-icon"]} ${displayCategories ? formStyles["plus-icon_selected"] : ""}`}
             onMouseDown={(event) => {
-              console.log("clicking")
-              handleAddRemoveCategoryClick(event);
+              handleTouchStart(event, "addRemoveCategory");
             }}
             onTouchStart={(event) => {
               console.log("touching")
@@ -29,7 +28,6 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
               handleTouchStart(event, "highPriority");
             }}
             // onTouchStart={(event) => {
-            //   console.log("touching")
             //   handleTouchStart(event, "highPriority");
             // }}
           >
@@ -38,7 +36,7 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
           <span
             className={`${formStyles["rewind-icon"]}`}
             onMouseDown={(event) => {
-              handleCancelClick(event);
+              handleTouchStart(event, "cancel");
             }}
             onTouchStart={(event) => {
               handleTouchStart(event, "cancel");
