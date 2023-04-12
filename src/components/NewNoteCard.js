@@ -30,10 +30,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
     }
   }, [memory]);
 
-  useEffect(() => {
-    setTouchTimeout(false);
-  }, [memory])
-
   // focuses on the first note if it has just been put there by 'add note' and needs filling in
   useEffect(() => {
     if (note.newEmptyNote) {
@@ -167,7 +163,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
     event.preventDefault();
     event.stopPropagation();
     setDisplayCategories(!displayCategories);
-    setTouchTimeout(false);
   };
 
   const handleHighPriorityClick = (event) => {
@@ -209,7 +204,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
     if (!touchTimeout) {
       setTouchTimeout(true);
       setTimeout(() => {
-        // setTouchTimeout(false);
+        setTouchTimeout(false);
 
         switch (touchType) {
           case "addRemoveCategory":
