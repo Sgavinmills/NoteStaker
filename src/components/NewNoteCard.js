@@ -5,14 +5,14 @@ import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
 
-const NoteCard = ({ note, setMemory, memory }) => {
+const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocussedCannotClick }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
 
   const [noteText, setNoteText] = useState(note.note);
   const [textAreaHeight, setTextAreaHeight] = useState(38);
   const [inFocus, setInFocus] = useState(false);
   const [displayCategories, setDisplayCategories] = useState(false);
-  const [touchTimeout, setTouchTimeout] = useState(false);
+  // const [touchTimeout, setTouchTimeout] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const confirmationMessage =
@@ -34,8 +34,9 @@ const NoteCard = ({ note, setMemory, memory }) => {
   useEffect(() => {
     if (note.newEmptyNote) {
       textareaRef.current.focus();
+      setIsFocussedCannotClick(true);
     }
-  }, [note.newEmptyNote]);
+  }, [note.newEmptyNote, setIsFocussedCannotClick]);
 
   const handleDeleteConfirmClick = (event) => {
     event.preventDefault();
@@ -49,7 +50,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
       const newMemory = { ...currMemory };
       const updatedNotes = [...newMemory.notes];
       const index = updatedNotes.reduce((acc, item, index) => {
-        console.log(index, note.id, item.id);
         const isMatch = note.id === item.id;
         return isMatch ? index : acc;
       }, -1);
@@ -85,12 +85,20 @@ const NoteCard = ({ note, setMemory, memory }) => {
   };
 
   const handleFocus = (event) => {
-    setInFocus(true);
+    if (event.relatedTarget?.tagName === "TEXTAREA") {
+      setInFocus(false);
+      textareaRef.current.blur();
+    } else {
+      setInFocus(true);
+      setIsFocussedCannotClick(true);
+
+    }
   };
 
   const handleBlur = (event) => {
     setInFocus(false);
     handleSubmit(event);
+    setIsFocussedCannotClick(false);
   };
 
   const handleSubmit = (event) => {
@@ -201,10 +209,10 @@ const NoteCard = ({ note, setMemory, memory }) => {
   const handleTouchStart = (event, touchType, categoryName) => {
     event.stopPropagation();
     event.preventDefault();
-    if (!touchTimeout) {
-      setTouchTimeout(true);
-      setTimeout(() => {
-        setTouchTimeout(false);
+    // if (!touchTimeout) {
+      // setTouchTimeout(true);
+      // setTimeout(() => {
+        // setTouchTimeout(false);
         switch (touchType) {
           case "addRemoveCategory":
             handleAddRemoveCategoryClick(event);
@@ -227,8 +235,8 @@ const NoteCard = ({ note, setMemory, memory }) => {
           default:
             break;
         }
-      }, 100);
-    }
+      // }, 100);
+    // }
   };
 
   return (

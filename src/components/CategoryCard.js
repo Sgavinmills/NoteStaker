@@ -3,7 +3,7 @@ import styles from "../CSS/Card.module.css";
 import { useState } from 'react';
 import NoteList from './NoteList';
 
-const CategoryCard = ({categoryName, memory, setMemory}) => {
+const CategoryCard = ({categoryName, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
   const [showNotes, setShowNotes] = useState(false);
 
@@ -33,7 +33,7 @@ const CategoryCard = ({categoryName, memory, setMemory}) => {
   
   return (
     <>
-    <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onClick={()=> {setShowNotes(!showNotes)}}>
+    <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onMouseDown={()=> { if(!isFocussedCannotClick) { setShowNotes(!showNotes)}}}>
       <div className={styles["category-contents-container"]}>
       <p className={styles["category-main-text"]}>{categoryName}
       </p>
@@ -45,7 +45,7 @@ const CategoryCard = ({categoryName, memory, setMemory}) => {
       </div>
     </div>
 
-    {showNotes && <NoteList memory={memory} categoryName={categoryName} setMemory={setMemory} />}
+    {showNotes && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} categoryName={categoryName} setMemory={setMemory} />}
     </>
   );
 };
