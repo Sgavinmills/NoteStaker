@@ -1,7 +1,7 @@
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 import React from 'react';
 
-const AddRemoveCategories = ({memory, note, handleCategoryClick, handleTouchStart}) => {
+const AddRemoveCategories = ({memory, note, handleTouchStart}) => {
 
   return (
     <div className={formStyles["categories-container"]}>
@@ -11,10 +11,10 @@ const AddRemoveCategories = ({memory, note, handleCategoryClick, handleTouchStar
               className={`${formStyles["category-tab"]} ${
                 note.tags.includes(category) ? formStyles["selected"] : ""
               }`}
-              onMouseDown={(event) => handleCategoryClick(event, category)}
-              onTouchStart={(event) =>
-                handleTouchStart(event, "category", category)
-              }
+              onMouseDown={(event) => handleTouchStart(event, "category", category)}
+              // onTouchStart={(event) =>
+              //   handleTouchStart(event, "category", category)
+              // }
             >
               {category}
             </div>

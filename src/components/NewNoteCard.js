@@ -120,8 +120,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
   };
 
   const handleCategoryClick = (event, category) => {
-    event.preventDefault();
-    event.stopPropagation();
 
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
@@ -185,8 +183,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
   };
 
   const handleMarkDoneClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
 
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
@@ -271,60 +267,7 @@ const NoteCard = ({ note, setMemory, memory }) => {
               displayCategories={displayCategories}
               note={note}
               handleTouchStart={handleTouchStart}
-              handleAddRemoveCategoryClick={handleAddRemoveCategoryClick}
-              handleHighPriorityClick={handleHighPriorityClick}
-              handleCancelClick={handleCancelClick}
             />
-            // <span className={`${formStyles["icon-container"]}`}>
-            // <span
-            //   className={`${formStyles["plus-icon"]} ${displayCategories ? formStyles["plus-icon_selected"] : ""}`}
-            //   onMouseDown={(event) => {
-            //     handleAddRemoveCategoryClick(event);
-            //   }}
-            //   onTouchStart={(event) => {
-            //     handleTouchStart(event, "addRemoveCategory");
-            //   }}
-            // >
-            //   &#x2295;
-            // </span>
-            // <span
-            //   className={`${formStyles["high-priority-icon"]} ${
-            //     note.isHighPriority
-            //       ? formStyles["note-text-area_high_prority"]
-            //       : ""
-            //   }`}
-            //   onMouseDown={(event) => {
-            //     handleHighPriorityClick(event);
-            //   }}
-            //   onTouchStart={(event) => {
-            //     handleTouchStart(event, "highPriority");
-            //   }}
-            // >
-            //   &#x2606;
-            // </span>
-            // <span
-          //     className={`${formStyles["rewind-icon"]}`}
-          //     onMouseDown={(event) => {
-          //       handleCancelClick(event);
-          //     }}
-          //     onTouchStart={(event) => {
-          //       handleTouchStart(event, "cancel");
-          //     }}
-          //   >
-          //     &#x21BA;
-          //   </span>
-          //   <span
-          //     className={`${formStyles["cross-icon"]}`}
-          //     onMouseDown={(event) => {
-          //       handleTouchStart(event, "delete");
-          //     }}
-          //     onTouchStart={(event) => {
-          //       handleTouchStart(event, "delete");
-          //     }}
-          //   >
-          //     &#x274C;
-          //   </span>
-          // </span>
           )}
         </div>
         <div className={styles["dots-and-tick-container"]}>
@@ -332,11 +275,11 @@ const NoteCard = ({ note, setMemory, memory }) => {
             <span
               className={`${styles["done-tick"]}`}
               onMouseDown={(event) => {
-                handleMarkDoneClick(event);
-              }}
-              onTouchStart={(event) => {
                 handleTouchStart(event, "markDone");
               }}
+              // onTouchStart={(event) => {
+              //   handleTouchStart(event, "markDone");
+              // }}
             >
               &#x2705;
             </span>
@@ -344,11 +287,11 @@ const NoteCard = ({ note, setMemory, memory }) => {
             <span
               className={`${styles["not-done-tick"]}`}
               onMouseDown={(event) => {
-                handleMarkDoneClick(event);
-              }}
-              onTouchStart={(event) => {
                 handleTouchStart(event, "markDone");
               }}
+              // onTouchStart={(event) => {
+              //   handleTouchStart(event, "markDone");
+              // }}
             >
               &#x26AA;
             </span>
@@ -367,7 +310,6 @@ const NoteCard = ({ note, setMemory, memory }) => {
         <AddRemoveCategories
           memory={memory}
           note={note}
-          handleCategoryClick={handleCategoryClick}
           handleTouchStart={handleTouchStart}
         />
       )}

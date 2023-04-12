@@ -1,7 +1,7 @@
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 import React from 'react';
 
-const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handleHighPriorityClick, handleCancelClick, displayCategories}) => {
+const NoteIcons = ({note, handleTouchStart, displayCategories}) => {
 
   return (
     
@@ -11,10 +11,9 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
             onMouseDown={(event) => {
               handleTouchStart(event, "addRemoveCategory");
             }}
-            onTouchStart={(event) => {
-              console.log("touching")
-              handleTouchStart(event, "addRemoveCategory");
-            }}
+            // onTouchStart={(event) => {
+            //   handleTouchStart(event, "addRemoveCategory");
+            // }}
           >
             &#x2295;
           </span>
@@ -38,9 +37,9 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
             onMouseDown={(event) => {
               handleTouchStart(event, "cancel");
             }}
-            onTouchStart={(event) => {
-              handleTouchStart(event, "cancel");
-            }}
+            // onTouchStart={(event) => {
+            //   handleTouchStart(event, "cancel");
+            // }}
           >
             &#x21BA;
           </span>
@@ -49,9 +48,9 @@ const NoteIcons = ({note, handleTouchStart, handleAddRemoveCategoryClick, handle
             onMouseDown={(event) => {
               handleTouchStart(event, "delete");
             }}
-            onTouchStart={(event) => {
-              handleTouchStart(event, "delete");
-            }}
+            // onTouchStart={(event) => {
+            //   handleTouchStart(event, "delete");
+            // }}
           >
             &#x274C;
           </span>
