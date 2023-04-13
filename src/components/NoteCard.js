@@ -12,7 +12,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   const [textAreaHeight, setTextAreaHeight] = useState(38);
   const [inFocus, setInFocus] = useState(false);
   const [displayCategories, setDisplayCategories] = useState(false);
-  // const [touchTimeout, setTouchTimeout] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const confirmationMessage =
@@ -110,7 +109,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   };
 
   const handleCategoryClick = (event, category) => {
-
+    console.log("yes?")
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
       const updatedNotes = [...newMemory.notes];
@@ -130,7 +129,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
       }
 
       updatedNotes[index].tags = newCategories;
-
+      updatedNotes[index].note = noteText;
       newMemory.notes = updatedNotes;
       return newMemory;
     });
@@ -154,8 +153,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   };
   
   const handleHighPriorityClick = (event) => {
-    console.log("i am " + note.note)
-    // event.preventDefault();
     event.stopPropagation();
 
     setMemory((currMemory) => {
@@ -167,6 +164,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
       }, -1);
 
       updatedNotes[index].isHighPriority = !updatedNotes[index].isHighPriority;
+      updatedNotes[index].note = noteText;
       newMemory.notes = updatedNotes;
       return newMemory;
     });
@@ -191,10 +189,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   const handleTouchStart = (event, touchType, categoryName) => {
     event.stopPropagation();
     event.preventDefault();
-    // if (!touchTimeout) {
-      // setTouchTimeout(true);
-      // setTimeout(() => {
-        // setTouchTimeout(false);
         switch (touchType) {
           case "addRemoveCategory":
             handleAddRemoveCategoryClick(event);
@@ -217,8 +211,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
           default:
             break;
         }
-      // }, 100);
-    // }
+     
   };
 
   return (
