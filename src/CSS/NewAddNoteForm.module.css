@@ -55,9 +55,13 @@
   border-bottom: 1px dashed #c6d6f0;
 }
 
-.note-text-area_high_prority {
+.note-text-area_high_priority {
     color: #FFD700;
-  }
+}
+
+.note-text-area_low_priority {
+  color: #5242af;
+}
 
   .textarea-container {
     width: 100%;

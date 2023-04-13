@@ -32,9 +32,28 @@ function App() {
     setAddingCategory(!addingCategory);
   }
 
-    
+    const updatePriorities = () => {
+      setMemory(currMemory => {
+        const newMemory = {...currMemory}
+        const newNotes = [...newMemory.notes]
+        const updatedNotes = newNotes.map(note => {
+          if (note.isHighPriority) {
+            note.priority = "high"
+          } else {
+            note.priority = ""
+          }
+          delete note.isHighPriority;
+
+          return note;
+        })
+
+        newMemory.notes = updatedNotes;
+        return newMemory;
+      })
+    }
   return (
     <div className={`${AppStyle["app-container"]}`}>
+      <button style={{ height: '100px' }} onClick={updatePriorities}>Update priority</button>
       { addingCategory && <AddCategoryModal setAddingCategory={setAddingCategory} memory={memory} setMemory={setMemory} />}
       <div className={`${AppStyle["hamburger-container"]}`}><span onClick={(event) => {handleBurgerClick(event)}} className={`${AppStyle["hamburger-span"]}`}>&#x2630;</span></div>
       {!isLoading && <Categories memory={memory} setMemory={setMemory} />}

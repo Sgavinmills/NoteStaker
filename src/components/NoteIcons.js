@@ -19,8 +19,9 @@ const NoteIcons = ({note, handleTouchStart, displayCategories}) => {
           </span>
           <span
             className={`${formStyles["high-priority-icon"]} ${
-              note.isHighPriority
-                ? formStyles["note-text-area_high_prority"]
+              note.priority === "high"
+                ? formStyles["note-text-area_high_priority"]
+                : note.priority === "low" ? formStyles["note-text-area_low_priority"]
                 : ""
             }`}
             onMouseDown={(event) => {

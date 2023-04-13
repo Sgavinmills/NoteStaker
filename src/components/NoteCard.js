@@ -109,7 +109,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   };
 
   const handleCategoryClick = (event, category) => {
-    console.log("yes?")
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
       const updatedNotes = [...newMemory.notes];
@@ -163,7 +162,15 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
         return isMatch ? index : acc;
       }, -1);
 
-      updatedNotes[index].isHighPriority = !updatedNotes[index].isHighPriority;
+      // updatedNotes[index].isHighPriority = !updatedNotes[index].isHighPriority;
+      if (updatedNotes[index].priority === "high") {
+        updatedNotes[index].priority = "low" 
+      } else if (updatedNotes[index].priority === "low") {
+        updatedNotes[index].priority = "" 
+      } else {
+        updatedNotes[index].priority = "high" 
+      }
+
       updatedNotes[index].note = noteText;
       newMemory.notes = updatedNotes;
       return newMemory;
@@ -229,8 +236,9 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             ref={textareaRef}
             style={{ height: `${textAreaHeight}px` }}
             className={`${formStyles["note-text-area"]} ${
-              note.isHighPriority
-                ? formStyles["note-text-area_high_prority"]
+              note.priority === "high"
+                ? formStyles["note-text-area_high_priority"]
+                : note.priority === "low" ? formStyles["note-text-area_low_priority"]
                 : ""
             }`}
             placeholder="Enter note text here"
