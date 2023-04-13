@@ -5,12 +5,9 @@
 }
 
 .hamburger-container {
-    position: sticky;
-    top: 0;
     width: 100%;
     background-color: #010101;
     z-index: 99;
-    height: 10vh;
     display: flex;
     justify-content: right;
 }
