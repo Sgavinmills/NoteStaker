@@ -140,6 +140,11 @@ outline: none;
   padding-top: 13px; */
 }
 
+.category-three-vertical-dots-icon {
+  color: #b4b4b4;
+  font-size: 30px;
+}
+
 .done-tick-visible {
   visibility: visible;
   opacity: 1;
@@ -167,12 +172,12 @@ outline: none;
   border-top: 10px solid #c6d6f0;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 15px;
+  margin-right: 20px;
   /* margin-top: 15px; */
 }
 
 .category-up-arrow {
-  margin-right: 15px;
+  margin-right: 20px;
   /* margin-top: 15px; */
   width: 0;
   height: 0;

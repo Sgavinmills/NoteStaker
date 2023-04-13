@@ -60,24 +60,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
-  // Really dont need to leave this but quite like how its handled so keeping for now
-  // const optionNotHandled = () => {
-  //   console.log("This option is not handled yet");
-  // }
-  // const options = [
-  //   {
-  //     option: "Delete item",
-  //     // action: handleDeleteClick,
-  //   },
-  //   {
-  //     option: "Add/remove categories",
-  //     action: optionNotHandled
-  //   },
-  //   {
-  //     option: "View additional details",
-  //     action: optionNotHandled
-  //   }
-  // ]
 
   const handleChange = (event) => {
     setNoteText(event.target.value);
