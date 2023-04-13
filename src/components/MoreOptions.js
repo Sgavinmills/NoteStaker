@@ -7,7 +7,7 @@ const MoreOptions = ({options, optionsMenuRef}) => {
     <div ref={optionsMenuRef} className={`${OptionStyles["options-container"]} ${OptionStyles[""]}`}>
       { options?.map((option, index) => (
 
-     <p key={index} className={OptionStyles["option-text"]} onClick={(option.action)}>{option.option}</p> 
+     <p key={index} className={OptionStyles["option-text"]} onMouseDown={(option.action)}>{option.option}</p> 
 
       ))}
 

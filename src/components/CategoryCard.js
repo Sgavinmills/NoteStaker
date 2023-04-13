@@ -3,10 +3,17 @@ import styles from "../CSS/Card.module.css";
 import { useState, useRef, useEffect } from 'react';
 import NoteList from './NoteList';
 import MoreOptions from './MoreOptions';
+import ConfirmModal from "./ConfirmModal";
+import EditCategoryModal from './EditCategoryModal';
+
 const CategoryCard = ({categoryName, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
   const [showNotes, setShowNotes] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const [confirmDeleteCategoryModalOpen, setConfirmDeleteCategoryModalOpen] = useState(false);
+  const [confirmDeleteAllNotesWithinCategoryModalOpen, setConfirmDeleteAllNotesWithinCategoryModalOpen] = useState(false)
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [edittingCategory, setEdittingCategory] = useState(false);
   const optionsMenuRef = useRef(null);
 
   const handleAddNoteClick = (event) => {
@@ -33,21 +40,85 @@ const CategoryCard = ({categoryName, memory, setMemory, isFocussedCannotClick, s
     setShowNotes(true);
   }
 
-  const optionNotHandled = () => {
-    console.log("This option is not handled yet");
+  const removeCategory = () => {
+    setConfirmDeleteCategoryModalOpen(false);
+     setMemory(currMemory => {
+      const newMemory = {...currMemory}
+      const newNotes = [...newMemory.notes];
+      const newCategories = [...newMemory.categories];
+
+      const catIndex = newCategories.indexOf(categoryName);
+      newCategories.splice(catIndex, 1);
+      newMemory.categories = newCategories;
+
+      const filteredNotes = [];
+      newNotes.forEach(note => {
+        const tagIndex = note.tags.indexOf(categoryName);
+        if (tagIndex === -1) {
+          filteredNotes.push(note);
+        } else {
+          if (note.tags.length > 1) {
+            // splce then push
+            note.tags.splice(tagIndex, 1)
+            filteredNotes.push(note);
+          }
+        }
+      })
+      newMemory.notes = filteredNotes;
+      return newMemory;
+
+     })
+
   }
+
+  const removeAllNotesFromCategory = () => {
+    setConfirmDeleteAllNotesWithinCategoryModalOpen(false);
+    setMemory(currMemory => {
+      const newMemory = {...currMemory};
+      const newNotes = [...newMemory.notes];
+      const filteredNotes = [];
+      newNotes.forEach(note => {
+        const tagIndex = note.tags.indexOf(categoryName);
+        if (tagIndex === -1) {
+          filteredNotes.push(note);
+        } else {
+          if (note.tags.length > 1) {
+            note.tags.splice(tagIndex, 1)
+            filteredNotes.push(note);
+          }
+        }
+      })
+      newMemory.notes = filteredNotes;
+      return newMemory;
+    })
+  }
+  
+  const handleDeleteCategoryClick = (event) => {
+    setConfirmDeleteCategoryModalOpen(true);
+    setConfirmationMessage("Are you sure you want to delete this category? Any notes that only belong to this category will also be deleted.")
+  }
+
+  const handleDeleteAllNotesWithinCategoryClick = (event) => {
+    setConfirmDeleteAllNotesWithinCategoryModalOpen(true);
+    setConfirmationMessage("Are you sure you want to delete all notes within this category? Notes belonging to other categories will remain there but the rest will be permenantly erased")
+  }
+
+  const handleEditCategoryClick = () => {
+    setEdittingCategory(true);
+  }
+
   const options = [
     {
-      option: "Delete category",
-      action: optionNotHandled
+      option: " ❌ Delete category",
+      action: handleDeleteCategoryClick
     },
     {
-      option: "Edit category",
-      action: optionNotHandled
+      option: "✏️ Edit category name",
+      action: handleEditCategoryClick
     },
     {
-      option: "Remove all notes from category",
-      action: optionNotHandled
+      option: "🗑️ Remove all notes from category",
+      action: handleDeleteAllNotesWithinCategoryClick
     }
   ]
 
@@ -88,6 +159,23 @@ const CategoryCard = ({categoryName, memory, setMemory, isFocussedCannotClick, s
   }
   return (
     <>
+    {confirmDeleteCategoryModalOpen && (
+        <ConfirmModal
+          handleDelete={removeCategory}
+          setIsModalOpen={setConfirmDeleteCategoryModalOpen}
+          confirmationMessage={confirmationMessage}
+        />
+      )}
+    {confirmDeleteAllNotesWithinCategoryModalOpen && (
+        <ConfirmModal
+          handleDelete={removeAllNotesFromCategory}
+          setIsModalOpen={setConfirmDeleteAllNotesWithinCategoryModalOpen}
+          confirmationMessage={confirmationMessage}
+        />
+      )}
+    {edittingCategory && (
+      <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={categoryName} setMemory={setMemory} memory={memory}  />
+    )}
     <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onMouseDown={()=> { handleCategoryCardClick()}}>
       <div className={styles["category-contents-container"]}>
       <p className={styles["category-main-text"]}>{categoryName}

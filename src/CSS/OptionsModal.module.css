@@ -3,6 +3,8 @@
     /* border: 2px solid red; */
     right: 2px;
     background-color: #1e1e1e;
+    z-index: 5;
+    padding: 10px;
 }
 
 .option-text {
