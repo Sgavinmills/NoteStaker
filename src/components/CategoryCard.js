@@ -239,7 +239,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       <p className={styles["category-main-text"]}>{category.name}
       </p>
           <div className={styles["category-icon-container"]}>
-            <span className={`${styles["category-plus-symbol"]}`} onClick={(event) => {handleAddNoteClick(event)}} >&#x002B;</span>
+           {(memory.categories.find(cat => cat.name === category.name)?.sub_categories.length === 0) && <span className={`${styles["category-plus-symbol"]}`} onClick={(event) => {handleAddNoteClick(event)}} >&#x002B;</span>}
             <span className={`${!showNotes ? styles["category-down-arrow"] : styles["category-up-arrow"]}`} ></span>
             <span className={styles["category-three-vertical-dots-icon"]} onMouseDown={(event) => {handleMoreOptionsClick(event)}}>&#x22EE;
                      {showMoreOptions && <MoreOptions options={options} optionsMenuRef={optionsMenuRef} />}
