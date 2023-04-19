@@ -1,4 +1,5 @@
 import './App.css';
+import testMemoryJSON from './memory3.json';
 // import testMemoryJSON from './memory2.json';
 // import testMemoryJSON from './emptyMemory.json';
 import { useState, useEffect } from 'react';
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
   // const memoryToUse = testMemoryJSON;
+  // DONT FORGET WILL NEED TO DO SOMETHING AT LEAST SORT OF CLEVER BEFORE PUSHING TO MAIN ELSE WILL FUCK MY EXISTING MEMORY
   const memoryToUse = readFromLocalStorage();
   setMemory(memoryToUse); 
   setIsLoading(false);

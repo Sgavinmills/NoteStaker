@@ -1,0 +1,60 @@
+{
+    "notes" : [
+         {
+           "note": "the last kingdom",
+           "tags": [{"name" : "tv shows", "sub_tags" : ["watched", "otg"]}],
+           "additional_info": "To save time and eat healthier",
+           "date_added": "",
+           "id": "uniqueid55"
+         },
+         {
+           "note": "Install toilet",
+           "tags": [{"name" : "things to fix around the house", "sub_tags" : ["bathroom"]}],
+           "additional_info": "",
+           "date_added": "",
+           "priority": "high",
+           "id": "uniqueid53"
+         },
+         {
+          "note": "Reacher",
+          "tags": [{"name" : "tv shows", "sub_tags" : ["otg", "watched"]}, {"name" :"pet names", "sub_tags" : []}],
+          "additional_info": "",
+          "date_added": "",
+          "priority": "high",
+          "id": "uniqueid56"
+        },
+        {
+         "note": "The Last Of Us",
+         "tags": [{"name" : "tv shows", "sub_tags" : ["need to watch"]}],
+         "additional_info": "",
+         "date_added": "",
+         "priority": "high",
+         "id": "uniqueid568"
+       },
+       {
+         "note": "The stroy of a tv show with no sub category",
+         "tags": [{"name" : "tv shows", "sub_tags" : []}],
+         "additional_info": "",
+         "date_added": "",
+         "priority": "",
+         "id": "uniqueid5689"
+       }
+
+    ],
+
+    "categories" : [
+      {
+        "name" : "pet names",
+        "sub_categories" : ["dog names", "cat names"]
+      },
+      {
+        "name" : "things to fix around the house",
+        "sub_categories" : ["bathroom", "kitchen", "garden"]
+      },
+      {
+        "name" : "tv shows",
+        "sub_categories" : ["watched", "otg", "need to watch"]
+      }
+    ]
+
+   }

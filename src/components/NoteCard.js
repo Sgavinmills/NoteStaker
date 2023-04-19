@@ -5,7 +5,7 @@ import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
 
-const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocussedCannotClick }) => {
+const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocussedCannotClick, parentCategory, subCategoryName }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
 
   const [noteText, setNoteText] = useState(note.note);
@@ -108,7 +108,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
-  const handleCategoryClick = (event, category) => {
+  const updateCategoryInMemory = (event, category, categoryType, parentCategory) => { // can prob not need categorytype and just check for parentcategory, but whatevs for now
     setMemory((currMemory) => {
       const newMemory = { ...currMemory };
       const updatedNotes = [...newMemory.notes];
@@ -120,12 +120,43 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
       const currCategories = updatedNotes[index].tags;
       const newCategories = [...currCategories];
 
-      const catIndex = newCategories.indexOf(category);
-      if (catIndex > -1) {
-        newCategories.splice(catIndex, 1);
-      } else {
-        newCategories.push(category);
-      }
+      // const catIndex = newCategories.indexOf(category);
+      if (categoryType === "parent") {
+        let catIndex = -1;
+        for (let i = 0; i < newCategories.length; i++) {
+          if (newCategories[i].name === category) {
+            catIndex = i;
+            break;
+          }
+        }
+        if (catIndex > -1) {
+          newCategories.splice(catIndex, 1);
+        } else {
+          newCategories.push({"name" : category, "sub_tags" : []})
+        }
+       } else {
+        if (categoryType === "sub") {
+         
+          let parentCatIndex = -1;
+          console.log(parentCategory)
+          for (let i = 0; i < newCategories.length; i++) {
+            if (newCategories[i].name === parentCategory.name) {
+              parentCatIndex = i;
+              break;
+            }
+          }
+          console.log(parentCatIndex)
+          const subCatIndex = newCategories[parentCatIndex].sub_tags.indexOf(category)
+          if (subCatIndex > -1) {
+            newCategories[parentCatIndex].sub_tags.splice(subCatIndex,1)
+          } else {
+            newCategories[parentCatIndex].sub_tags.push(category);
+          }
+        }
+       }
+
+
+      
 
       updatedNotes[index].tags = newCategories;
       updatedNotes[index].note = noteText;
@@ -193,7 +224,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
-  const handleTouchStart = (event, touchType, categoryName) => {
+  const handleTouchStart = (event, touchType, categoryName, categoryType, parentCategory) => {
     event.stopPropagation();
     event.preventDefault();
         switch (touchType) {
@@ -213,7 +244,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             setIsModalOpen(true);
             break;
           case "category":
-            handleCategoryClick(event, categoryName);
+            updateCategoryInMemory(event, categoryName, categoryType, parentCategory);
             break;
           default:
             break;
@@ -268,9 +299,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
               onMouseDown={(event) => {
                 handleTouchStart(event, "markDone");
               }}
-              // onTouchStart={(event) => {
-              //   handleTouchStart(event, "markDone");
-              // }}
             >
               &#x2705;
             </span>
@@ -280,9 +308,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
               onMouseDown={(event) => {
                 handleTouchStart(event, "markDone");
               }}
-              // onTouchStart={(event) => {
-              //   handleTouchStart(event, "markDone");
-              // }}
             >
               &#x26AA;
             </span>
@@ -302,6 +327,8 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
           memory={memory}
           note={note}
           handleTouchStart={handleTouchStart}
+          subCategoryName={subCategoryName}
+          parentCategory={parentCategory}
         />
       )}
     </>

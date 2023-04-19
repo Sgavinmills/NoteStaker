@@ -7,7 +7,7 @@ import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
 
-const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
+const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
   const [showNotes, setShowNotes] = useState(false);
   const [showSubCategories, setShowSubCategories] = useState(false);
@@ -29,7 +29,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       const uniqueIdentifier = String(timeStamp) + randomNumber;
       newNotes.unshift({
         "note" : "",
-        "tags" : [{"name" : category.name, "sub_tags" : []}],
+        "tags" : [{"name" : parentCategory.name, "sub_tags" : [subCategoryName] }],
         "additional_info" : "",
         "date_added" : "",
         id : uniqueIdentifier,
@@ -39,65 +39,75 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       return newMemory;
     })
 
-    setShowNotes(true); // so im praying that here i can do some shit where i creare a useRef and apply it in the <Note component
-    // if the newEmptyNote property is true. Then, after setting to memory here i can do targetRef.current.scrollIntoView (s per chatgpt)
-    // to head to it. prob worth doing sharpish after getting subcategory list to render nicely. 
-
-    // either that or we'll need to just make a new form component that looks like a note that we can render above the subcategory list
-    // to add a note without categories,. 
-
-    // for now i 'll just update this to add a blank note as before into the category. and it will appear underneath sub categories for time being. 
+    setShowNotes(true);
   }
 
-  const removeCategory = () => {
+  const removeSubCategory = () => {
     setConfirmDeleteCategoryModalOpen(false);
      setMemory(currMemory => {
       const newMemory = {...currMemory}
       const newNotes = [...newMemory.notes];
       const newCategories = [...newMemory.categories];
 
-      // const catIndex = newCategories.indexOf(categoryName);
-      let catIndex = -1;
-      for (let i = 0; i < newCategories.length; i++) {
-        if (newCategories[i.name === category.name]) {
-          catIndex = i;
-          break;
-        }
-      }
-      newCategories.splice(catIndex, 1);
+      // const catIndex = newCategories.indexOf(parentCategory.name);
+      const catIndex = newCategories.reduce((acc, category, index) => {
+        const isMatch = category.name === parentCategory.name;
+        return isMatch ? index : acc;
+      }, -1);
+
+      // newCategories.splice(catIndex, 1);
+
+      const subCatIndex = newCategories[catIndex].sub_categories.reduce((acc, subCategory, index) => {
+        const isMatch = subCategory === subCategoryName;
+        return isMatch ? index : acc;
+      }, -1)
+
+      const newSubCategories = [...newCategories[catIndex].sub_categories];
+      newSubCategories.splice(subCatIndex, 1);
+
+      newCategories[catIndex].sub_categories = newSubCategories;
+
+
       newMemory.categories = newCategories;
 
+
+      // const notesWithParentCategory = newNotes.filter(note => note.tags.some(tag => tag.name === parentCategory));
+
       const filteredNotes = [];
-      // newNotes.forEach(note => {
-      //   const tagIndex = note.tags.indexOf(categoryName);
-      //   if (tagIndex === -1) {
-      //     filteredNotes.push(note);
-      //   } else {
-      //     if (note.tags.length > 1) {
-      //       // splce then push
-      //       note.tags.splice(tagIndex, 1)
-      //       filteredNotes.push(note);
-      //     }
-      //   }
-      // })
 
       newNotes.forEach(note => {
-        let tagIndex = -1;
-        for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i].name === category.name) {
-            tagIndex = i;
-            break;
-          }
-        }
-        if (tagIndex === -1) {
+        // check if the tags array contains a cat object with the name === parentCategory. 
+        // if it does not can just push striahgt into filteredNotes and move on.
+
+        // but if it does have name === parentCategory, then using the index already established, 
+        // access that object and see if sub_tags contains subCategoryName.
+        // if it does splice it out then push unless it is the only sub category in which case just forget about him
+        // if not then just push 
+
+        const catIndex = note.tags.reduce((acc, category, index) => {
+          const isMatch = category.name === parentCategory;
+          return isMatch ? index : acc;
+        }, -1)
+
+        if (catIndex === -1) {
           filteredNotes.push(note);
         } else {
-          if (note.tags.length > 1) {
-            note.tags.splice(tagIndex, 1)
+          const subCatIndex = note.tags[catIndex].sub_tags.includes(subCategoryName);
+          if (subCatIndex === -1) {
             filteredNotes.push(note);
+          } else {
+            if (note.tags[catIndex].sub_tags.length > 1) {
+              note.tags[catIndex].sub_tags.splice(subCatIndex,1);
+              // make this new obj first.
+              const newNoteSubTags = [...note.tags[catIndex].sub_tags];
+              note.tags[catIndex].sub_tags = newNoteSubTags;
+              filteredNotes.push(note);
+            }
           }
         }
       })
+
+      
       newMemory.notes = filteredNotes;
       return newMemory;
 
@@ -110,25 +120,46 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     setMemory(currMemory => {
       const newMemory = {...currMemory};
       const newNotes = [...newMemory.notes];
+
+
+
       const filteredNotes = [];
       newNotes.forEach(note => {
-        // const tagIndex = note.tags.indexOf(categoryName);
-        let tagIndex = -1;
-        for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i] === category.name) {
-            tagIndex = i;
-            break;
-          }
-        }
-        if (tagIndex === -1) {
+       
+        const catIndex = note.tags.reduce((acc, category, index) => {
+          const isMatch = category.name === parentCategory;
+          return isMatch ? index : acc;
+        }, -1)
+
+        if (catIndex === -1) {
           filteredNotes.push(note);
         } else {
-          if (note.tags.length > 1) {
-            note.tags.splice(tagIndex, 1)
+          const subCatIndex = note.tags[catIndex].sub_tags.includes(subCategoryName);
+          if (subCatIndex === -1) {
             filteredNotes.push(note);
+          } else {
+            if (note.tags[catIndex].sub_tags.length > 1) {
+              note.tags[catIndex].sub_tags.splice(subCatIndex,1);
+              // make this new obj first.
+              const newNoteSubTags = [...note.tags[catIndex].sub_tags];
+              note.tags[catIndex].sub_tags = newNoteSubTags;
+              filteredNotes.push(note);
+            }
           }
         }
       })
+
+      // newNotes.forEach(note => {
+      //   const tagIndex = note.tags.indexOf(categoryName);
+      //   if (tagIndex === -1) {
+      //     filteredNotes.push(note);
+      //   } else {
+      //     if (note.tags.length > 1) {
+      //       note.tags.splice(tagIndex, 1)
+      //       filteredNotes.push(note);
+      //     }
+      //   }
+      // })
       newMemory.notes = filteredNotes;
       return newMemory;
     })
@@ -136,12 +167,12 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   
   const handleDeleteCategoryClick = (event) => {
     setConfirmDeleteCategoryModalOpen(true);
-    setConfirmationMessage("Are you sure you want to delete this category? Any notes that only belong to this category will also be deleted.")
+    setConfirmationMessage("Are you sure you want to delete this sub category? Any notes that only belong to this category will also be deleted.")
   }
 
   const handleDeleteAllNotesWithinCategoryClick = (event) => {
     setConfirmDeleteAllNotesWithinCategoryModalOpen(true);
-    setConfirmationMessage("Are you sure you want to delete all notes within this category? Notes belonging to other categories will remain there but the rest will be permenantly erased")
+    setConfirmationMessage("Are you sure you want to delete all notes within this sub category? Notes belonging to other categories will remain there but the rest will be permenantly erased")
   }
 
   const handleEditCategoryClick = () => {
@@ -192,10 +223,11 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     };
   }, [showMoreOptions]);
   
-  const handleCategoryCardClick = () => {
+  const handleSubCategoryCardClick = () => {
     if (optionsMenuRef.current) {
       return;
     }
+
     if(!isFocussedCannotClick) { 
       setShowSubCategories(!showSubCategories)
       setShowNotes(!showNotes)
@@ -205,7 +237,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     <>
     {confirmDeleteCategoryModalOpen && (
         <ConfirmModal
-          handleDelete={removeCategory}
+          handleDelete={removeSubCategory}
           setIsModalOpen={setConfirmDeleteCategoryModalOpen}
           confirmationMessage={confirmationMessage}
         />
@@ -218,11 +250,11 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
         />
       )}
     {edittingCategory && (
-      <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
+      <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={subCategoryName} setMemory={setMemory} memory={memory} subCategoryName={subCategoryName} parentCategory={parentCategory}  />
     )}
-    <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onMouseDown={()=> { handleCategoryCardClick()}}>
+    <div className={`${styles["card-container"]} ${styles["sub-category-card-container"]}`} onMouseDown={()=> { handleSubCategoryCardClick()}}>
       <div className={styles["category-contents-container"]}>
-      <p className={styles["category-main-text"]}>{category.name}
+      <p className={styles["sub-category-main-text"]}>↳ {subCategoryName}
       </p>
           <div className={styles["category-icon-container"]}>
             <span className={`${styles["category-plus-symbol"]}`} onClick={(event) => {handleAddNoteClick(event)}} >&#x002B;</span>
@@ -233,18 +265,12 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
           </div>
       </div>
     </div>
-      {/* showSubcategories - list the sub categrories.
-      then the showNotes bit would filter for notes in the category name that do NOT have a sub category. 
-      the subcategory component would be passed the name of the sub catgeoy and the parents category
-      then the notes themselves would be rendered in a similar way as before, check all notes if they have a tag
-      that has [0] matching category then check if it has a [1] that includes sub category and render.
-       */}
-    { showSubCategories && <SubCategories memory={memory} setMemory={setMemory} parentCategory={category} isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick}/>}
-    {showNotes && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={category} setMemory={setMemory} />}
+
+    {showNotes && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={parentCategory} subCategoryName={subCategoryName} setMemory={setMemory} />}
     </>
   );
 };
 
-export default CategoryCard;
+export default SubCategoryCard;
 
 // editting and deleteing not so bad since we just need to use uniqueid to find them

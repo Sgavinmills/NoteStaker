@@ -6,7 +6,7 @@ export default function Categories({memory, setMemory}) {
   return (
     <div>
           {memory.categories.map((category, index) => (
-            <CategoryCard key={index} categoryName={category} memory={memory} setMemory={setMemory} isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick}/>
+            <CategoryCard key={index} category={category} memory={memory} setMemory={setMemory} isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick}/>
           ))}
     </div>
   )
