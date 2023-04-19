@@ -2,7 +2,6 @@ import React from 'react';
 import styles from "../CSS/Card.module.css";
 import { useState, useRef, useEffect } from 'react';
 import NoteList from './NoteList';
-import SubCategories from './SubCategories';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
@@ -85,7 +84,7 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
         // if not then just push 
 
         const catIndex = note.tags.reduce((acc, category, index) => {
-          const isMatch = category.name === parentCategory;
+          const isMatch = category.name === parentCategory.name;
           return isMatch ? index : acc;
         }, -1)
 
@@ -116,6 +115,10 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
   }
 
   const removeAllNotesFromCategory = () => {
+    // new method:
+    // need to loop over notes. Notes with an object in the tag array with name === category.name
+    // then check if the corresponding sub tags is empty. if empty then need to remove the paent category from this note
+    // and if its the only one in there so tags is now empty then delete the entire note.
     setConfirmDeleteAllNotesWithinCategoryModalOpen(false);
     setMemory(currMemory => {
       const newMemory = {...currMemory};
@@ -124,13 +127,13 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
 
 
       const filteredNotes = [];
+      debugger;
       newNotes.forEach(note => {
-       
         const catIndex = note.tags.reduce((acc, category, index) => {
-          const isMatch = category.name === parentCategory;
+          const isMatch = category.name === parentCategory.name;
           return isMatch ? index : acc;
         }, -1)
-
+        
         if (catIndex === -1) {
           filteredNotes.push(note);
         } else {

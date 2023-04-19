@@ -1,5 +1,5 @@
 import './App.css';
-import testMemoryJSON from './memory3.json';
+// import testMemoryJSON from './memory3.json';
 // import testMemoryJSON from './memory2.json';
 // import testMemoryJSON from './emptyMemory.json';
 import { useState, useEffect } from 'react';
@@ -14,9 +14,9 @@ function App() {
   const [addingCategory, setAddingCategory] = useState(false);
 
   useEffect(() => {
-  const memoryToUse = testMemoryJSON;
+  // const memoryToUse = testMemoryJSON;
   // DONT FORGET WILL NEED TO DO SOMETHING AT LEAST SORT OF CLEVER BEFORE PUSHING TO MAIN ELSE WILL FUCK MY EXISTING MEMORY
-  // const memoryToUse = readFromLocalStorage();
+  const memoryToUse = readFromLocalStorage();
   setMemory(memoryToUse); 
   setIsLoading(false);
   }, [])
@@ -34,8 +34,16 @@ function App() {
     setAddingCategory(!addingCategory);
   }
 
+  const deleteMemory = () => {
+    setMemory(currMemory => {
+      return { "notes" : [], "categories" : []}
+    })
+  }
+
   return (
     <div className={`${AppStyle["app-container"]}`}>
+    <button onClick={() => {deleteMemory()}}>CLICK ME TO DELETE MEMORY</button>
+
       { addingCategory && <AddCategoryModal setAddingCategory={setAddingCategory} memory={memory} setMemory={setMemory} />}
       <div className={`${AppStyle["hamburger-container"]}`}><span onClick={(event) => {handleBurgerClick(event)}} className={`${AppStyle["hamburger-span"]}`}>&#x2630;</span></div>
       {!isLoading && <Categories memory={memory} setMemory={setMemory} />}

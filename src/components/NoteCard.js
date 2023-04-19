@@ -13,7 +13,10 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   const [inFocus, setInFocus] = useState(false);
   const [displayCategories, setDisplayCategories] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [displayingSubCategories, setDisplayingSubCategories] = useState(
+    true
+  );
+  const [subCatToDisplay, setSubCatToDisplay] = useState("");
   const confirmationMessage =
     "Are you sure? Note will be deleted from all categories";
 
@@ -145,12 +148,17 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
               break;
             }
           }
-          console.log(parentCatIndex)
           const subCatIndex = newCategories[parentCatIndex].sub_tags.indexOf(category)
           if (subCatIndex > -1) {
+            if (subCategoryName === newCategories[parentCatIndex].sub_tags[subCatIndex]) {
+              setIsFocussedCannotClick(false);
+            }
             newCategories[parentCatIndex].sub_tags.splice(subCatIndex,1)
           } else {
             newCategories[parentCatIndex].sub_tags.push(category);
+            if (newCategories[parentCatIndex].sub_tags.length === 1) {
+              setIsFocussedCannotClick(false);
+            }
           }
         }
        }
@@ -244,6 +252,23 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             setIsModalOpen(true);
             break;
           case "category":
+            if (!displayingSubCategories) {
+              // if we're on parent atm, want to swap to the sub categories when we select the parent
+              // but only if that parent is now chosen... if the parent has been deselected then stay on parents
+              
+              // fundamentally need to check the notes categories and see if it contains
+              // the categoryname clicked on (in the parent categories)
+              // if it does NOT then we know it will from now on
+              // so we will do the setdisplayingsubcategories(true)
+              // and also need to update a state which tells the addremovecategoris component
+              // which subs its actually showing :/ 
+
+              if (!note.tags.some(tag => tag.name === categoryName)) {
+                setDisplayingSubCategories(true);
+                setSubCatToDisplay(categoryName);
+
+              }
+            }
             updateCategoryInMemory(event, categoryName, categoryType, parentCategory);
             break;
           default:
@@ -329,6 +354,10 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
           handleTouchStart={handleTouchStart}
           subCategoryName={subCategoryName}
           parentCategory={parentCategory}
+          displayingSubCategories={displayingSubCategories}
+          setDisplayingSubCategories={setDisplayingSubCategories}
+          setSubCatToDisplay={setSubCatToDisplay}
+          subCatToDisplay={subCatToDisplay}
         />
       )}
     </>

@@ -109,6 +109,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   }
 
   const removeAllNotesFromCategory = () => {
+    
     setConfirmDeleteAllNotesWithinCategoryModalOpen(false);
     setMemory(currMemory => {
       const newMemory = {...currMemory};
@@ -118,7 +119,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
         // const tagIndex = note.tags.indexOf(categoryName);
         let tagIndex = -1;
         for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i] === category.name) {
+          if (note.tags[i].name === category.name) {
             tagIndex = i;
             break;
           }

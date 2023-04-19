@@ -146,10 +146,33 @@
     cursor: pointer;
     transition: background-color 0.2s;
   }
+
+  .category-tab-parent {
+    background-color: rgb(192, 137, 178);
+    color: #fff;
+
+
+  }
+
+  .category-tab-sub {
+    background-color: rgb(117, 154, 167);
+    color: #fff;
+
+
+  }
+
+  .category-swap-arrow {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   
   .category-tab.selected {
     background-color: #6bbf56;
     color: #fff;
+  }
+
+  .swap-category-tab {
+    background-color: rgb(117, 154, 167);
   }
 
   
