@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
 import ModalStyles from "../CSS/Modal.module.css";
 
-const AddCategoryModal = ({setAddingCategory, setMemory, memory}) => {
+const AddCategoryModal = ({setAddingCategory, setMemory, memory, parentCategory}) => {
 const [categoryText, setCategoryText] = useState('');
 
 const handleSubmit = (event) => {
   event.stopPropagation();
   event.preventDefault();
   setAddingCategory(false);
-  if (!memory.categories.includes(categoryText) && categoryText.length > 2) {
-    setMemory(currMemory => {
-      const newMemory = {...currMemory};
-      const newCategories = [...newMemory.categories];
-      newCategories.push(categoryText);
-      newMemory.categories = newCategories;
-      return newMemory;
-    })
+  if (!parentCategory) { // add normal category
+    if (!memory.categories.some(cat => cat === categoryText) && categoryText.length > 2) {
+      setMemory(currMemory => {
+        const newMemory = {...currMemory};
+        const newCategories = [...newMemory.categories];
+        newCategories.push({ "name" : categoryText, "sub_categories" : []});
+        newMemory.categories = newCategories;
+        return newMemory;
+      })
+    }
+
+  } else { // add sub category
+  
+    const parentCatIndex = memory.categories.reduce((acc, category, index) => {
+      const isMatch = category.name === parentCategory.name;
+      return isMatch ? index : acc;
+    }, -1)
+
+    if (!memory.categories[parentCatIndex].sub_categories.includes(categoryText) && categoryText.length > 2) {
+      setMemory(currMemory => {
+        const newMemory = {...currMemory};
+        const newCategories = [...newMemory.categories];
+        newCategories[parentCatIndex].sub_categories.push(categoryText);
+        newMemory.categories = newCategories;
+        return newMemory;
+      })
+    }
   }
 }
 

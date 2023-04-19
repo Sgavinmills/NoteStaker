@@ -14,9 +14,9 @@ function App() {
   const [addingCategory, setAddingCategory] = useState(false);
 
   useEffect(() => {
-  // const memoryToUse = testMemoryJSON;
+  const memoryToUse = testMemoryJSON;
   // DONT FORGET WILL NEED TO DO SOMETHING AT LEAST SORT OF CLEVER BEFORE PUSHING TO MAIN ELSE WILL FUCK MY EXISTING MEMORY
-  const memoryToUse = readFromLocalStorage();
+  // const memoryToUse = readFromLocalStorage();
   setMemory(memoryToUse); 
   setIsLoading(false);
   }, [])

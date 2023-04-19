@@ -49,19 +49,23 @@ const handleSubmit = (event) => {
         // access that object and see if sub_tags contains subCategoryName.
         // if it does splice it out then push unless it is the only sub category in which case just forget about him
         // if not then just push 
-
+        console.log(parentCategory.name)
         const catIndex = note.tags.reduce((acc, category, index) => {
-          const isMatch = category.name === parentCategory;
+          const isMatch = category.name === parentCategory.name;
           return isMatch ? index : acc;
         }, -1)
 
         if (catIndex === -1) {
+          console.log("here every time?") // not anymore
           filteredNotes.push(note);
         } else {
-          const subCatIndex = note.tags[catIndex].sub_tags.includes(subCategoryName);
+          console.log(subCategoryName)
+          const subCatIndex = note.tags[catIndex].sub_tags.indexOf(subCategoryName);
+          console.log(subCatIndex)
           if (subCatIndex === -1) {
             filteredNotes.push(note);
           } else {
+            console.log("ever in here?")
               note.tags[catIndex].sub_tags[subCatIndex] = categoryText;
               // make this new obj first.
               const newNoteSubTags = [...note.tags[catIndex].sub_tags];

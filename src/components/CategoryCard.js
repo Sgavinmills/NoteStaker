@@ -6,6 +6,7 @@ import SubCategories from './SubCategories';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
+import AddCategoryModal from './AddCategoryModal';
 
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -16,6 +17,8 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   const [confirmDeleteAllNotesWithinCategoryModalOpen, setConfirmDeleteAllNotesWithinCategoryModalOpen] = useState(false)
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [edittingCategory, setEdittingCategory] = useState(false);
+  const [addingSubCategory, setAddingSubCategory] = useState(false);
+
   const optionsMenuRef = useRef(null);
 
   const handleAddNoteClick = (event) => {
@@ -148,7 +151,15 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     setEdittingCategory(true);
   }
 
+  const handleAddSubCategoryClick = () => {
+    setAddingSubCategory(true);
+  }
+
   const options = [
+    {
+      option: " ➕ Add Sub-Category",
+      action: handleAddSubCategoryClick
+    },
     {
       option: " ❌ Delete category",
       action: handleDeleteCategoryClick
@@ -220,6 +231,8 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
     )}
+    { addingSubCategory && <AddCategoryModal setAddingCategory={setAddingSubCategory} memory={memory} setMemory={setMemory} parentCategory={category} />}
+
     <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onMouseDown={()=> { handleCategoryCardClick()}}>
       <div className={styles["category-contents-container"]}>
       <p className={styles["category-main-text"]}>{category.name}
