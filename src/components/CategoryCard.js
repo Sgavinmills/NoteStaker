@@ -7,6 +7,7 @@ import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
 import AddCategoryModal from './AddCategoryModal';
+import { addNewBlankNoteToParentCategory } from '../memoryFunctions/memoryFunctions';
 
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -25,31 +26,10 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     event.stopPropagation();
     event.preventDefault();
     setMemory(currMemory => {
-      const newMemory = {...currMemory};
-      const newNotes = [...newMemory.notes];
-      const timeStamp = new Date().getTime();
-      const randomNumber = Math.random().toString(36).slice(2,9);
-      const uniqueIdentifier = String(timeStamp) + randomNumber;
-      newNotes.unshift({
-        "note" : "",
-        "tags" : [{"name" : category.name, "sub_tags" : []}],
-        "additional_info" : "",
-        "date_added" : "",
-        id : uniqueIdentifier,
-        newEmptyNote : true
-      });
-      newMemory.notes = newNotes;
+      const newMemory = addNewBlankNoteToParentCategory(currMemory, category.name);
       return newMemory;
     })
-
-    setShowNotes(true); // so im praying that here i can do some shit where i creare a useRef and apply it in the <Note component
-    // if the newEmptyNote property is true. Then, after setting to memory here i can do targetRef.current.scrollIntoView (s per chatgpt)
-    // to head to it. prob worth doing sharpish after getting subcategory list to render nicely. 
-
-    // either that or we'll need to just make a new form component that looks like a note that we can render above the subcategory list
-    // to add a note without categories,. 
-
-    // for now i 'll just update this to add a blank note as before into the category. and it will appear underneath sub categories for time being. 
+    setShowNotes(true); 
   }
 
   const removeCategory = () => {
