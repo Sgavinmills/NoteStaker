@@ -15,18 +15,6 @@ export function readFromLocalStorage() {
     return savedMemory;
 }
 
-// function deepCopy(obj) {
-//     if (typeof obj !== 'object' || obj === null) {
-//       return obj;
-//     }
-//     const copy = Array.isArray(obj) ? [] : {};
-//     Object.keys(obj).forEach(key => {
-//       copy[key] = deepCopy(obj[key]);
-//     });
-//     return copy;
-//   }
-
-
   // categories
 export function addParentCategoryToMemory(currMemory, categoryName) {
     const newMemory = {...currMemory};
@@ -76,6 +64,22 @@ export function addNewBlankNoteToParentCategory(currMemory, categoryName) {
     return newMemory;
 }
 
+export function addNewBlankNoteToSubCategory(currMemory, categoryName, parentCategoryName) {
+    const newMemory = {...currMemory};
+    const timeStamp = new Date().getTime();
+    const randomNumber = Math.random().toString(36).slice(2,9);
+    const uniqueIdentifier = String(timeStamp) + randomNumber;
+    newMemory.notes = [{
+        "note" : "",
+        "tags" : [{"name" : parentCategoryName, "sub_tags" : [categoryName]}],
+        "additional_info" : "",
+        "date_added" : "",
+        id : uniqueIdentifier,
+        newEmptyNote : true}, 
+        ...newMemory.notes]
+    return newMemory;
+}
+
 function deleteParentCategoryTagFromEachNote(notes, categoryName) {
     const filteredNotes = []
     notes.forEach(note => {
@@ -94,6 +98,7 @@ function deleteParentCategoryTagFromEachNote(notes, categoryName) {
     return filteredNotes;
 }
 
+
 export function removeParentCategory(currMemory, categoryName) {
     const newMemory = {...currMemory};
     const newCategories = [...newMemory.categories];
@@ -111,6 +116,44 @@ export function removeParentCategory(currMemory, categoryName) {
     return newMemory;
 }
 
+export function removeSubCategoryFromMemory(currMemory, categoryName, parentCategoryName) {
+    const newMemory = {...currMemory};
+    const newCategories = [...newMemory.categories];
+    const newNotes = [...newMemory.notes];
+    const parentCatIndex = getCatIndex(newMemory.categories, parentCategoryName);
+
+    // const subCatIndex = getCatIndex(newCategories[parentCatIndex].sub_categories, categoryName)
+    const subCatIndex = newCategories[parentCatIndex].sub_categories.indexOf(categoryName)
+
+    const newSubCategories = [...newCategories[parentCatIndex].sub_categories];
+    newSubCategories.splice(subCatIndex, 1);
+    newCategories[parentCatIndex].sub_categories = newSubCategories;
+    newMemory.categories = newCategories
+
+    const filteredNotes = [];
+
+    newNotes.forEach(note => {
+        const parentCatIndex = getCatIndex(note.tags, parentCategoryName);
+        if (parentCatIndex === -1) {
+            console.log("should hit this...")
+            filteredNotes.push(note);
+        } else {
+            const subCatIndex = note.tags[parentCatIndex].sub_tags.includes(categoryName);
+            if (subCatIndex === -1) {
+                filteredNotes.push(note);
+            } else {
+               if (note.tags[parentCatIndex].sub_tags.length > 1) {
+                    const newNoteSubTags = [...note.tags[parentCatIndex].sub_tags];
+                    note.tags[parentCatIndex].sub_tags = newNoteSubTags;
+                    filteredNotes.push(note);
+                }
+            }
+        }
+    })
+    newMemory.notes = filteredNotes;
+    return newMemory;
+}
+
 
 export function removeAllNotesFromParentCategory(currMemory, categoryName) {
     const newMemory = {...currMemory};
@@ -120,6 +163,8 @@ export function removeAllNotesFromParentCategory(currMemory, categoryName) {
     return newMemory;
     
 }
+
+
 
 export function editParentCategoryName(currMemory, oldName, newName) {
     const newMemory = {...currMemory};
@@ -335,6 +380,8 @@ export function toggleMarkDone(currMemory, noteID, noteText) {
 
     return newMemory;
 }
+
+
 
 
 
