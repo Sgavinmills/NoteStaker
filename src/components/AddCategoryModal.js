@@ -18,7 +18,6 @@ const handleSubmit = (event) => {
 
   } else { // add sub category
     const parentCatIndex = getParentCategoryIndex(memory.categories, parentCategory.name);
-    debugger;
     if (!memory.categories[parentCatIndex].sub_categories.includes(categoryText) && categoryText.length > 2) {
       setMemory(currMemory => {
         const newMemory = addSubCategoryToMemory(currMemory, categoryText, parentCatIndex);

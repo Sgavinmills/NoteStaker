@@ -127,7 +127,6 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
 
 
       const filteredNotes = [];
-      debugger;
       newNotes.forEach(note => {
         const catIndex = note.tags.reduce((acc, category, index) => {
           const isMatch = category.name === parentCategory.name;

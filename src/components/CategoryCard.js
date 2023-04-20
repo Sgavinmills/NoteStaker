@@ -7,7 +7,7 @@ import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
 import AddCategoryModal from './AddCategoryModal';
-import { addNewBlankNoteToParentCategory } from '../memoryFunctions/memoryFunctions';
+import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory } from '../memoryFunctions/memoryFunctions';
 
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -35,85 +35,15 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   const removeCategory = () => {
     setConfirmDeleteCategoryModalOpen(false);
      setMemory(currMemory => {
-      const newMemory = {...currMemory}
-      const newNotes = [...newMemory.notes];
-      const newCategories = [...newMemory.categories];
-
-      // const catIndex = newCategories.indexOf(categoryName);
-      let catIndex = -1;
-      for (let i = 0; i < newCategories.length; i++) {
-        if (newCategories[i.name === category.name]) {
-          catIndex = i;
-          break;
-        }
-      }
-      newCategories.splice(catIndex, 1);
-      newMemory.categories = newCategories;
-
-      const filteredNotes = [];
-      // newNotes.forEach(note => {
-      //   const tagIndex = note.tags.indexOf(categoryName);
-      //   if (tagIndex === -1) {
-      //     filteredNotes.push(note);
-      //   } else {
-      //     if (note.tags.length > 1) {
-      //       // splce then push
-      //       note.tags.splice(tagIndex, 1)
-      //       filteredNotes.push(note);
-      //     }
-      //   }
-      // })
-
-      newNotes.forEach(note => {
-        let tagIndex = -1;
-        for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i].name === category.name) {
-            tagIndex = i;
-            break;
-          }
-        }
-        if (tagIndex === -1) {
-          filteredNotes.push(note);
-        } else {
-          if (note.tags.length > 1) {
-            note.tags.splice(tagIndex, 1)
-            filteredNotes.push(note);
-          }
-        }
-      })
-      newMemory.notes = filteredNotes;
+      const newMemory = removeParentCategory(currMemory, category.name);
       return newMemory;
-
      })
-
   }
 
   const removeAllNotesFromCategory = () => {
-    
     setConfirmDeleteAllNotesWithinCategoryModalOpen(false);
     setMemory(currMemory => {
-      const newMemory = {...currMemory};
-      const newNotes = [...newMemory.notes];
-      const filteredNotes = [];
-      newNotes.forEach(note => {
-        // const tagIndex = note.tags.indexOf(categoryName);
-        let tagIndex = -1;
-        for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i].name === category.name) {
-            tagIndex = i;
-            break;
-          }
-        }
-        if (tagIndex === -1) {
-          filteredNotes.push(note);
-        } else {
-          if (note.tags.length > 1) {
-            note.tags.splice(tagIndex, 1)
-            filteredNotes.push(note);
-          }
-        }
-      })
-      newMemory.notes = filteredNotes;
+      const newMemory = removeAllNotesFromParentCategory(currMemory, category.name);
       return newMemory;
     })
   }
