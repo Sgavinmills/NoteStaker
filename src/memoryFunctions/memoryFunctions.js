@@ -116,29 +116,15 @@ export function removeParentCategory(currMemory, categoryName) {
     return newMemory;
 }
 
-export function removeSubCategoryFromMemory(currMemory, categoryName, parentCategoryName) {
-    const newMemory = {...currMemory};
-    const newCategories = [...newMemory.categories];
-    const newNotes = [...newMemory.notes];
-    const parentCatIndex = getCatIndex(newMemory.categories, parentCategoryName);
-
-    // const subCatIndex = getCatIndex(newCategories[parentCatIndex].sub_categories, categoryName)
-    const subCatIndex = newCategories[parentCatIndex].sub_categories.indexOf(categoryName)
-
-    const newSubCategories = [...newCategories[parentCatIndex].sub_categories];
-    newSubCategories.splice(subCatIndex, 1);
-    newCategories[parentCatIndex].sub_categories = newSubCategories;
-    newMemory.categories = newCategories
-
+function deleteSubCategoryFromEachNote(newNotes, categoryName, parentCategoryName) {
     const filteredNotes = [];
 
     newNotes.forEach(note => {
         const parentCatIndex = getCatIndex(note.tags, parentCategoryName);
         if (parentCatIndex === -1) {
-            console.log("should hit this...")
             filteredNotes.push(note);
         } else {
-            const subCatIndex = note.tags[parentCatIndex].sub_tags.includes(categoryName);
+            const subCatIndex = note.tags[parentCatIndex].sub_tags.indexOf(categoryName);
             if (subCatIndex === -1) {
                 filteredNotes.push(note);
             } else {
@@ -146,10 +132,47 @@ export function removeSubCategoryFromMemory(currMemory, categoryName, parentCate
                     const newNoteSubTags = [...note.tags[parentCatIndex].sub_tags];
                     note.tags[parentCatIndex].sub_tags = newNoteSubTags;
                     filteredNotes.push(note);
+                } else {
+                    if (note.tags.length > 1) {
+
+                        const newNoteTags = [...note.tags];
+                        newNoteTags.splice(parentCatIndex, 1);
+                        note.tags = newNoteTags;
+                        
+                        filteredNotes.push(note);
+                    }
                 }
             }
         }
     })
+
+    return filteredNotes;
+
+}
+export function removeSubCategoryFromMemory(currMemory, categoryName, parentCategoryName) {
+    const newMemory = {...currMemory};
+    const newCategories = [...newMemory.categories];
+    const newNotes = [...newMemory.notes];
+    const parentCatIndex = getCatIndex(newMemory.categories, parentCategoryName);
+
+    const subCatIndex = newCategories[parentCatIndex].sub_categories.indexOf(categoryName)
+
+    const newSubCategories = [...newCategories[parentCatIndex].sub_categories];
+    newSubCategories.splice(subCatIndex, 1);
+    newCategories[parentCatIndex].sub_categories = newSubCategories;
+    newMemory.categories = newCategories
+
+
+    const filteredNotes = deleteSubCategoryFromEachNote(newNotes, categoryName, parentCategoryName)
+    newMemory.notes = filteredNotes;
+    return newMemory;
+}
+
+export function removeAllNotesFromASubCategory(currMemory, categoryName, parentCategoryName) {
+    const newMemory = {...currMemory};
+    const newNotes = [...newMemory.notes];
+
+    const filteredNotes = deleteSubCategoryFromEachNote(newNotes, categoryName, parentCategoryName);
     newMemory.notes = filteredNotes;
     return newMemory;
 }

@@ -5,7 +5,7 @@ import NoteList from './NoteList';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
-import { addNewBlankNoteToSubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
+import { addNewBlankNoteToSubCategory, removeAllNotesFromASubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
 
 const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -29,135 +29,22 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
     setShowNotes(true);
   }
 
-  //DOESNT WORK YET.
-  // SEEMS THAT NOTES THAT SHARE A SUB CATEGORY DONT GET DELETED BUT ANY OTHER CATEGORY DOES.
 
   const removeSubCategory = () => {
     setConfirmDeleteCategoryModalOpen(false);
      setMemory(currMemory => {
       const newMemory = removeSubCategoryFromMemory(currMemory, subCategoryName, parentCategory.name)
       return newMemory;
-
-      // const newMemory = {...currMemory}
-      // const newNotes = [...newMemory.notes];
-      // const newCategories = [...newMemory.categories];
-
-      // // const catIndex = newCategories.indexOf(parentCategory.name);
-      // const catIndex = newCategories.reduce((acc, category, index) => {
-      //   const isMatch = category.name === parentCategory.name;
-      //   return isMatch ? index : acc;
-      // }, -1);
-
-      // // newCategories.splice(catIndex, 1);
-
-      // const subCatIndex = newCategories[catIndex].sub_categories.reduce((acc, subCategory, index) => {
-      //   const isMatch = subCategory === subCategoryName;
-      //   return isMatch ? index : acc;
-      // }, -1)
-
-      // const newSubCategories = [...newCategories[catIndex].sub_categories];
-      // newSubCategories.splice(subCatIndex, 1);
-
-      // newCategories[catIndex].sub_categories = newSubCategories;
-
-
-      // newMemory.categories = newCategories;
-
-
-      // // const notesWithParentCategory = newNotes.filter(note => note.tags.some(tag => tag.name === parentCategory));
-
-      // const filteredNotes = [];
-
-      // newNotes.forEach(note => {
-      //   // check if the tags array contains a cat object with the name === parentCategory. 
-      //   // if it does not can just push striahgt into filteredNotes and move on.
-
-      //   // but if it does have name === parentCategory, then using the index already established, 
-      //   // access that object and see if sub_tags contains subCategoryName.
-      //   // if it does splice it out then push unless it is the only sub category in which case just forget about him
-      //   // if not then just push 
-
-      //   const catIndex = note.tags.reduce((acc, category, index) => {
-      //     const isMatch = category.name === parentCategory.name;
-      //     return isMatch ? index : acc;
-      //   }, -1)
-
-      //   if (catIndex === -1) {
-      //     filteredNotes.push(note);
-      //   } else {
-      //     const subCatIndex = note.tags[catIndex].sub_tags.includes(subCategoryName);
-      //     if (subCatIndex === -1) {
-      //       filteredNotes.push(note);
-      //     } else {
-      //       if (note.tags[catIndex].sub_tags.length > 1) {
-      //         note.tags[catIndex].sub_tags.splice(subCatIndex,1);
-      //         // make this new obj first.
-      //         const newNoteSubTags = [...note.tags[catIndex].sub_tags];
-      //         note.tags[catIndex].sub_tags = newNoteSubTags;
-      //         filteredNotes.push(note);
-      //       }
-      //     }
-      //   }
-      // })
-
-      
-      // newMemory.notes = filteredNotes;
-      // return newMemory;
-
      })
 
   }
 
   const removeAllNotesFromCategory = () => {
-    // new method:
-    // need to loop over notes. Notes with an object in the tag array with name === category.name
-    // then check if the corresponding sub tags is empty. if empty then need to remove the paent category from this note
-    // and if its the only one in there so tags is now empty then delete the entire note.
     setConfirmDeleteAllNotesWithinCategoryModalOpen(false);
     setMemory(currMemory => {
-      const newMemory = {...currMemory};
-      const newNotes = [...newMemory.notes];
-
-
-
-      const filteredNotes = [];
-      newNotes.forEach(note => {
-        const catIndex = note.tags.reduce((acc, category, index) => {
-          const isMatch = category.name === parentCategory.name;
-          return isMatch ? index : acc;
-        }, -1)
-        
-        if (catIndex === -1) {
-          filteredNotes.push(note);
-        } else {
-          const subCatIndex = note.tags[catIndex].sub_tags.includes(subCategoryName);
-          if (subCatIndex === -1) {
-            filteredNotes.push(note);
-          } else {
-            if (note.tags[catIndex].sub_tags.length > 1) {
-              note.tags[catIndex].sub_tags.splice(subCatIndex,1);
-              // make this new obj first.
-              const newNoteSubTags = [...note.tags[catIndex].sub_tags];
-              note.tags[catIndex].sub_tags = newNoteSubTags;
-              filteredNotes.push(note);
-            }
-          }
-        }
-      })
-
-      // newNotes.forEach(note => {
-      //   const tagIndex = note.tags.indexOf(categoryName);
-      //   if (tagIndex === -1) {
-      //     filteredNotes.push(note);
-      //   } else {
-      //     if (note.tags.length > 1) {
-      //       note.tags.splice(tagIndex, 1)
-      //       filteredNotes.push(note);
-      //     }
-      //   }
-      // })
-      newMemory.notes = filteredNotes;
+      const newMemory = removeAllNotesFromASubCategory(currMemory, subCategoryName, parentCategory.name);
       return newMemory;
+      
     })
   }
   
