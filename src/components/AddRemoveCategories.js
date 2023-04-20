@@ -10,7 +10,7 @@ const AddRemoveCategories = ({
   setDisplayingSubCategories,
   displayingSubCategories,
   subCatToDisplay,
-  setSubCatToDisplay
+  setSubCatToDisplay,
 }) => {
   
 useEffect(() => {
@@ -45,14 +45,14 @@ useEffect(() => {
             </div>
             
           ))}
-          <div
+          {parentCategory.sub_categories.length > 0 && <div
               className={`${formStyles["category-tab"]} ${formStyles["category-tab"]} ${formStyles["category-tab-parent"]}`}
               onMouseDown={(event) =>
                 handleSwapCategoryClick(event)
               }
             >
               <span className={`${formStyles["category-swap-arrow"]}`}>⇓</span>
-            </div>
+            </div>}
         </div>
       ) : (
         <div className={formStyles["categories-container"]}>
@@ -65,7 +65,7 @@ useEffect(() => {
                   : ""
               }`}
               onMouseDown={(event) =>
-                handleTouchStart(event, "category", subCategory, "sub", parentCategory)
+                handleTouchStart(event, "category", subCategory, "sub", subCatToDisplay)
               }
             >
               {subCategory}

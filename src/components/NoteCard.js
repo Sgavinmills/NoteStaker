@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../CSS/Card.module.css";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
+import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getNoteIndex, getParentCategoryIndex } from "../memoryFunctions/memoryFunctions";
 import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
@@ -14,7 +15,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   const [displayCategories, setDisplayCategories] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [displayingSubCategories, setDisplayingSubCategories] = useState(
-    true
+    parentCategory.sub_categories.length > 0 ? true : false
   );
   const [subCatToDisplay, setSubCatToDisplay] = useState("");
   const confirmationMessage =
@@ -49,15 +50,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
 
   const removeFromMemory = () => {
     setMemory((currMemory) => {
-      const newMemory = { ...currMemory };
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-
-      updatedNotes.splice(index, 1);
-      newMemory.notes = updatedNotes;
+      const newMemory = deleteNoteFromMemory(currMemory, note.id)
       return newMemory;
     });
   };
@@ -111,65 +104,37 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
-  const updateCategoryInMemory = (event, category, categoryType, parentCategory) => { // can prob not need categorytype and just check for parentcategory, but whatevs for now
+  const updateCategoryInMemory = (event, categoryName, categoryType, parentCategoryName) => { 
+    
+    if (categoryType === "parent") { // we dont update memory if clicking into a parent category that has subs
+       const noteIndex = getNoteIndex(memory.notes, note.id);
+      const isCurrentlyActiveTag = getParentCategoryIndex(memory.notes[noteIndex].tags, categoryName) > -1 ? true : false;
+      if (!isCurrentlyActiveTag) {
+
+        const categoryIndex = getParentCategoryIndex(memory.categories, categoryName)
+        if (memory.categories[categoryIndex].sub_categories.length > 0) {
+  
+          return;
+        }
+      }
+
+    }
+
     setMemory((currMemory) => {
-      const newMemory = { ...currMemory };
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-
-      const currCategories = updatedNotes[index].tags;
-      const newCategories = [...currCategories];
-
-      // const catIndex = newCategories.indexOf(category);
       if (categoryType === "parent") {
-        let catIndex = -1;
-        for (let i = 0; i < newCategories.length; i++) {
-          if (newCategories[i].name === category) {
-            catIndex = i;
-            break;
-          }
-        }
-        if (catIndex > -1) {
-          newCategories.splice(catIndex, 1);
-        } else {
-          newCategories.push({"name" : category, "sub_tags" : []})
-        }
+        const newMemory = addOrRemoveParentCategoryToNote(currMemory, note.id, categoryName, noteText) 
+        return newMemory;
        } else {
         if (categoryType === "sub") {
-         
-          let parentCatIndex = -1;
-          console.log(parentCategory)
-          for (let i = 0; i < newCategories.length; i++) {
-            if (newCategories[i].name === parentCategory.name) {
-              parentCatIndex = i;
-              break;
-            }
-          }
-          const subCatIndex = newCategories[parentCatIndex].sub_tags.indexOf(category)
-          if (subCatIndex > -1) {
-            if (subCategoryName === newCategories[parentCatIndex].sub_tags[subCatIndex]) {
+            if (subCategoryName === categoryName) { 
               setIsFocussedCannotClick(false);
             }
-            newCategories[parentCatIndex].sub_tags.splice(subCatIndex,1)
-          } else {
-            newCategories[parentCatIndex].sub_tags.push(category);
-            if (newCategories[parentCatIndex].sub_tags.length === 1) {
-              setIsFocussedCannotClick(false);
-            }
-          }
+          const newMemory = addOrRemoveSubCategoryToNote(currMemory, note.id, categoryName, parentCategoryName, noteText)
+          return newMemory;
+
         }
+
        }
-
-
-      
-
-      updatedNotes[index].tags = newCategories;
-      updatedNotes[index].note = noteText;
-      newMemory.notes = updatedNotes;
-      return newMemory;
     });
   };
 
@@ -210,7 +175,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
         updatedNotes[index].priority = "high" 
       }
 
-      updatedNotes[index].note = noteText;
+      updatedNotes[index].note = noteText; // need this so clicking away doesnt reset the text
       newMemory.notes = updatedNotes;
       return newMemory;
     });
@@ -253,20 +218,9 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             break;
           case "category":
             if (!displayingSubCategories) {
-              // if we're on parent atm, want to swap to the sub categories when we select the parent
-              // but only if that parent is now chosen... if the parent has been deselected then stay on parents
-              
-              // fundamentally need to check the notes categories and see if it contains
-              // the categoryname clicked on (in the parent categories)
-              // if it does NOT then we know it will from now on
-              // so we will do the setdisplayingsubcategories(true)
-              // and also need to update a state which tells the addremovecategoris component
-              // which subs its actually showing :/ 
-
               if (!note.tags.some(tag => tag.name === categoryName)) {
                 setDisplayingSubCategories(true);
                 setSubCatToDisplay(categoryName);
-
               }
             }
             updateCategoryInMemory(event, categoryName, categoryType, parentCategory);

@@ -8,6 +8,7 @@ const handleSubmit = (event) => {
   event.stopPropagation();
   event.preventDefault();
   setAddingCategory(false);
+  // should display a reason why can't add
   if (!parentCategory) { // add normal category
     if (!memory.categories.some(cat => cat === categoryText) && categoryText.length > 2) {
       setMemory(currMemory => {
@@ -17,6 +18,7 @@ const handleSubmit = (event) => {
     }
 
   } else { // add sub category
+  // should display a reason why can't add
     const parentCatIndex = getParentCategoryIndex(memory.categories, parentCategory.name);
     if (!memory.categories[parentCatIndex].sub_categories.includes(categoryText) && categoryText.length > 2) {
       setMemory(currMemory => {
