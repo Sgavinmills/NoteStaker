@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../CSS/Card.module.css";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
-import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getNoteIndex, getParentCategoryIndex } from "../memoryFunctions/memoryFunctions";
+import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getNoteIndex, getParentCategoryIndex, submitNoteChange, toggleHighPriority, toggleMarkDone } from "../memoryFunctions/memoryFunctions";
 import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
@@ -91,15 +91,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     }
 
     setMemory((currMemory) => {
-      const newMemory = { ...currMemory };
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-      updatedNotes[index].note = noteText;
-      updatedNotes[index].newEmptyNote = false; // or delete property?
-      newMemory.notes = updatedNotes;
+      const newMemory = submitNoteChange(currMemory, note.id, noteText)
       return newMemory;
     });
   };
@@ -159,24 +151,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     event.stopPropagation();
 
     setMemory((currMemory) => {
-      const newMemory = { ...currMemory };
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-
-      // updatedNotes[index].isHighPriority = !updatedNotes[index].isHighPriority;
-      if (updatedNotes[index].priority === "high") {
-        updatedNotes[index].priority = "low" 
-      } else if (updatedNotes[index].priority === "low") {
-        updatedNotes[index].priority = "" 
-      } else {
-        updatedNotes[index].priority = "high" 
-      }
-
-      updatedNotes[index].note = noteText; // need this so clicking away doesnt reset the text
-      newMemory.notes = updatedNotes;
+      const newMemory = toggleHighPriority(currMemory, note.id, noteText)
       return newMemory;
     });
   };
@@ -184,15 +159,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   const handleMarkDoneClick = (event) => {
 
     setMemory((currMemory) => {
-      const newMemory = { ...currMemory };
-      const updatedNotes = [...newMemory.notes];
-      const index = updatedNotes.reduce((acc, item, index) => {
-        const isMatch = note.id === item.id;
-        return isMatch ? index : acc;
-      }, -1);
-
-      updatedNotes[index].markDone = !updatedNotes[index].markDone;
-      newMemory.notes = updatedNotes;
+      const newMemory = toggleMarkDone(currMemory, note.id, noteText)
       return newMemory;
     });
   };

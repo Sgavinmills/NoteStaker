@@ -213,6 +213,8 @@ export function addOrRemoveParentCategoryToNote(currMemory, noteID, categoryName
 
       updatedNotes[noteIndex].tags = noteNewCategories;
       updatedNotes[noteIndex].note = noteText;
+      updatedNotes[noteIndex].newEmptyNote = false;
+
 
       newMemory.notes = updatedNotes;
       return newMemory;
@@ -275,6 +277,8 @@ export function addOrRemoveSubCategoryToNote(currMemory, noteID, categoryName, p
       }
       updatedNotes[noteIndex].tags = noteNewCategories;
       updatedNotes[noteIndex].note = noteText;
+      updatedNotes[noteIndex].newEmptyNote = false;
+
       newMemory.notes = updatedNotes;
       return newMemory;
 }
@@ -290,6 +294,47 @@ export function deleteNoteFromMemory(currMemory, noteID) {
 
 }
 
+export function submitNoteChange(currMemory, noteID, noteText) {
+    const newMemory = { ...currMemory };
+    const updatedNotes = [...newMemory.notes];
+    const noteIndex = getNoteIndexFromNoteList(updatedNotes, noteID);
+    
+    updatedNotes[noteIndex].note = noteText;
+    updatedNotes[noteIndex].newEmptyNote = false;
+    newMemory.notes = updatedNotes;
+    return newMemory;
+}
+
+export function toggleHighPriority(currMemory, noteID, noteText) {
+    const newMemory = { ...currMemory };
+    const updatedNotes = [...newMemory.notes];
+    const noteIndex = getNoteIndexFromNoteList(updatedNotes, noteID);
+
+    if (updatedNotes[noteIndex].priority === "high") {
+        updatedNotes[noteIndex].priority = "low" 
+      } else if (updatedNotes[noteIndex].priority === "low") {
+        updatedNotes[noteIndex].priority = "" 
+      } else {
+        updatedNotes[noteIndex].priority = "high" 
+      }
+
+      updatedNotes[noteIndex].note = noteText;
+      newMemory.notes = updatedNotes;
+      return newMemory;
+}
+
+export function toggleMarkDone(currMemory, noteID, noteText) {
+    const newMemory = { ...currMemory };
+    const updatedNotes = [...newMemory.notes];
+    const noteIndex = getNoteIndexFromNoteList(updatedNotes, noteID);
+
+    
+    updatedNotes[noteIndex].markDone = !updatedNotes[noteIndex].markDone;
+    newMemory.notes = updatedNotes;
+    updatedNotes[noteIndex].note = noteText;
+
+    return newMemory;
+}
 
 
 
