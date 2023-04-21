@@ -19,12 +19,8 @@ function App() {
   // const memoryToUse = testMemoryJSON;
   // DONT FORGET WILL NEED TO DO SOMETHING AT LEAST SORT OF CLEVER BEFORE PUSHING TO MAIN ELSE WILL FUCK MY EXISTING MEMORY
   const memoryToUse = readFromLocalStorage();
-  if (typeof memoryToUse.notes[0]?.tags[0] === "string") {
-    setMemory({notes:[], categories:[]});
-  } else {
     setMemory(memoryToUse); 
-  }
-  setIsLoading(false);
+    setIsLoading(false);
   }, [])
 
   useEffect(() => {
