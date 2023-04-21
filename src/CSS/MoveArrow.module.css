@@ -39,7 +39,7 @@
   height: 0;
   border-left: 5vh solid transparent;
   border-right: 5vh solid transparent;
-  border-bottom: 5vh solid #b009f1; /* adjust color and size as needed */
+  border-bottom: 5vh solid #c6d6f0; /* adjust color and size as needed */
   content: "";
 }
 
@@ -51,12 +51,12 @@
   height: 0;
   border-left: 5vh solid transparent;
   border-right: 5vh solid transparent;
-  border-top: 5vh solid #b009f1; /* adjust color and size as needed */
+  border-top: 5vh solid #c6d6f0; /* adjust color and size as needed */
   content: "";
 }
 
 .done {
   width: 10vh;
   height: 20px;
-  background-color: #b009f1
+  background-color: #c6d6f0
 }
