@@ -8,7 +8,7 @@ import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
 import MoveCategoryArrows from './MoveCategoryArrows';
 import AddCategoryModal from './AddCategoryModal';
-import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory } from '../memoryFunctions/memoryFunctions';
+import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory, getParentCategoryIndex, moveCategoryUp, moveCategoryDown } from '../memoryFunctions/memoryFunctions';
 
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -130,6 +130,38 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       setShowNotes(!showNotes)
     }
   }
+
+const handleMoveCategoryUp = (event, catName) => {
+  event.stopPropagation();
+  event.preventDefault();
+
+  const catIndex = getParentCategoryIndex(memory.categories, catName);
+  if (catIndex === 0) {
+    // handle not being able to move up here.
+    // dont do until note moving is implemented because that might be a pickler
+    return;
+  }
+
+  setMemory(currMemory => {
+    const newMemory = moveCategoryUp(currMemory, catIndex);
+    return newMemory;
+    })
+}
+
+const handleMoveCategoryDown = (event, catName) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const catIndex = getParentCategoryIndex(memory.categories, catName);
+  if (catIndex === memory.categories.length -1) {
+    console.log("already at bottom")
+    // handle not moving here, but wait til notes is done
+    return;
+  }
+  setMemory(currMemory => {
+    const newMemory = moveCategoryDown(currMemory, catIndex);
+    return newMemory;
+    })
+}
   
   return (
     <>
@@ -148,7 +180,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
         />
       )}
     { movingCategory && 
-      <MoveCategoryArrows memory={memory} setMemory={setMemory} category={category} setMovingCategory={setMovingCategory}/>
+      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown}memory={memory} setMemory={setMemory} category={category} setMovingCategory={setMovingCategory}/>
     }
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
