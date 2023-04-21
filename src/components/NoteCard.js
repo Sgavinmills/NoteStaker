@@ -97,21 +97,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   };
 
   const updateCategoryInMemory = (event, categoryName, categoryType, parentCategoryName) => { 
-    
-    if (categoryType === "parent") { // we dont update memory if clicking into a parent category that has subs
-       const noteIndex = getNoteIndex(memory.notes, note.id);
-      const isCurrentlyActiveTag = getParentCategoryIndex(memory.notes[noteIndex].tags, categoryName) > -1 ? true : false;
-      if (!isCurrentlyActiveTag) {
-
-        const categoryIndex = getParentCategoryIndex(memory.categories, categoryName)
-        if (memory.categories[categoryIndex].sub_categories.length > 0) {
-  
-          return;
-        }
-      }
-
-    }
-
     setMemory((currMemory) => {
       if (categoryType === "parent") {
         const newMemory = addOrRemoveParentCategoryToNote(currMemory, note.id, categoryName, noteText) 
@@ -184,10 +169,18 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             setIsModalOpen(true);
             break;
           case "category":
-            if (!displayingSubCategories) {
-              if (!note.tags.some(tag => tag.name === categoryName)) {
+            if (categoryType === "parent") {  
+              const isCurrentlyActiveTag = note.tags.some(tag => tag.name === categoryName);
+              const indexOfParentClickedOn = getParentCategoryIndex(memory.categories, categoryName);
+              const hasSubCategories = memory.categories[indexOfParentClickedOn].sub_categories.length > 0 ? true : false;
+
+              if (!isCurrentlyActiveTag && hasSubCategories) {
                 setDisplayingSubCategories(true);
                 setSubCatToDisplay(categoryName);
+              }
+
+              if (!isCurrentlyActiveTag && hasSubCategories) {
+                break;
               }
             }
             updateCategoryInMemory(event, categoryName, categoryType, parentCategory);
