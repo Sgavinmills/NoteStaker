@@ -36,16 +36,9 @@ function App() {
     setAddingCategory(!addingCategory);
   }
 
-  const deleteMemory = () => {
-    setMemory(currMemory => {
-      return { "notes" : [], "categories" : []}
-    })
-  }
-
+ 
   return (
     <div className={`${AppStyle["app-container"]}`}>
-    <button onClick={() => {deleteMemory()}}>CLICK ME TO DELETE MEMORY</button>
-
       { addingCategory && <AddCategoryModal setAddingCategory={setAddingCategory} memory={memory} setMemory={setMemory} />}
       <div className={`${AppStyle["hamburger-container"]}`}><span onClick={(event) => {handleBurgerClick(event)}} className={`${AppStyle["hamburger-span"]}`}>&#x2630;</span></div>
       {!isLoading && <Categories memory={memory} setMemory={setMemory} />}
