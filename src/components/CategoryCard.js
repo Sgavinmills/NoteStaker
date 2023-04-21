@@ -6,6 +6,7 @@ import SubCategories from './SubCategories';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
+import MoveCategoryArrows from './MoveCategoryArrows';
 import AddCategoryModal from './AddCategoryModal';
 import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory } from '../memoryFunctions/memoryFunctions';
 
@@ -19,9 +20,8 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [edittingCategory, setEdittingCategory] = useState(false);
   const [addingSubCategory, setAddingSubCategory] = useState(false);
-
+  const [movingCategory, setMovingCategory] = useState(false);
   const optionsMenuRef = useRef(null);
-
   const handleAddNoteClick = (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -66,6 +66,9 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     setAddingSubCategory(true);
   }
 
+  const handleMoveCategoryClick = () => {
+    setMovingCategory(true);
+  }
   const options = [
     {
       option: " ➕ Add Sub-Category",
@@ -82,6 +85,10 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     {
       option: "🗑️ Remove all notes from category",
       action: handleDeleteAllNotesWithinCategoryClick
+    },
+    {
+      option: "⇕ Move category",
+      action: handleMoveCategoryClick
     }
   ]
 
@@ -123,6 +130,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       setShowNotes(!showNotes)
     }
   }
+  
   return (
     <>
     {confirmDeleteCategoryModalOpen && (
@@ -139,6 +147,9 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
           confirmationMessage={confirmationMessage}
         />
       )}
+    { movingCategory && 
+      <MoveCategoryArrows memory={memory} setMemory={setMemory} category={category} setMovingCategory={setMovingCategory}/>
+    }
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
     )}

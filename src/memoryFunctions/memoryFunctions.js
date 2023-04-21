@@ -404,6 +404,26 @@ export function toggleMarkDone(currMemory, noteID, noteText) {
     return newMemory;
 }
 
+export function moveCategoryUp(currMemory, catIndex) {
+    const newMemory = {...currMemory};
+    const newCategories = [...newMemory.categories];
+    const itemToMove = {...newCategories[catIndex]};
+    newCategories[catIndex] = {...newCategories[catIndex -1]};
+    newCategories[catIndex-1] = itemToMove;
+    newMemory.categories = newCategories;
+    return newMemory;
+}
+
+export function moveCategoryDown(currMemory, catIndex) {
+    const newMemory = {...currMemory};
+    const newCategories = [...newMemory.categories];
+    const itemToMove = {...newCategories[catIndex]};
+    newCategories[catIndex] = {...newCategories[catIndex + 1]};
+    newCategories[catIndex+1] = itemToMove;
+    newMemory.categories = newCategories;
+    return newMemory;
+}
+
 
 
 
