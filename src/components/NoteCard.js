@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../CSS/Card.module.css";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
-import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getNoteIndex, getParentCategoryIndex, submitNoteChange, toggleHighPriority, toggleMarkDone } from "../memoryFunctions/memoryFunctions";
+import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getParentCategoryIndex, submitNoteChange, toggleHighPriority, toggleMarkDone } from "../memoryFunctions/memoryFunctions";
 import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
