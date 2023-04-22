@@ -76,6 +76,11 @@
   font-size: 18px;
 }
 
+.additional-info-message {
+  font-size: 12px;
+  font-style: italic;
+}
+
 .add-category-modal-options {
   /* Set flexbox properties to align buttons horizontally */
   display: flex;

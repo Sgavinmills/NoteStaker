@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import ModalStyles from "../CSS/Modal.module.css";
 import { addParentCategoryToMemory, addSubCategoryToMemory, getParentCategoryIndex } from '../memoryFunctions/memoryFunctions';
+
 const AddCategoryModal = ({setAddingCategory, setMemory, memory, parentCategory, setShowSubCategories}) => {
 const [categoryText, setCategoryText] = useState('');
+
+// checks if the new subcategory is the first in a parent and if so if any notes will be moved
+const strandedNotes = () => {
+  if (parentCategory && parentCategory.sub_categories.length === 0) {
+    return memory.notes.some(note => getParentCategoryIndex(note.tags, parentCategory.name) > -1);
+  }
+  return false;
+}
 
 const handleSubmit = (event) => {
   event.stopPropagation();
@@ -42,7 +51,8 @@ const handleCancel = (event) => {
      <div className={`${ModalStyles["add-category-modal-content"]}`}>
       <div className={`${ModalStyles["add-category-modal-message"]}`}>
         <p>Enter category name</p>
-          
+        { strandedNotes() && <p className={`${ModalStyles["additional-info-message"]}`} >If a category has a sub-category then all notes within that category must reside in a subcategory.
+          Since notes already exist in {parentCategory.name} they will all be moved into the new sub category after it is created. You can still move them into different categories later.</p>}
         <input onChange={(event) => setCategoryText(event.target.value)}
           value={categoryText}
         

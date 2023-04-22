@@ -27,12 +27,40 @@ export function addParentCategoryToMemory(currMemory, categoryName) {
 export function addSubCategoryToMemory(currMemory, categoryName, parentIndex) {
     const newMemory = {...currMemory};
     const newCategories = [...newMemory.categories];
+    const newNotes = [...newMemory.notes];
     const updatedCategory = {
         ...newCategories[parentIndex],
         sub_categories: [...newCategories[parentIndex].sub_categories, categoryName]
     }
     newCategories[parentIndex] = updatedCategory;
+
     newMemory.categories = newCategories;
+
+    // checks if any notes are stranded outside of subcategories due to new subcategory.
+    // if they are it adds the subcategory to the note. 
+    const updatedNotes = newNotes.map(note => {
+        const tagIndex = getCatIndex(note.tags, currMemory.categories[parentIndex].name)
+        if (tagIndex === -1) {
+            return note;
+        } else {
+            if (note.tags[tagIndex].sub_tags.length === 0) {
+                // add subcat name to subtags
+                const newTags = [...note.tags];
+                const newSubTags = [...newTags[tagIndex].sub_tags];
+
+                newSubTags.push(categoryName);
+                newTags[tagIndex].sub_tags = newSubTags;
+                const newNote = {...note}
+                newNote.tags = newTags;
+                return newNote;
+
+            } else {
+                return note;
+            }
+        }
+    })
+    newMemory.notes = updatedNotes;
+
     return newMemory;
 }
 
