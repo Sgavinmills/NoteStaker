@@ -41,6 +41,15 @@
   border-right: 5vh solid transparent;
   border-bottom: 5vh solid #c6d6f0; /* adjust color and size as needed */
   content: "";
+  box-shadow: 0px 3px 0px #000;
+  transition: transform 0.1s ease-in-out;
+
+
+}
+
+.up-arrow:active {
+  transform: translateY(2px);
+  border-bottom-color: #999;
 }
 
 .down-arrow {
@@ -53,6 +62,14 @@
   border-right: 5vh solid transparent;
   border-top: 5vh solid #c6d6f0; /* adjust color and size as needed */
   content: "";
+  box-shadow: 0px -3px 0px  #000;
+  transition: transform 0.1s ease-in-out;
+
+}
+
+.down-arrow:active {
+  transform: translateY(2px);
+  border-bottom-color: #999;
 }
 
 .done {
