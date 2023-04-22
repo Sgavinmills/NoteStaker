@@ -76,21 +76,21 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       action: handleAddSubCategoryClick
     },
     {
-      option: " ❌ Delete category",
-      action: handleDeleteCategoryClick
-    },
-    {
       option: "✏️ Edit category name",
       action: handleEditCategoryClick
+    },
+    {
+      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move category</span>,
+      action: handleMoveCategoryClick
     },
     {
       option: "🗑️ Remove all notes from category",
       action: handleDeleteAllNotesWithinCategoryClick
     },
     {
-      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move category</span>,
-      action: handleMoveCategoryClick
-    }
+      option: " ❌ Delete category",
+      action: handleDeleteCategoryClick
+    },
   ]
 
   const handleMoreOptionsClick = (event) => {

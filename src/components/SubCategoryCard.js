@@ -7,6 +7,8 @@ import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
 import { addNewBlankNoteToSubCategory, getParentCategoryIndex, getSubCatIndex, moveSubCategoryDown, moveSubCategoryUp, removeAllNotesFromASubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
 import MoveCategoryArrows from './MoveItemArrows';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUpDown } from '@fortawesome/free-solid-svg-icons'
 
 const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -70,20 +72,20 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
 
   const options = [
     {
-      option: " ❌ Delete sub-category",
-      action: handleDeleteCategoryClick
-    },
-    {
       option: "✏️ Edit sub-category name",
       action: handleEditCategoryClick
+    },
+    {
+      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move sub-category</span>,
+      action: handleMoveCategoryClick
     },
     {
       option: "🗑️ Remove all notes from sub-category",
       action: handleDeleteAllNotesWithinCategoryClick
     },
     {
-      option: "⇕ Move sub-category",
-      action: handleMoveCategoryClick
+      option: " ❌ Delete sub-category",
+      action: handleDeleteCategoryClick
     }
   ]
 
