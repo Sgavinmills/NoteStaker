@@ -1,0 +1,147 @@
+{
+  "notes" : [
+  {
+      "note": "But notes can appear in more than one category (see third sub category)",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Second sub category",
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188137607ngw9drt",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Any changes you make to a note will apply to the note in all categories it exists in. ",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "16821881837243cd48nn",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Click on a note to edit it. You can use the icons to:\n - Add / remove categories\n - Set high / low priority\n- Move notes up and down \n- Delete note",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188209742kc5vum8",
+      "newEmptyNote": false
+  },
+  {
+      "note": "When adding and removing categories use the arrow icon to jump or down between parent and sub categories. You can add or remove a note from any category or sub category if you navigate through to it correctly. The only exception is you cannot remove the last category from a note. If you want to get rid of a note entirely use the delete button (big red X)",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188285342vja0u4s",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Move notes or categories up or down is done using the up/down arrow icon and clicking the big obvious buttons until it's in the position you want. To escape from moving mode click the middle line.",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188378077aicq6ps",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Add new categories by using the hamburger menu at the top, all other options can be found inside the 3 vertical dot options menu and should be self explanatory. Try messing around with these notes or just delete them all (can delete entire categories) and add your own.",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "Third sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188428374oya0gkd",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Notes in here are split into categories",
+      "tags": [
+          {
+              "name": "See More",
+              "sub_tags": [
+                  "First sub category"
+              ]
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "16821881254506zkzmyt",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Since this is your first time feel free to use these notes as an introduction into using the app. Otherwise, feel free to delete them and start from scratch. ",
+      "tags": [
+          {
+              "name": "Starting Off",
+              "sub_tags": []
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "16821879759331yecd59",
+      "newEmptyNote": false
+  },
+  {
+      "note": "Notes can be added directly to a category, or into sub categories. This 'starting off' category has no categories but click on 'See More' below to see some sub categories.",
+      "tags": [
+          {
+              "name": "Starting Off",
+              "sub_tags": []
+          }
+      ],
+      "additional_info": "",
+      "date_added": "",
+      "id": "1682188024078adj1916",
+      "newEmptyNote": false
+  }
+],
+
+"categories" : [
+  {
+    "name" :"Starting Off",
+    "sub_categories" : []
+  },
+  {
+    "name" : "See More",
+    "sub_categories" : ["First sub category", "Second sub category", "Third sub category"]
+  }
+]
+}

@@ -1,16 +1,13 @@
+import setUpMemoryJSON from '../setupMemory.json';
+
 export function writeToLocalStorage(memory) {
     localStorage.setItem("memory", JSON.stringify(memory));
 }
 
 export function readFromLocalStorage() {
-    const savedMemory = JSON.parse(localStorage.getItem("memory"));
+    let savedMemory = JSON.parse(localStorage.getItem("memory"));
     if (!savedMemory) {
-        const emptyMemory = {
-            notes : [],
-            categories: []
-        }
-
-        return emptyMemory;
+        savedMemory = setUpMemoryJSON;        
     }
     return savedMemory;
 }
