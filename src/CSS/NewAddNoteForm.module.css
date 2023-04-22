@@ -148,14 +148,14 @@
   }
 
   .category-tab-parent {
-    background-color: rgb(192, 137, 178);
+    background-color: rgba(192, 137, 178, 0.4);
     color: #fff;
 
 
   }
 
   .category-tab-sub {
-    background-color: rgb(117, 154, 167);
+    background-color: rgb(117, 154, 167, 0.4);
     color: #fff;
 
 
