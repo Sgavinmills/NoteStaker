@@ -10,7 +10,7 @@ import MoveCategoryArrows from './MoveItemArrows';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash, faUpDown } from '@fortawesome/free-solid-svg-icons'
 
-const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
+const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick, closeNotes, setCloseNotes}) => {
 
   const [showNotes, setShowNotes] = useState(false);
   const [showSubCategories, setShowSubCategories] = useState(false);
@@ -21,6 +21,14 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
   const [edittingCategory, setEdittingCategory] = useState(false);
   const [movingCategory, setMovingCategory] = useState(false);
   const optionsMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (closeNotes) {
+      setShowNotes(false);
+      setCloseNotes(false);
+    }
+  }, [closeNotes, setShowNotes, setShowSubCategories, setCloseNotes])
+
 
   const handleAddNoteClick = (event) => {
     event.stopPropagation();
@@ -67,6 +75,7 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
   }
 
   const handleMoveCategoryClick = () => {
+    setCloseNotes(true);
     setMovingCategory(true);
   }
 
@@ -198,7 +207,7 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
       </div>
     </div>
 
-    {showNotes && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={parentCategory} subCategoryName={subCategoryName} setMemory={setMemory} />}
+    {(showNotes && !closeNotes) && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={parentCategory} subCategoryName={subCategoryName} setMemory={setMemory} />}
     </>
   );
 };

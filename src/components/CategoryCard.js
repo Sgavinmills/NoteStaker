@@ -11,8 +11,7 @@ import AddCategoryModal from './AddCategoryModal';
 import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory, getParentCategoryIndex, moveCategoryUp, moveCategoryDown } from '../memoryFunctions/memoryFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpDown, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
-const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
-
+const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick, closeAll, setCloseAll}) => {
   const [showNotes, setShowNotes] = useState(false);
   const [showSubCategories, setShowSubCategories] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
@@ -32,6 +31,14 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
     })
     setShowNotes(true); 
   }
+
+  useEffect(() => {
+    if (closeAll) {
+      setShowNotes(false);
+      setShowSubCategories(false);
+      setCloseAll(false);
+    }
+  }, [closeAll, setShowNotes, setShowSubCategories, setCloseAll])
 
   const removeCategory = () => {
     setConfirmDeleteCategoryModalOpen(false);
@@ -68,6 +75,8 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   }
 
   const handleMoveCategoryClick = () => {
+    
+    setCloseAll(true);
     setMovingCategory(true);
   }
   const options = [
@@ -207,8 +216,8 @@ const handleMoveCategoryDown = (event, catName) => {
       then the notes themselves would be rendered in a similar way as before, check all notes if they have a tag
       that has [0] matching category then check if it has a [1] that includes sub category and render.
        */}
-    { showSubCategories && <SubCategories memory={memory} setMemory={setMemory} parentCategory={category} isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick}/>}
-    {showNotes && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={category} setMemory={setMemory} />}
+    { (showSubCategories && !closeAll) && <SubCategories closeAll={closeAll} setCloseAll={setCloseAll} memory={memory} setMemory={setMemory} parentCategory={category} isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick}/>}
+    {(showNotes && !closeAll) && <NoteList isFocussedCannotClick={isFocussedCannotClick} setIsFocussedCannotClick={setIsFocussedCannotClick} memory={memory} parentCategory={category} setMemory={setMemory} />}
     </>
   );
 };
