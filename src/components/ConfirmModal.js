@@ -7,7 +7,7 @@ const ConfirmModal = ({handleDelete, setIsModalOpen, confirmationMessage}) => {
     <div className={`${ModalStyles["modal-container"]} ${ModalStyles[""]}`}>
      <div className={`${ModalStyles["modal-content"]}`}>
       <div className={`${ModalStyles["modal-message"]}`}>
-        <p>{confirmationMessage}</p>
+        {confirmationMessage}
 
       </div>
       <div className={`${ModalStyles["modal-options"]}`}>

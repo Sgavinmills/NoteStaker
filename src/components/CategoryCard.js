@@ -58,12 +58,12 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   
   const handleDeleteCategoryClick = (event) => {
     setConfirmDeleteCategoryModalOpen(true);
-    setConfirmationMessage("Are you sure you want to delete this category? Any notes that only belong to this category will also be deleted.")
+    setConfirmationMessage(<p>Are you sure you want to delete <span style={{ fontStyle: 'italic', fontWeight: 'bold' }}>{category.name}</span> category? Any notes that only belong to this category will also be deleted.</p>)
   }
 
   const handleDeleteAllNotesWithinCategoryClick = (event) => {
     setConfirmDeleteAllNotesWithinCategoryModalOpen(true);
-    setConfirmationMessage("Are you sure you want to delete all notes within this category? Notes belonging to other categories will remain there but the rest will be permenantly erased")
+    setConfirmationMessage(<p>Are you sure you want to delete all notes within <span style={{ fontStyle: 'italic' , fontWeight: 'bold'}}>{category.name}</span> category? Notes belonging to other categories will remain there but the rest will be permenantly erased</p>)
   }
 
   const handleEditCategoryClick = () => {
