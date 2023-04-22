@@ -8,7 +8,7 @@ import EditCategoryModal from './EditCategoryModal';
 import { addNewBlankNoteToSubCategory, getParentCategoryIndex, getSubCatIndex, moveSubCategoryDown, moveSubCategoryUp, removeAllNotesFromASubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
 import MoveCategoryArrows from './MoveItemArrows';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpDown } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faTrash, faUpDown } from '@fortawesome/free-solid-svg-icons'
 
 const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -72,15 +72,15 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
 
   const options = [
     {
-      option: "✏️ Edit sub-category name",
+      option: <span><FontAwesomeIcon icon={faPenToSquare} /> Edit sub-category name</span>,
       action: handleEditCategoryClick
     },
     {
-      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move sub-category</span>,
+      option: <span> <FontAwesomeIcon icon={faUpDown} /> Move sub-category</span>,
       action: handleMoveCategoryClick
     },
     {
-      option: "🗑️ Remove all notes from sub-category",
+      option: <span><FontAwesomeIcon icon={faTrash} /> Remove all notes from sub-category</span>,
       action: handleDeleteAllNotesWithinCategoryClick
     },
     {

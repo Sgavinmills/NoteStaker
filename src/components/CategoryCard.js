@@ -10,7 +10,7 @@ import MoveCategoryArrows from './MoveItemArrows';
 import AddCategoryModal from './AddCategoryModal';
 import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory, getParentCategoryIndex, moveCategoryUp, moveCategoryDown } from '../memoryFunctions/memoryFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpDown } from '@fortawesome/free-solid-svg-icons'
+import { faUpDown, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
   const [showNotes, setShowNotes] = useState(false);
@@ -72,19 +72,19 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   }
   const options = [
     {
-      option: " ➕ Add Sub-Category",
+      option: <span><FontAwesomeIcon icon={faPlus} /> Add Sub-Category</span>,
       action: handleAddSubCategoryClick
     },
     {
-      option: "✏️ Edit category name",
+      option: <span><FontAwesomeIcon icon={faPenToSquare} /> Edit category name</span>,
       action: handleEditCategoryClick
     },
     {
-      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move category</span>,
+      option: <span><FontAwesomeIcon icon={faUpDown} /> Move category</span>,
       action: handleMoveCategoryClick
     },
     {
-      option: "🗑️ Remove all notes from category",
+      option: <span><FontAwesomeIcon icon={faTrash} /> Remove all notes from category</span>,
       action: handleDeleteAllNotesWithinCategoryClick
     },
     {

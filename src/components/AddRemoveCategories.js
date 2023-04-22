@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowTurnDown, faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 import React, { useEffect } from "react";
 
@@ -51,7 +53,7 @@ useEffect(() => {
                 handleSwapCategoryClick(event)
               }
             >
-              <span className={`${formStyles["category-swap-arrow"]}`}>⇓</span>
+              <span className={`${formStyles["category-swap-arrow"]}`}><FontAwesomeIcon icon={faArrowTurnDown} /></span>
             </div>}
         </div>
       ) : (
@@ -77,7 +79,7 @@ useEffect(() => {
                 handleSwapCategoryClick(event)
               }
             >
-             <span className={`${formStyles["category-swap-arrow"]}`}>  ⇑  </span>
+             <span className={`${formStyles["category-swap-arrow"]}`}> <FontAwesomeIcon icon={faArrowTurnUp} /> </span>
             </div>
         </div>
       )}
