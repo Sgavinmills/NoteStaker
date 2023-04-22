@@ -36,7 +36,7 @@ const NoteIcons = ({note, handleTouchStart, displayCategories}) => {
           <span
             className={`${formStyles["rewind-icon"]}`}
             onMouseDown={(event) => {
-              handleTouchStart(event, "cancel");
+              handleTouchStart(event, "moveNote");
             }}
             // onTouchStart={(event) => {
             //   handleTouchStart(event, "cancel");

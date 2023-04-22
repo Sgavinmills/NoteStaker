@@ -144,25 +144,35 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
   }
 
   const handleTouchStart = (event, touchType, categoryName, categoryType, parentCategory) => {
-    event.stopPropagation();
-    event.preventDefault();
+    
         switch (touchType) {
           case "addRemoveCategory":
+            event.stopPropagation();
+            event.preventDefault();
             handleAddRemoveCategoryClick(event);
             break;
           case "highPriority":
+            event.stopPropagation();
+            event.preventDefault();
             handleHighPriorityClick(event);
             break;
-          case "cancel": // rename?
+          case "moveNote": // rename?
+          event.stopPropagation();
             handleMoveNoteClick(event);
             break;
           case "markDone":
+            event.stopPropagation();
+            event.preventDefault();
             handleMarkDoneClick(event);
             break;
           case "delete":
+            event.stopPropagation();
+            event.preventDefault();
             setIsModalOpen(true);
             break;
           case "category":
+            event.stopPropagation();
+            event.preventDefault();
             if (categoryType === "parent") {  
               const isCurrentlyActiveTag = note.tags.some(tag => tag.name === categoryName);
               const indexOfParentClickedOn = getParentCategoryIndex(memory.categories, categoryName);
