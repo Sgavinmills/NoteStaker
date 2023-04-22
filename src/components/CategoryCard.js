@@ -9,7 +9,8 @@ import EditCategoryModal from './EditCategoryModal';
 import MoveCategoryArrows from './MoveItemArrows';
 import AddCategoryModal from './AddCategoryModal';
 import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory, getParentCategoryIndex, moveCategoryUp, moveCategoryDown } from '../memoryFunctions/memoryFunctions';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUpDown } from '@fortawesome/free-solid-svg-icons'
 const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
   const [showNotes, setShowNotes] = useState(false);
@@ -87,7 +88,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
       action: handleDeleteAllNotesWithinCategoryClick
     },
     {
-      option: "⇕ Move category",
+      option: <span> <FontAwesomeIcon size="lg" icon={faUpDown} /> Move category</span>,
       action: handleMoveCategoryClick
     }
   ]
@@ -185,7 +186,7 @@ const handleMoveCategoryDown = (event, catName) => {
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
     )}
-    { addingSubCategory && <AddCategoryModal setAddingCategory={setAddingSubCategory} memory={memory} setMemory={setMemory} parentCategory={category} />}
+    { addingSubCategory && <AddCategoryModal setShowSubCategories={setShowSubCategories} setAddingCategory={setAddingSubCategory} memory={memory} setMemory={setMemory} parentCategory={category} />}
 
     <div className={`${styles["card-container"]} ${styles["category-card-container"]}`} onMouseDown={()=> { handleCategoryCardClick()}}>
       <div className={styles["category-contents-container"]}>

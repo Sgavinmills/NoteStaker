@@ -1,6 +1,7 @@
 import formStyles from "../CSS/NewAddNoteForm.module.css";
 import React from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUpDown } from '@fortawesome/free-solid-svg-icons'
 const NoteIcons = ({note, handleTouchStart, displayCategories}) => {
 
   return (
@@ -42,7 +43,8 @@ const NoteIcons = ({note, handleTouchStart, displayCategories}) => {
             //   handleTouchStart(event, "cancel");
             // }}
           >
-            &#x21BA;
+            {/* &#x21BA; */}
+          <FontAwesomeIcon icon={faUpDown} />
           </span>
           <span
             className={`${formStyles["cross-icon"]}`}

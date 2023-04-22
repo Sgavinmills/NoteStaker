@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import ModalStyles from "../CSS/Modal.module.css";
 import { addParentCategoryToMemory, addSubCategoryToMemory, getParentCategoryIndex } from '../memoryFunctions/memoryFunctions';
-const AddCategoryModal = ({setAddingCategory, setMemory, memory, parentCategory}) => {
+const AddCategoryModal = ({setAddingCategory, setMemory, memory, parentCategory, setShowSubCategories}) => {
 const [categoryText, setCategoryText] = useState('');
 
 const handleSubmit = (event) => {
   event.stopPropagation();
   event.preventDefault();
   setAddingCategory(false);
+  if(setShowSubCategories) {
+    setShowSubCategories(true);
+  }
   // should display a reason why can't add
   if (!parentCategory) { // add normal category
     if (!memory.categories.some(cat => cat === categoryText) && categoryText.length > 2) {
