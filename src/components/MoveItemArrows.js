@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import MoveArrowStyles from "../CSS/MoveArrow.module.css";
 
-const EditCategoryModal = ({ categoryName, setMovingCategory, memory, handleUp, handleDown}) => {
-  const [catName, ] = useState(categoryName)
+const MoveItemArrows = ({ itemName, setMovingItem, memory, handleUp, handleDown}) => {
+  const [catName, ] = useState(itemName)
 
   const handleDone = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    setMovingCategory(false);
+    setMovingItem(false);
   }
 
   return (
@@ -24,4 +24,4 @@ const EditCategoryModal = ({ categoryName, setMovingCategory, memory, handleUp, 
   );
 };
 
-export default EditCategoryModal;
+export default MoveItemArrows;

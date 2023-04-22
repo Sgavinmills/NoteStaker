@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../CSS/Card.module.css";
 import formStyles from "../CSS/NewAddNoteForm.module.css";
-import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getParentCategoryIndex, submitNoteChange, toggleHighPriority, toggleMarkDone } from "../memoryFunctions/memoryFunctions";
+import { addOrRemoveParentCategoryToNote, addOrRemoveSubCategoryToNote, deleteNoteFromMemory, getNoteIndex, getParentCategoryIndex, moveNoteDown, moveNoteUp, submitNoteChange, toggleHighPriority, toggleMarkDone } from "../memoryFunctions/memoryFunctions";
 import AddRemoveCategories from "./AddRemoveCategories";
 import ConfirmModal from "./ConfirmModal";
 import NoteIcons from "./NoteIcons";
-
+import MoveCategoryArrows from './MoveItemArrows'; // IF WROKS REMOVE TO JUST MOVEITEMARROWS
 const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocussedCannotClick, parentCategory, subCategoryName }) => {
   const textareaRef = useRef(null); // Create a ref to the textarea element
 
@@ -18,6 +18,7 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     parentCategory.sub_categories.length > 0 ? true : false
   );
   const [subCatToDisplay, setSubCatToDisplay] = useState("");
+  const [movingNote, setMovingNote] = useState(false);
   const confirmationMessage =
     "Are you sure? Note will be deleted from all categories";
 
@@ -115,17 +116,6 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
-  // saving for later, probably wants revamped. Maybe actually store a 'previousedit' variable? or multiple?
-  const handleCancelClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    // add implementation here.
-    // will need to add a 'noteHistory' property to the note
-    // click can then read and update memory accordingly
-    // obvs will need to go through and ensure noteHistory is updated whenever the note is updated
-  };
-
   const handleAddRemoveCategoryClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -149,6 +139,10 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
     });
   };
 
+  const handleMoveNoteClick = () => {
+    setMovingNote(true);
+  }
+
   const handleTouchStart = (event, touchType, categoryName, categoryType, parentCategory) => {
     event.stopPropagation();
     event.preventDefault();
@@ -159,8 +153,8 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
           case "highPriority":
             handleHighPriorityClick(event);
             break;
-          case "cancel":
-            handleCancelClick(event);
+          case "cancel": // rename?
+            handleMoveNoteClick(event);
             break;
           case "markDone":
             handleMarkDoneClick(event);
@@ -191,6 +185,92 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
      
   };
 
+  const handleMoveNoteUp = (event, noteID) => {
+    event.stopPropagation();
+    event.preventDefault();
+  
+    const noteIndex = getNoteIndex(memory.notes, noteID)
+    // THIS WORKS BUT CANNOT BE EFFICIENT?!? FILTERING THE ENTIRE MEMORY AGAIN INTO CATEGORY NOTES.
+    // THEN DOING ANOTHER FULL SEARCH ON THE MEMORY TO GET THE INDEX OF THE NOTEID THAT WE FIND...
+    // THERE MUST BE A WAY TO RETAIN THIS INFORMATION FROM WHEN NOTELIST DOES THE FILTERS
+    // BUT IT WILL DO FOR NOW. NO NEED FOR PREMMATURE OPTIMISATIONS.
+    const categoryFilteredNotes = memory.notes.filter(note => {
+      for(let i = 0; i < note.tags.length; i++) {
+        if (note.tags[i].name === parentCategory.name) {
+          if (!subCategoryName && note.tags[i].sub_tags.length === 0) {
+            return note;
+          } else {
+            if (subCategoryName) {
+               if (note.tags[i].sub_tags.includes(subCategoryName)) {
+                 return note;
+               }
+            }
+          }
+ 
+          break;
+        }
+      }
+      return false;
+    })
+
+    const noteIndexInFilteredCategory = getNoteIndex(categoryFilteredNotes, note.id);
+
+    if (noteIndexInFilteredCategory === 0) {
+      console.log("already at top");
+      return;
+    }
+
+    const noteIDOfIndexToSwapWith = categoryFilteredNotes[noteIndexInFilteredCategory-1].id;
+    const noteToSwapIndex = getNoteIndex(memory.notes, noteIDOfIndexToSwapWith);
+  
+    setMemory(currMemory => {
+      const newMemory = moveNoteUp(currMemory, noteIndex, noteToSwapIndex);
+      return newMemory;
+      })
+  }
+  
+  const handleMoveNoteDown = (event, noteID) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const noteIndex = getNoteIndex(memory.notes, noteID);
+    const categoryFilteredNotes = memory.notes.filter(note => {
+      for(let i = 0; i < note.tags.length; i++) {
+        if (note.tags[i].name === parentCategory.name) {
+          if (!subCategoryName && note.tags[i].sub_tags.length === 0) {
+            return note;
+          } else {
+            if (subCategoryName) {
+               if (note.tags[i].sub_tags.includes(subCategoryName)) {
+                 return note;
+               }
+            }
+          }
+ 
+          break;
+        }
+      }
+      return false;
+    })
+
+    const noteIndexInFilteredCategory = getNoteIndex(categoryFilteredNotes, note.id);
+    console.log(noteIndexInFilteredCategory)
+    console.log()
+
+    if (noteIndexInFilteredCategory === categoryFilteredNotes.length -1) {
+      console.log("already at bottom")
+      // handle not moving here, but wait til notes is done
+      return;
+    }
+
+    const noteIDOfIndexToSwapWith = categoryFilteredNotes[noteIndexInFilteredCategory+1].id;
+    const noteToSwapIndex = getNoteIndex(memory.notes, noteIDOfIndexToSwapWith);
+
+    setMemory(currMemory => {
+      const newMemory = moveNoteDown(currMemory, noteIndex, noteToSwapIndex);
+      return newMemory;
+      })
+  }
+
   return (
     <>
       {isModalOpen && (
@@ -200,6 +280,9 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
           confirmationMessage={confirmationMessage}
         />
       )}
+      { movingNote && 
+      <MoveCategoryArrows handleUp={handleMoveNoteUp} handleDown={handleMoveNoteDown} memory={memory} setMemory={setMemory} itemName={note.id} setMovingItem={setMovingNote}/>
+    }
       <div className={styles["note-contents-container"]}>
         <div className={`${formStyles["textarea-container"]}`}>
           <textarea

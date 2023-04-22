@@ -469,7 +469,29 @@ export function moveSubCategoryDown(currMemory, catIndex, parentIndex, x) {
         newCategories[parentIndex] = newCategory;
         newMemory.categories = newCategories;
         return newMemory;
-    
+}
+
+export function moveNoteUp(currMemory, noteIndex, noteToSwapIndex) {
+    console.log("should be moving " + noteIndex + " above " + noteToSwapIndex)
+    const newMemory = {...currMemory};
+    const newNotes = [...newMemory.notes];
+
+    const itemToMove = {...newNotes.splice(noteIndex, 1)[0]}
+    newNotes.splice(noteToSwapIndex, 0, itemToMove)
+
+    newMemory.notes = newNotes;
+    return newMemory;
+}
+
+export function moveNoteDown(currMemory, noteIndex, noteToSwapIndex) {
+    const newMemory = {...currMemory};
+    const newNotes = [...newMemory.notes];
+
+    const itemToMove = {...newNotes.splice(noteIndex, 1)[0]}
+    newNotes.splice(noteToSwapIndex, 0, itemToMove);
+
+    newMemory.notes = newNotes;
+    return newMemory;
 }
 
 

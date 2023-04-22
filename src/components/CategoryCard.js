@@ -6,7 +6,7 @@ import SubCategories from './SubCategories';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
-import MoveCategoryArrows from './MoveCategoryArrows';
+import MoveCategoryArrows from './MoveItemArrows';
 import AddCategoryModal from './AddCategoryModal';
 import { addNewBlankNoteToParentCategory, removeParentCategory, removeAllNotesFromParentCategory, getParentCategoryIndex, moveCategoryUp, moveCategoryDown } from '../memoryFunctions/memoryFunctions';
 
@@ -71,7 +71,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   }
   const options = [
     {
-      option: " ➕ Add Category",
+      option: " ➕ Add Sub-Category",
       action: handleAddSubCategoryClick
     },
     {
@@ -180,7 +180,7 @@ const handleMoveCategoryDown = (event, catName) => {
         />
       )}
     { movingCategory && 
-      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown}memory={memory} setMemory={setMemory} categoryName={category.name} setMovingCategory={setMovingCategory}/>
+      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown}memory={memory} setMemory={setMemory} itemName={category.name} setMovingItem={setMovingCategory}/>
     }
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />
