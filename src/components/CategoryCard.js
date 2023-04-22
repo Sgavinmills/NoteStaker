@@ -71,7 +71,7 @@ const CategoryCard = ({category, memory, setMemory, isFocussedCannotClick, setIs
   }
   const options = [
     {
-      option: " ➕ Add Sub-Category",
+      option: " ➕ Add Category",
       action: handleAddSubCategoryClick
     },
     {
@@ -180,7 +180,7 @@ const handleMoveCategoryDown = (event, catName) => {
         />
       )}
     { movingCategory && 
-      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown}memory={memory} setMemory={setMemory} category={category} setMovingCategory={setMovingCategory}/>
+      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown}memory={memory} setMemory={setMemory} categoryName={category.name} setMovingCategory={setMovingCategory}/>
     }
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={category.name} setMemory={setMemory} memory={memory}  />

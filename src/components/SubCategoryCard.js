@@ -5,7 +5,8 @@ import NoteList from './NoteList';
 import MoreOptions from './MoreOptions';
 import ConfirmModal from "./ConfirmModal";
 import EditCategoryModal from './EditCategoryModal';
-import { addNewBlankNoteToSubCategory, removeAllNotesFromASubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
+import { addNewBlankNoteToSubCategory, getParentCategoryIndex, getSubCatIndex, moveSubCategoryDown, moveSubCategoryUp, removeAllNotesFromASubCategory, removeSubCategoryFromMemory } from '../memoryFunctions/memoryFunctions';
+import MoveCategoryArrows from './MoveCategoryArrows';
 
 const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, isFocussedCannotClick, setIsFocussedCannotClick}) => {
 
@@ -16,6 +17,7 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
   const [confirmDeleteAllNotesWithinCategoryModalOpen, setConfirmDeleteAllNotesWithinCategoryModalOpen] = useState(false)
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [edittingCategory, setEdittingCategory] = useState(false);
+  const [movingCategory, setMovingCategory] = useState(false);
   const optionsMenuRef = useRef(null);
 
   const handleAddNoteClick = (event) => {
@@ -62,18 +64,26 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
     setEdittingCategory(true);
   }
 
+  const handleMoveCategoryClick = () => {
+    setMovingCategory(true);
+  }
+
   const options = [
     {
-      option: " ❌ Delete category",
+      option: " ❌ Delete sub-category",
       action: handleDeleteCategoryClick
     },
     {
-      option: "✏️ Edit category name",
+      option: "✏️ Edit sub-category name",
       action: handleEditCategoryClick
     },
     {
-      option: "🗑️ Remove all notes from category",
+      option: "🗑️ Remove all notes from sub-category",
       action: handleDeleteAllNotesWithinCategoryClick
+    },
+    {
+      option: "⇕ Move sub-category",
+      action: handleMoveCategoryClick
     }
   ]
 
@@ -116,6 +126,40 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
       setShowNotes(!showNotes)
     }
   }
+
+  const handleMoveCategoryUp = (event, catName) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const parentCatIndex = getParentCategoryIndex(memory.categories, parentCategory.name);
+    const subCatIndex = getSubCatIndex(memory.categories, catName, parentCatIndex) 
+    if (subCatIndex === 0) {
+      // todo: handle item at top
+      return;
+    }
+  
+    setMemory(currMemory => {
+      const newMemory = moveSubCategoryUp(currMemory, subCatIndex, parentCatIndex);
+      return newMemory;
+    })
+  }
+  
+  const handleMoveCategoryDown = (event, catName) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const parentCatIndex = getParentCategoryIndex(memory.categories, parentCategory.name);
+    const subCatIndex = getSubCatIndex(memory.categories, catName, parentCatIndex) // THINK this subcatname param should be the catName
+
+    if (subCatIndex === memory.categories[parentCatIndex].sub_categories.length -1) {
+      console.log("already at bottom")
+      // handle not moving here, but wait til notes is done
+      return;
+    }
+    setMemory(currMemory => {
+      const newMemory = moveSubCategoryDown(currMemory, subCatIndex, parentCatIndex);
+      return newMemory;
+      })
+  }
+
   return (
     <>
     {confirmDeleteCategoryModalOpen && (
@@ -132,6 +176,9 @@ const SubCategoryCard = ({subCategoryName, parentCategory, memory, setMemory, is
           confirmationMessage={confirmationMessage}
         />
       )}
+    { movingCategory && 
+      <MoveCategoryArrows handleUp={handleMoveCategoryUp} handleDown={handleMoveCategoryDown} memory={memory} setMemory={setMemory} categoryName={subCategoryName} setMovingCategory={setMovingCategory}/>
+    }
     {edittingCategory && (
       <EditCategoryModal setEdittingCategory={setEdittingCategory} currCategoryName={subCategoryName} setMemory={setMemory} memory={memory} subCategoryName={subCategoryName} parentCategory={parentCategory}  />
     )}

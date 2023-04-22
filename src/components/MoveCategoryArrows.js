@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import MoveArrowStyles from "../CSS/MoveArrow.module.css";
 
-const EditCategoryModal = ({ setMemory, category, setMovingCategory, memory, handleUp, handleDown}) => {
-  const [catName, ] = useState(category.name)
+const EditCategoryModal = ({ categoryName, setMovingCategory, memory, handleUp, handleDown}) => {
+  const [catName, ] = useState(categoryName)
 
   const handleDone = (event) => {
     event.stopPropagation();

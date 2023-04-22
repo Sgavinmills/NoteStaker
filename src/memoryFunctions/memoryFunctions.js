@@ -43,6 +43,8 @@ function getCatIndex(categories, categoryName) {
     }, -1)
 }
 
+
+
 export function getParentCategoryIndex(categories, parentCategoryName) {
     return getCatIndex(categories, parentCategoryName);
 }
@@ -115,6 +117,8 @@ export function removeParentCategory(currMemory, categoryName) {
     newMemory.notes = filteredNotes;
     return newMemory;
 }
+
+
 
 function deleteSubCategoryFromEachNote(newNotes, categoryName, parentCategoryName) {
     const filteredNotes = [];
@@ -424,7 +428,49 @@ export function moveCategoryDown(currMemory, catIndex) {
     return newMemory;
 }
 
+// update functions to use getSubCatIndex later.
+export function getSubCatIndex(categories, categoryName, parentCatIndex) {
+    return categories[parentCatIndex].sub_categories.indexOf(categoryName);
+}
 
+export function moveSubCategoryUp(currMemory, subCatIndex, parentIndex) {
+    // const newMemory = JSON.parse(JSON.stringify(currMemory));
+    // const itemToMove = newMemory.categories[parentIndex].sub_categories[subCatIndex];
+    // newMemory.categories[parentIndex].sub_categories[subCatIndex] = newMemory.categories[parentIndex].sub_categories[subCatIndex-1]
+    // newMemory.categories[parentIndex].sub_categories[subCatIndex-1] = itemToMove;
+
+    const newMemory = {...currMemory};
+    const newCategories = [...newMemory.categories]
+
+    const newCat = {...newCategories[parentIndex]}; // brand new cat. has same sub cat?
+    const newSubCategories = [...newCat.sub_categories];
+
+    const itemToCopy = newSubCategories[subCatIndex];
+    newSubCategories[subCatIndex] = newSubCategories[subCatIndex-1] // any issues check here, but theyre strings!
+    newSubCategories[subCatIndex-1] = itemToCopy;
+
+    newCat.sub_categories = newSubCategories;
+    newCategories[parentIndex] = newCat;
+    newMemory.categories = newCategories;
+    return newMemory;
+}
+
+export function moveSubCategoryDown(currMemory, catIndex, parentIndex, x) {
+        const newMemory = {...currMemory};
+        const newCategories = [...newMemory.categories];
+        const newCategory = {...newCategories[parentIndex]}
+        const newSubCategories = [...newCategory.sub_categories]
+        
+        const itemToMove = newSubCategories[catIndex];
+        newSubCategories[catIndex] = newSubCategories[catIndex+1];
+        newSubCategories[catIndex+1] = itemToMove;
+    
+        newCategory.sub_categories = newSubCategories;
+        newCategories[parentIndex] = newCategory;
+        newMemory.categories = newCategories;
+        return newMemory;
+    
+}
 
 
 
