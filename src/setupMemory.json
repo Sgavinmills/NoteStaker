@@ -120,6 +120,20 @@
       "newEmptyNote": false
   },
   {
+    "note": "Before starting make sure you install this page as an app. In most browsers click into options/settings and choose either 'install' or 'add to homescreen'. This will add it to your list of apps. Do not try to use in the browser. ",
+    "tags": [
+        {
+            "name": "Starting Off",
+            "sub_tags": []
+        }
+    ],
+    "additional_info": "",
+    "date_added": "",
+    "id": "16821879759331yecdvfdgff59",
+    "newEmptyNote": false,
+    "priority" : "high"
+},
+  {
       "note": "Notes can be added directly to a category, or into sub categories. This 'starting off' category has no categories but click on 'See More' below to see some sub categories.",
       "tags": [
           {
