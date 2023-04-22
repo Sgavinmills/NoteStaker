@@ -174,16 +174,11 @@ const NoteCard = ({ note, setMemory, memory, isFocussedCannotClick, setIsFocusse
             event.stopPropagation();
             event.preventDefault();
             if (categoryType === "parent") {  
-              const isCurrentlyActiveTag = note.tags.some(tag => tag.name === categoryName);
               const indexOfParentClickedOn = getParentCategoryIndex(memory.categories, categoryName);
               const hasSubCategories = memory.categories[indexOfParentClickedOn].sub_categories.length > 0 ? true : false;
-
-              if (!isCurrentlyActiveTag && hasSubCategories) {
+              if (hasSubCategories) {
                 setDisplayingSubCategories(true);
                 setSubCatToDisplay(categoryName);
-              }
-
-              if (!isCurrentlyActiveTag && hasSubCategories) {
                 break;
               }
             }
