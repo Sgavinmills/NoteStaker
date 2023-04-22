@@ -1,7 +1,11 @@
 .app-container {
     background-color: #010101;
-    min-height: 2000px;
+    /* min-height: 2000px; */
+    /* min-height: calc(100% + 2000px); */
     /* todo: calculate min height to be an extra screen */
+  /* height: calc(100% + 20000px); */
+  /* height: 2000px; */
+  padding-bottom: 2000px;
 }
 
 .hamburger-container {
