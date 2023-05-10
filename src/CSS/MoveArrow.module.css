@@ -8,7 +8,7 @@
     /* display: flex; */
     /* align-items: center; */
     /* justify-content: flex-end; */
-    background-color: rgba(148, 139, 139, 0.5);
+    background-color: var(--arrow-modal-container-color);
     z-index: 100;
 }
 
@@ -39,7 +39,7 @@
   height: 0;
   border-left: 5vh solid transparent;
   border-right: 5vh solid transparent;
-  border-bottom: 5vh solid #c6d6f0; /* adjust color and size as needed */
+  border-bottom: 5vh solid var(--header-text-color); /* adjust color and size as needed */
   content: "";
   box-shadow: 0px 3px 0px #000;
   transition: transform 0.1s ease-in-out;
@@ -60,7 +60,7 @@
   height: 0;
   border-left: 5vh solid transparent;
   border-right: 5vh solid transparent;
-  border-top: 5vh solid #c6d6f0; /* adjust color and size as needed */
+  border-top: 5vh solid var(--header-text-color); /* adjust color and size as needed */
   content: "";
   box-shadow: 0px -3px 0px  #000;
   transition: transform 0.1s ease-in-out;
@@ -75,5 +75,5 @@
 .done {
   width: 10vh;
   height: 20px;
-  background-color: #c6d6f0
+  background-color: var(--header-text-color)
 }

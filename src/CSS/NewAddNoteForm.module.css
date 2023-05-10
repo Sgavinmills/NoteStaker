@@ -1,41 +1,12 @@
-.note-form-container {
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #1e1e1e;
-  border: 1px solid #464646;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
 
-.note-form-container_new_note {
-  margin-top: -15px;
-}
-  
-  .note-text-input {
-    width: 100%;
-    min-height: 180px;
-    padding: 10px;
-    font-size: 16px;
-    color: #b4b4b4;
-    /* border: 2px solid #ddd; */
-    /* border-radius: 5px; */
-    resize: none;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    border: none;
-    background-color: transparent;
-  }
 
   .note-text-area {
     width: 100%;
     /* min-height: 180px; */
     /* padding: 10px; */
     font-size: 15px;
-    color: #b4b4b4;
-    /* border: 2px solid #ddd; */
+    color: var(--note-text-color);
+    /* border: 2px solid #ddd; */ 
     /* border-radius: 5px; */
     resize: none;
     box-sizing: border-box;
@@ -52,15 +23,15 @@
 }
 
 .note-text-area:focus {
-  border-bottom: 1px dashed #c6d6f0;
+  border-bottom: 1px dashed var(--header-text-color);
 }
 
 .note-text-area_high_priority {
-    color: #FFD700;
+    color: var(--highpriority-text-color);
 }
 
 .note-text-area_low_priority {
-  color: #5242af;
+  color: var(--lowpriority-text-color);
 }
 
   .textarea-container {
@@ -71,7 +42,7 @@
   }
 
   .icon-container {
-    color: white;
+    color: var(--icon-container-text-color);
     position: absolute;
     bottom: -32px;
     right: 0px;
@@ -95,7 +66,7 @@
   }
 
   .plus-icon_selected {
-    color: #6bbf56;
+    color: var(--plus-icon-selected-color);
   }
 
   .high-priority-icon {
@@ -116,8 +87,8 @@
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #333;
-    color: #c6d6f0;
+    background-color: var(--submit-button-background-color);
+    color: var(--header-text-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -126,7 +97,7 @@
   }
   
   .submit-button:hover {
-    background-color: #555;
+    background-color: var(--submit-button-background-color-hover);
   }
 
   .categories-container {
@@ -138,9 +109,8 @@
   }
   
   .category-tab {
-    background-color: #4a4747;
-    background-color: #333;
-    color: #c6d6f0;
+    background-color: var(--submit-button-background-color);
+    color: var(--header-text-color);
     border-radius: 4px;
     padding: 4px;
     cursor: pointer;
@@ -148,14 +118,14 @@
   }
 
   .category-tab-parent {
-    background-color: rgba(192, 137, 178, 0.4);
+    background-color: var(--category-tab-parent-color);
     color: #fff;
 
 
   }
 
   .category-tab-sub {
-    background-color: rgb(117, 154, 167, 0.4);
+    background-color: var(--category-tab-sub-color);
     color: #fff;
 
 
@@ -167,12 +137,12 @@
   }
   
   .category-tab.selected {
-    background-color: #6bbf56;
+    background-color: var(--category-tab-selected-background-color);
     color: #fff;
   }
 
   .swap-category-tab {
-    background-color: rgb(117, 154, 167);
+    background-color: var(--category-tab-swap-color);
   }
 
   

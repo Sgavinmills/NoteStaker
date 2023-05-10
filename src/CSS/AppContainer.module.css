@@ -1,5 +1,5 @@
 .app-container {
-    background-color: #010101;
+    background-color: var(--main-background-color);
     /* min-height: 2000px; */
     /* min-height: calc(100% + 2000px); */
     /* todo: calculate min height to be an extra screen */
@@ -10,7 +10,7 @@
 
 .hamburger-container {
     width: 100%;
-    background-color: #010101;
+    background-color: var(--main-background-color);
     z-index: 99;
     display: flex;
     justify-content: right;
@@ -18,7 +18,7 @@
 
 .hamburger-span {
     font-size: 50px;
-    color: #c6d6f0;
+    color: var(--header-text-color);
     display: block;
     width: 50px;
     margin-right: 20px;

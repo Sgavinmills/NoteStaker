@@ -8,18 +8,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(148, 139, 139, 0.2);
+    background-color: var(--modal-container-background-color);
     /* width: 100px; */
     /* height: 100px; */
     z-index: 100;
 }
 
 .modal-content {
-    background-color: black;
-}
-
-.modal-content {
-    background-color: #fff;
+    background-color: var(--modal-content-background-color);
+  }
+  
+  .modal-content {
+    background-color: var(--category-tab-selected-text-color);
     border-radius: 8px;
     padding: 24px;
     text-align: center;
@@ -39,8 +39,8 @@
   .modal-option {
     margin: 0 8px;
     padding: 12px 24px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--modal-option-background-color);
+    color: var(--category-tab-selected-text-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -57,7 +57,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(148, 139, 139, 0.5);
+    background-color: var(--arrow-modal-container-color);
+
     z-index: 100;
 }
 
@@ -65,7 +66,8 @@
   /* Set the maximum width of the form and add some spacing between elements */
   max-width: 400px;
   margin: auto;
-  background-color: #f8f8f8;
+  background-color: var(--modal-add-category-content-background-color);
+
   padding: 40px;
 
 }
@@ -89,8 +91,8 @@
 
 .add-category-modal-option {
   /* Set button styles, such as background color, padding, margin, and font properties */
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--modal-option-background-color);
+  color: var(--category-tab-selected-text-color);
   padding: 10px 20px;
   margin: 0 5px;
   border: none;
@@ -100,6 +102,7 @@
 
 .add-category-modal-option:hover {
   /* Add hover effect for buttons, such as changing background color */
-  background-color: #0069d9;
+  background-color: var(--modal-option-background-color-hover);
+
 }
 
